@@ -1,0 +1,28 @@
+
+{include '@acl.latte'}
+{form resources}
+<ul class="errors" n:if="$form->hasErrors()">
+	<li n:foreach="$form->errors as $error">{$error}</li>
+</ul>
+<fieldset>
+	<legend>Zdroje</legend>
+	{label name/}
+	{input name}
+	{input send}
+</fieldset>
+{/form}
+{if count($resources)}
+<table>
+	<tr>
+		<th>Zdroje</th>
+		<th colspan="2">&nbsp;</th>
+	</tr>
+	{foreach $resources as $row}
+	<tr>
+		<td>{$row->name}</td>
+		<td style="width: 8%;"><a href="{link delete!, $row->id}" title="Smazat">&Cross;</a></td>
+		<td style="width: 8%;"><a href="{link edit!, $row->id}" title="Upravit">&dtrif;</a></td>
+	</tr>
+	{/foreach}
+</table>
+{/if}

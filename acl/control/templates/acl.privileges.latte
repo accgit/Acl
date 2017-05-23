@@ -1,0 +1,28 @@
+
+{include '@acl.latte'}
+{form privileges}
+<ul class="errors" n:if="$form->hasErrors()">
+	<li n:foreach="$form->errors as $error">{$error}</li>
+</ul>
+<fieldset>
+	<legend>Akce</legend>
+	{label name/}
+	{input name}
+	{input send}
+</fieldset>
+{/form}
+{if count($privileges)}
+<table n:if="count($privileges)">
+	<tr>
+		<th>Akce</th>
+		<th colspan="2"></th>
+	</tr>
+	{foreach $privileges as $row}
+	<tr>
+		<td>{$row->name}</td>
+		<td style="width: 8%;"><a href="{link delete!, $row->id}" title="Smazat">&Cross;</a></td>
+		<td style="width: 8%;"><a href="{link edit!, $row->id}" title="Upravit">&dtrif;</a></td>
+	</tr>
+	{/foreach}
+</table>
+{/if}

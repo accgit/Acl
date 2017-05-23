@@ -1,0 +1,52 @@
+
+{include '@acl.latte'}
+{form permissions}
+<ul class="errors" n:if="$form->hasErrors()">
+	<li n:foreach="$form->errors as $error">{$error}</li>
+</ul>
+<fieldset>
+	<legend>Nastavení oprávnění</legend>
+	{label role/}
+	{input role}
+
+	{label resource/}
+	{input resource}
+
+	{label privilege/}
+	{input privilege}
+
+	{label allowed/}
+	{input allowed}
+
+	{input send}
+</fieldset>
+{/form}
+
+{if count($permissions)}
+{foreach $permissions as $row}
+	{foreach $roles as $role}
+	{if $row->role == $role->name}
+	<p class="role">Role: {$role->name}</p>
+	<table>
+		<tr>
+			<th>Zdroj</th>
+			<th>Akce</th>
+			<th>Přístup</th>
+			<th colspan="2">&nbsp;</th>
+		</tr>
+		{foreach $permissions as $row}
+		{if $row->role == $role->name}
+		<tr>
+			<td>{$row->resource}</td>
+			<td>{$row->privilege}</td>
+			<td n:class="$row->allowed == 'yes' ? 'bull allowed' : 'bull deny'">&bull;</td>
+			<td><a n:href="delete!, $row->id" title="Smazat">&Cross;</a></td>
+			<td><a n:href="edit!, $row->id" title="Upravit">&dtrif;</a></td>
+		</tr>
+		{/if}
+		{/foreach}
+	</table>
+	{/if}
+	{/foreach}
+{/foreach}
+{/if}

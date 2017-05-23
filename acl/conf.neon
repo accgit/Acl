@@ -1,0 +1,38 @@
+
+# Acl component.
+services:
+
+	- Component\Acl
+	- Component\Acl\Allowed
+
+	- Component\Acl\Entity\Roles
+	- Component\Acl\Entity\Resources
+	- Component\Acl\Entity\Privileges
+	- Component\Acl\Entity\Permissions
+
+	- Component\Acl\Repository\Roles
+	- Component\Acl\Repository\Resources
+	- Component\Acl\Repository\Privileges
+	- Component\Acl\Repository\Permissions
+
+	- Component\Acl\Factory\Roles
+	- Component\Acl\Factory\Resources
+	- Component\Acl\Factory\Privileges
+	- Component\Acl\Factory\Permissions
+
+	- Component\Acl\Control\Roles
+	- Component\Acl\Control\Resources
+	- Component\Acl\Control\Privileges
+	- Component\Acl\Control\Permissions
+
+	# Cache settings.
+	cache.access:
+		class: Nette\Caching\Cache
+		arguments: [@Nette\Caching\IStorage, 'Drago.AclCache']
+
+	# Cache for acl.
+	- Drago\Caching\Caches(@cache.access)
+
+	# Registration authorizator.
+	acl: Component\Acl\Permission
+	app.authorizator: @acl::create

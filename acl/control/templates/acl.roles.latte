@@ -1,0 +1,34 @@
+
+{include '@acl.latte'}
+{form roles}
+<ul class="errors" n:if="$form->hasErrors()">
+	<li n:foreach="$form->errors as $error">{$error}</li>
+</ul>
+<fieldset>
+	<legend>Role</legend>
+	{label name/}
+	{input name}
+
+	{label parent/}
+	{input parent}
+
+	{input send}
+</fieldset>
+{/form}
+{if count($roles)}
+<table>
+	<tr>
+		<th>Role</th>
+		<th>Převzatá role</th>
+		<th colspan="2">&nbsp;</th>
+	</tr>
+	{foreach $roles as $row}
+	<tr>
+		<td>{$row->name}</td>
+		<td>{$row->parent}</td>
+		<td style="width: 8%;"><a href="{link delete!, $row->id}" title="Smazat">&Cross;</a></td>
+		<td style="width: 8%;"><a href="{link edit!, $row->id}" title="Upravit">&dtrif;</a></td>
+	</tr>
+	{/foreach}
+</table>
+{/if}
