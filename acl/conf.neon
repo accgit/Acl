@@ -26,13 +26,13 @@ services:
 	- Component\Acl\Control\Permissions
 
 	# Cache settings.
-	cache.access:
+	cache.acl:
 		class: Nette\Caching\Cache
 		arguments: [@Nette\Caching\IStorage, 'Drago.AclCache']
 
 	# Cache for acl.
-	- Drago\Caching\Caches(@cache.access)
+	- Drago\Caching\Caches(@cache.acl)
 
 	# Registration authorizator.
-	acl: Component\Acl\Permission
+	acl: Component\Acl\Authorizator
 	app.authorizator: @acl::create

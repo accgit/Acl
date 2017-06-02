@@ -82,6 +82,6 @@ CREATE TABLE `access` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 INSERT INTO `access` (`id`, `role`, `user`) VALUES
-(NULL, 3, 1);
+(NULL, 2, 1);
 
 -- 2017-05-23 05:29:29

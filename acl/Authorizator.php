@@ -14,10 +14,13 @@ use Drago\Caching\Caches;
  * Managing User Permissions.
  * @author Zdeněk Papučík
  */
-class Permission
+class Authorizator
 {
-	// System administrator.
-	const SystemRole = 'root';
+	// Default roles.
+	const
+		ROLE_GUEST  = 'guest',
+		ROLE_MEMBER = 'member',
+		ROLE_ADMIN  = 'admin';
 
 	/**
 	 * Key for cache.
@@ -72,9 +75,6 @@ class Permission
 				$acl->addRole($role->name, $role->parent === 0 ? NULL : $role->parent);
 			}
 
-			// Add system role.
-			$acl->addRole(self::SystemRole);
-
 			// Add resources.
 			foreach ($this->resources->all() as $resource) {
 				$acl->addResource($resource->name);
@@ -85,8 +85,8 @@ class Permission
 				$acl->{$row->allowed == 'yes' ? 'allow' : 'deny'}($row->role, $row->resource, $row->privilege);
 			}
 
-			// System role that can do everything.
-			$acl->allow(self::SystemRole, Security\Permission::ALL, Security\Permission::ALL);
+			// Admin role that can do everything.
+			$acl->allow(self::ROLE_ADMIN, Security\Permission::ALL, Security\Permission::ALL);
 
 			// Save permissions to cache.
 			$this->caches->setToCache($this->key, $acl);
