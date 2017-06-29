@@ -1,6 +1,5 @@
 -- Adminer 4.2.5 MySQL dump
 
-DROP TABLE IF EXISTS `privileges`;
 CREATE TABLE `privileges` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `name` varchar(40) NOT NULL,
@@ -11,7 +10,6 @@ CREATE TABLE `privileges` (
 INSERT INTO `privileges` (`id`, `name`) VALUES
 (NULL, 'default');
 
-DROP TABLE IF EXISTS `resources`;
 CREATE TABLE `resources` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `name` varchar(40) NOT NULL,
@@ -24,7 +22,6 @@ INSERT INTO `resources` (`id`, `name`) VALUES
 (NULL, 'Web:Login'),
 (NULL, 'Admin:Admin');
 
-DROP TABLE IF EXISTS `roles`;
 CREATE TABLE `roles` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `name` varchar(40) NOT NULL,
@@ -37,7 +34,6 @@ INSERT INTO `roles` (`id`, `name`, `parent`) VALUES
 (NULL, 'guest',  0),
 (NULL, 'member', 1);
 
-DROP TABLE IF EXISTS `permissions`;
 CREATE TABLE `permissions` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `role` int(11) NOT NULL,
@@ -57,7 +53,6 @@ INSERT INTO `permissions` (`id`, `role`, `resource`, `privilege`, `allowed`) VAL
 (NULL, 1, 1, 1, 'yes'),
 (NULL, 1, 2, 1, 'yes');
 
-DROP TABLE IF EXISTS `users`;
 CREATE TABLE `users` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `realname` varchar(60) NOT NULL,
@@ -69,7 +64,6 @@ CREATE TABLE `users` (
 INSERT INTO `users` (`id`, `realname`, `email`, `password`) VALUES
 (NULL, 'Root', 'root@root.local', '$2y$10$N8V61Vhx8P4qAFcFE/ZSjuAmFtxHt28FZMShsb4ADYTHZTFdlM/Oi');
 
-DROP TABLE IF EXISTS `access`;
 CREATE TABLE `access` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `role` int(11) NOT NULL,
