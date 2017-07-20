@@ -102,7 +102,7 @@ class Permissions extends UI\Control
 		$row = $this->permissions->find($id);
 		if ($row) {
 			try {
-			    	$this->permissions->delete($id);
+				$this->permissions->delete($id);
 				$this->flashMessage('Přístup byl úspěšně vymazán.', 'info');
 
 			} catch (Exception $e) {

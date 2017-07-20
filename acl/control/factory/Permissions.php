@@ -88,13 +88,13 @@ class Permissions
 		$form->onSuccess[] = function (Form $form, $values) use ($permissions)  {
 			try {
 
-			    $entity = $this->entity;
-			    $entity->setId($values->id);
-			    $entity->role   = $values->role;
-			    $entity->resource  = $values->resource;
-			    $entity->privilege = $values->privilege;
-			    $entity->allowed = $values->allowed;
-			    $permissions->save($entity);
+				$entity = $this->entity;
+				$entity->setId($values->id);
+				$entity->role   = $values->role;
+				$entity->resource  = $values->resource;
+				$entity->privilege = $values->privilege;
+				$entity->allowed = $values->allowed;
+				$permissions->save($entity);
 
 			} catch (Dibi\Exception $e) {
 				\Tracy\Debugger::barDump($e);
