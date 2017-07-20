@@ -18,7 +18,7 @@ use Component\Acl\Factory;
  */
 class Permissions extends UI\Control
 {
-    	/**
+	/**
 	 * @var Repository\Roles
 	 */
 	private $roles;

@@ -16,7 +16,7 @@ use Component\Acl\Entity;
  */
 class Resources extends Drago\Database\Connection
 {
-    	/**
+	/**
 	 * Database table.
 	 * @var string
 	 */

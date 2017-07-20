@@ -51,10 +51,10 @@ class Resources
 		$form->onSuccess[] = function (Form $form, $values) use ($resources) {
 			try {
 
-			    $entity = $this->entity;
-			    $entity->setId($values->id);
-			    $entity->name = $values->name;
-			    $resources->save($entity);
+				$entity = $this->entity;
+				$entity->setId($values->id);
+				$entity->name = $values->name;
+				$resources->save($entity);
 
 			} catch (Dibi\Exception $e) {
 				if ($e->getCode() == 1062) {

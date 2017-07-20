@@ -75,8 +75,8 @@ class Permissions
 			->setRequired();
 
 		$allowed = [
-		    'yes' => 'Povolit',
-		    'no'  => 'Zakázat'
+			'yes' => 'Povolit',
+			'no'  => 'Zakázat'
 		];
 
 		$form->addSelect('allowed', 'Přístup:', $allowed)

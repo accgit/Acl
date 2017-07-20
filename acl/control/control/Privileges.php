@@ -80,7 +80,7 @@ class Privileges extends UI\Control
 		$row = $this->privileges->find($id);
 		if ($row) {
 			try {
-			    	$this->privileges->delete($id);
+				$this->privileges->delete($id);
 				$this->flashMessage('Akce byla úspěšně vymazána.', 'info');
 
 			} catch (Exception $e) {

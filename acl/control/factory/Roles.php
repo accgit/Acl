@@ -59,11 +59,11 @@ class Roles
 		$form->onSuccess[] = function (Form $form, $values) use ($roles)  {
 			try {
 
-			    $entity = $this->entity;
-			    $entity->setId($values->id);
-			    $entity->name   = $values->name;
-			    $entity->parent = $values->parent == NULL ? 0 : $values->parent;
-			    $roles->save($entity);
+				$entity = $this->entity;
+				$entity->setId($values->id);
+				$entity->name   = $values->name;
+				$entity->parent = $values->parent == NULL ? 0 : $values->parent;
+				$roles->save($entity);
 
 			} catch (Dibi\Exception $e) {
 				if ($e->getCode() == 1062) {

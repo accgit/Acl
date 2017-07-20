@@ -60,7 +60,7 @@ class Authorizator
 		$this->resources   = $resources;
 	}
 
-        /**
+	/**
 	 * @return Security\IAuthorizator
 	 */
 	public function create()

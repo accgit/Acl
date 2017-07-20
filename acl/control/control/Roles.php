@@ -89,7 +89,7 @@ class Roles extends UI\Control
 		if ($row) {
 			try {
 				if (!$this->roles->findParent($row->id)) {
-				    	$this->roles->delete($id);
+					$this->roles->delete($id);
 					$this->flashMessage('Role byla úspěšně vymazána.', 'info');
 				}
 

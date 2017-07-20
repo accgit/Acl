@@ -16,7 +16,7 @@ use Component\Acl\Entity;
  */
 class Roles extends Drago\Database\Connection
 {
-    	/**
+	/**
 	 * Database table.
 	 * @var string
 	 */

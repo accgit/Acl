@@ -51,10 +51,10 @@ class Privileges
 		$form->onSuccess[] = function (Form $form, $values) use ($privileges) {
 			try {
 
-			    $entity = $this->entity;
-			    $entity->setId($values->id);
-			    $entity->name = $values->name;
-			    $privileges->save($entity);
+				$entity = $this->entity;
+				$entity->setId($values->id);
+				$entity->name = $values->name;
+				$privileges->save($entity);
 
 			} catch (Dibi\Exception $e) {
 				if ($e->getCode() == 1062) {
