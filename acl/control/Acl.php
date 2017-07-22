@@ -52,7 +52,7 @@ class Acl extends UI\Control
 	/**
 	 * @return Control\Roles
 	 */
-	public function createComponentRoles()
+	protected function createComponentRoles()
 	{
 		return $this->roles;
 	}
@@ -60,7 +60,7 @@ class Acl extends UI\Control
 	/**
 	 * @return Control\Resources
 	 */
-	public function createComponentResources()
+	protected function createComponentResources()
 	{
 		return $this->resources;
 	}
@@ -68,7 +68,7 @@ class Acl extends UI\Control
 	/**
 	 * @return Control\Privileges
 	 */
-	public function createComponentPrivileges()
+	protected function createComponentPrivileges()
 	{
 		return $this->privileges;
 	}
@@ -76,7 +76,7 @@ class Acl extends UI\Control
 	/**
 	 * @return Control\Permissions
 	 */
-	public function createComponentPermissions()
+	protected function createComponentPermissions()
 	{
 		return $this->permissions;
 	}
