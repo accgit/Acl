@@ -51,7 +51,7 @@ class Permissions extends Drago\Database\Connection
 
 	/**
 	 * Returned record by id.
-	 * @param  int
+	 * @param int
 	 * @return array
 	 */
 	public function find($id)
@@ -65,7 +65,7 @@ class Permissions extends Drago\Database\Connection
 
 	/**
 	 * Delete record.
-	 * @param  int
+	 * @param int
 	 * @return void
 	 */
 	public function delete($id)
@@ -78,7 +78,7 @@ class Permissions extends Drago\Database\Connection
 
 	/**
 	 * Insert or update record.
-	 * @param  mixed
+	 * @param mixed
 	 * @return void
 	 */
 	public function save(Entity\Permissions $entity)
