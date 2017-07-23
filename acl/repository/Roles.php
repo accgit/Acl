@@ -48,7 +48,7 @@ class Roles extends Drago\Database\Connection
 
 	/**
 	 * Returned record by id.
-	 * @param  int
+	 * @param int
 	 * @return array
 	 */
 	public function find($id)
@@ -60,7 +60,7 @@ class Roles extends Drago\Database\Connection
 
 	/**
 	 * Find exist parent in database.
-	 * @param  int
+	 * @param int
 	 * @return bool
 	 */
 	public function findParent($id)
@@ -77,7 +77,7 @@ class Roles extends Drago\Database\Connection
 
 	/**
 	 * Delete record.
-	 * @param  int
+	 * @param int
 	 * @return void
 	 */
 	public function delete($id)
@@ -90,7 +90,7 @@ class Roles extends Drago\Database\Connection
 
 	/**
 	 * Insert or update record.
-	 * @param  mixed
+	 * @param mixed
 	 * @return void
 	 */
 	public function save(Entity\Roles $entity)
