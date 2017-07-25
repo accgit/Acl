@@ -7,8 +7,8 @@
 namespace Component\Acl\Factory;
 
 use Dibi;
-use Nette\Application\UI\Form;
-use Drago\Application\UI;
+use Drago\Application;
+use Nette\Application\UI;
 
 use Component\Acl\Entity;
 use Component\Acl\Repository;
@@ -20,9 +20,9 @@ use Component\Acl\Repository;
 class Roles
 {
 	/**
-	 * @var UI\Forms
+	 * @var Application\UI\Factory
 	 */
-	private $forms;
+	private $factory;
 
 	/**
 	 * @var Entity\Roles
@@ -30,19 +30,16 @@ class Roles
 	private $entity;
 
 	public function __construct(
-		UI\Forms $forms,
+		Application\UI\Factory $factory,
 		Entity\Roles $entity)
 	{
-		$this->forms  = $forms;
-		$this->entity = $entity;
+		$this->factory = $factory;
+		$this->entity  = $entity;
 	}
 
-	/**
-	 * @return Forms
-	 */
 	public function create(Repository\Roles $roles)
 	{
-		$form = $this->forms->create();
+		$form = $this->factory->create();
 		$form->addText('name', 'Název:')
 			->setRequired();
 
@@ -56,7 +53,7 @@ class Roles
 
 		$form->addHidden('id');
 		$form->addSubmit('send', 'Přidat');
-		$form->onSuccess[] = function (Form $form, $values) use ($roles)  {
+		$form->onSuccess[] = function (UI\Form $form, $values) use ($roles)  {
 			try {
 
 				$entity = $this->entity;

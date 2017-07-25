@@ -7,8 +7,8 @@
 namespace Component\Acl\Factory;
 
 use Dibi;
-use Nette\Application\UI\Form;
-use Drago\Application\UI;
+use Drago\Application;
+use Nette\Application\UI;
 
 use Component\Acl\Entity;
 use Component\Acl\Repository;
@@ -20,9 +20,9 @@ use Component\Acl\Repository;
 class Resources
 {
 	/**
-	 * @var UI\Forms
+	 * @var Application\UI\Factory
 	 */
-	private $forms;
+	private $factory;
 
 	/**
 	 * @var Entity\Resources
@@ -30,25 +30,22 @@ class Resources
 	private $entity;
 
 	public function __construct(
-		UI\Forms $forms,
+		Application\UI\Factory $factory,
 		Entity\Resources $entity)
 	{
-		$this->forms  = $forms;
-		$this->entity = $entity;
+		$this->factory = $factory;
+		$this->entity  = $entity;
 	}
 
-	/**
-	 * @return Forms
-	 */
 	public function create(Repository\Resources $resources)
 	{
-		$form = $this->forms->create();
+		$form = $this->factory->create();
 		$form->addText('name', 'Název:')
 			->setRequired();
 
 		$form->addHidden('id');
 		$form->addSubmit('send', 'Přidat');
-		$form->onSuccess[] = function (Form $form, $values) use ($resources) {
+		$form->onSuccess[] = function (UI\Form $form, $values) use ($resources) {
 			try {
 
 				$entity = $this->entity;
