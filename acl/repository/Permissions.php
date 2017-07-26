@@ -8,7 +8,8 @@ namespace Component\Acl\Repository;
 
 use Drago, Dibi;
 use Drago\Database\Iterator;
-use Component\Acl\Entity;
+
+use Component\Acl;
 
 /**
  * Permissions repository.
@@ -21,19 +22,6 @@ class Permissions extends Drago\Database\Connection
 	 * @var string
 	 */
 	private $table = ':prefix:permissions';
-
-	/**
-	 * @var Entity\Permissions
-	 */
-	private $entity;
-
-	public function __construct(
-		Dibi\Connection $db,
-		Entity\Permissions $entity)
-	{
-		parent::__construct($db);
-		$this->entity = $entity;
-	}
 
 	/**
 	 * Returned all records.
@@ -81,9 +69,8 @@ class Permissions extends Drago\Database\Connection
 	 * @param mixed
 	 * @return void
 	 */
-	public function save(Entity\Permissions $entity)
+	public function save(Acl\Entity\Permissions $entity)
 	{
-		$entity = $this->entity;
 		if (!$entity->getId()) {
 			return $this->db
 				->insert($this->table, Iterator::set($entity))

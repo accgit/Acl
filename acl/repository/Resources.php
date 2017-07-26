@@ -8,7 +8,8 @@ namespace Component\Acl\Repository;
 
 use Drago, Dibi;
 use Drago\Database\Iterator;
-use Component\Acl\Entity;
+
+use Component\Acl;
 
 /**
  * Resources repository.
@@ -21,19 +22,6 @@ class Resources extends Drago\Database\Connection
 	 * @var string
 	 */
 	private $table = ':prefix:resources';
-
-	/**
-	 * @var Entity\Resources
-	 */
-	private $entity;
-
-	public function __construct(
-		Dibi\Connection $db,
-		Entity\Resources $entity)
-	{
-		parent::__construct($db);
-		$this->entity = $entity;
-	}
 
 	/**
 	 * Returned all records.
@@ -77,9 +65,8 @@ class Resources extends Drago\Database\Connection
 	 * @param mixed
 	 * @return void
 	 */
-	public function save(Entity\Resources $entity)
+	public function save(Acl\Entity\Resources $entity)
 	{
-		$entity = $this->entity;
 		if (!$entity->getId()) {
 			return $this->db
 				->insert($this->table, Iterator::set($entity))

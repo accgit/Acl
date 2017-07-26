@@ -8,7 +8,8 @@ namespace Component\Acl\Repository;
 
 use Drago, Dibi, Exception;
 use Drago\Database\Iterator;
-use Component\Acl\Entity;
+
+use Component\Acl;
 
 /**
  * Roles repository.
@@ -21,19 +22,6 @@ class Roles extends Drago\Database\Connection
 	 * @var string
 	 */
 	private $table = ':prefix:roles';
-
-	/**
-	 * @var Entity\Roles
-	 */
-	private $entity;
-
-	public function __construct(
-		Dibi\Connection $db,
-		Entity\Roles $entity)
-	{
-		parent::__construct($db);
-		$this->entity = $entity;
-	}
 
 	/**
 	 * Returned all records.
@@ -82,10 +70,10 @@ class Roles extends Drago\Database\Connection
 	 */
 	public function delete($id)
 	{
-		return $this->db
-			->delete($this->table)
-			->where('id = ?', $id)
-			->execute();
+		$row = $this->find($id);
+		if ($row->name === Acl\Authorizator::ROLE_GUEST) {
+
+		}
 	}
 
 	/**
@@ -93,9 +81,8 @@ class Roles extends Drago\Database\Connection
 	 * @param mixed
 	 * @return void
 	 */
-	public function save(Entity\Roles $entity)
+	public function save(Acl\Entity\Roles $entity)
 	{
-		$entity = $this->entity;
 		if (!$entity->getId()) {
 			return $this->db
 				->insert($this->table, Iterator::set($entity))
