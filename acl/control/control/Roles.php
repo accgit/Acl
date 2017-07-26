@@ -41,8 +41,11 @@ class Roles extends UI\Control
 	{
 		$roles = [];
 		foreach ($this->roles->all() as $role) {
-			$parent  = $this->roles->find($role->parent);
-			$role->parent = $parent['name'];
+			$roleParent = $role->parent;
+			if ($roleParent > 0) {
+				$roleParent = $this->roles->find($roleParent);
+			}
+			$role->parent = $roleParent['name'];
 			$role->parent = $role->parent === 0 ? NULL : $role->parent;
 			$roles[] = $role;
 		}
@@ -71,12 +74,17 @@ class Roles extends UI\Control
 	 */
 	public function handleEdit($id = 0)
 	{
-		$data = $this->roles->find($id);
-		$form = $this['roles'];
-		$form['send']->caption = 'Aktualizovat';
-		if ($data) {
-			$data->parent  = $data->parent === 0 ? NULL : $data->parent;
+		try {
+			$data = $this->roles->find($id);
+			$form = $this['roles'];
+			$form['send']->caption = 'Aktualizovat';
+			$data->parent = $data->parent === 0 ? NULL : $data->parent;
 			$form->setDefaults($data);
+
+		} catch (Exception $e) {
+			if ($e->getCode() === 1) {
+				$this->flashMessage('Je nám líto, ale záznam nebyl nalezen.', 'error');
+			}
 		}
 	}
 

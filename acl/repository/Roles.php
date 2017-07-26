@@ -6,7 +6,7 @@
  */
 namespace Component\Acl\Repository;
 
-use Drago, Dibi, Exception;
+use Drago, Exception;
 use Drago\Database\Iterator;
 
 use Component\Acl;
@@ -17,6 +17,10 @@ use Component\Acl;
  */
 class Roles extends Drago\Database\Connection
 {
+	// Exceptions errors.
+	const
+		ROLE_NOT_FOUND = 1;
+
 	/**
 	 * Database table.
 	 * @var string
@@ -41,9 +45,11 @@ class Roles extends Drago\Database\Connection
 	 */
 	public function find($id)
 	{
-		return $this->all()
-			->where('id = ?', $id)
-			->fetch();
+		$row = $this->all()->where('id = ?', $id)->fetch();
+		if (!$row) {
+			throw new Exception('Sorry, but the record was not found.', self::ROLE_NOT_FOUND);
+		}
+		return $row;
 	}
 
 	/**
