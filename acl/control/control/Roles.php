@@ -33,7 +33,7 @@ class Roles extends UI\Control
 		Factory\Roles $factory)
 	{
 		parent::__construct();
-		$this->roles   = $roles;
+		$this->roles = $roles;
 		$this->factory = $factory;
 	}
 
@@ -94,10 +94,10 @@ class Roles extends UI\Control
 				}
 
 			} catch (Exception $e) {
-				if ($e->getCode() == 1451) {
+				if ($e->getCode() === 1451) {
 					$this->flashMessage('Litujeme, ale aktuální roli nelze vymazat, nejprve vymažte záznamy, které se vážou na roli.', 'error');
 
-				} elseif($e->getCode() == 1) {
+				} elseif($e->getCode() === 1) {
 					$this->flashMessage('Litujeme, ale aktuální roli nelze vymazat, nejprve vymažte role, které ji dědí.', 'error');
 				}
 			}

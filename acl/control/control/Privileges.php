@@ -84,7 +84,7 @@ class Privileges extends UI\Control
 				$this->flashMessage('Akce byla úspěšně vymazána.', 'info');
 
 			} catch (Exception $e) {
-				if ($e->getCode() == 1451) {
+				if ($e->getCode() === 1451) {
 					$this->flashMessage('Litujeme, ale aktuální akci nelze vymazat, nejprve vymažte záznamy, které se vážou na akci.', 'error');
 				}
 			}

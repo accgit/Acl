@@ -34,7 +34,7 @@ class Resources extends UI\Control
 	{
 		parent::__construct();
 		$this->resources = $resources;
-		$this->factory   = $factory;
+		$this->factory = $factory;
 	}
 
 	public function render()
@@ -84,7 +84,7 @@ class Resources extends UI\Control
 				$this->flashMessage('Zdroj byl úspěšně vymazán.', 'info');
 
 			} catch (Exception $e) {
-				if ($e->getCode() == 1451) {
+				if ($e->getCode() === 1451) {
 					$this->flashMessage('Litujeme, ale aktuální zdroj nelze vymazat, nejprve vymažte záznamy, které se vážou na zdroj.', 'error');
 				}
 			}
