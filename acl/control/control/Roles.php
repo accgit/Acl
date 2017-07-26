@@ -93,21 +93,16 @@ class Roles extends UI\Control
 	 */
 	public function handleDelete($id = 0)
 	{
-		$row = $this->roles->find($id);
-		if ($row) {
-			try {
-				if (!$this->roles->findParent($row->id)) {
-					$this->roles->delete($id);
-					$this->flashMessage('Role byla úspěšně vymazána.', 'info');
-				}
+		try {
+			$this->roles->delete($id);
+			$this->flashMessage('Role byla úspěšně vymazána.', 'info');
 
-			} catch (Exception $e) {
-				if ($e->getCode() === 1451) {
-					$this->flashMessage('Litujeme, ale aktuální roli nelze vymazat, nejprve vymažte záznamy, které se vážou na roli.', 'error');
+		} catch (Exception $e) {
+			if ($e->getCode() === 1451) {
+				$this->flashMessage('Litujeme, ale aktuální roli nelze vymazat, nejprve vymažte záznamy, které se vážou na roli.', 'error');
 
-				} elseif($e->getCode() === 1) {
-					$this->flashMessage('Litujeme, ale aktuální roli nelze vymazat, nejprve vymažte role, které ji dědí.', 'error');
-				}
+			} elseif($e->getCode() === 1) {
+				$this->flashMessage('Litujeme, ale aktuální roli nelze vymazat, nejprve vymažte role, které ji dědí.', 'error');
 			}
 		}
 		$this->redirect('this');
