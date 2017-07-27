@@ -33,7 +33,7 @@ CREATE TABLE `roles` (
 INSERT INTO `roles` (`id`, `name`, `parent`) VALUES
 (NULL, 'guest',  0),
 (NULL, 'member', 1),
-(NULL, 'admin',  1);
+(NULL, 'admin',  2);
 
 CREATE TABLE `permissions` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
