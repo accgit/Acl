@@ -17,6 +17,10 @@ use Component\Acl;
  */
 class Resources extends Drago\Database\Connection
 {
+    	// Exceptions errors.
+	const
+		ROLE_NOT_FOUND = 1;
+
 	/**
 	 * Database table.
 	 * @var string
@@ -42,9 +46,14 @@ class Resources extends Drago\Database\Connection
 	 */
 	public function find($id)
 	{
-		return $this->all()
+		$row = $this->all()
 			->where('id = ?', $id)
 			->fetch();
+
+		if (!$row) {
+			throw new Exception('Sorry, but the record was not found.', self::ROLE_NOT_FOUND);
+		}
+		return $row;
 	}
 
 	/**

@@ -17,6 +17,10 @@ use Component\Acl;
  */
 class Permissions extends Drago\Database\Connection
 {
+        // Exceptions errors.
+	const
+		ROLE_NOT_FOUND = 1;
+
 	/**
 	 * Database table.
 	 * @var string
@@ -44,11 +48,16 @@ class Permissions extends Drago\Database\Connection
 	 */
 	public function find($id)
 	{
-		return $this->db
+		$row = $this->db
 			->select('*')
 			->from($this->table)
 			->where('id = ?', $id)
 			->fetch();
+
+		if (!$row) {
+			throw new Exception('Sorry, but the record was not found.', self::ROLE_NOT_FOUND);
+		}
+		return $row;
 	}
 
 	/**

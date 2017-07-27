@@ -45,28 +45,14 @@ class Roles extends Drago\Database\Connection
 	 */
 	public function find($id)
 	{
-		$row = $this->all()->where('id = ?', $id)->fetch();
+		$row = $this->all()
+			->where('id = ?', $id)
+			->fetch();
+
 		if (!$row) {
 			throw new Exception('Sorry, but the record was not found.', self::ROLE_NOT_FOUND);
 		}
 		return $row;
-	}
-
-	/**
-	 * Find exist parent in database.
-	 * @param int
-	 * @return bool
-	 */
-	public function findParent($id)
-	{
-		$parent = $this->all()
-			->where('parent = ?', $id)
-			->fetch() ? TRUE : FALSE;
-
-		if ($parent) {
-			throw new Exception('The record can not be deleted, you must first delete the records that are associated with it.', 1);
-		}
-		return $parent;
 	}
 
 	/**
@@ -77,7 +63,7 @@ class Roles extends Drago\Database\Connection
 	public function delete($id)
 	{
 		$row = $this->find($id);
-		if ($row->name === Acl\Authorizator::ROLE_GUEST) {
+		if ($row->name === Acl\Authorizator::ROLE_GUEST or $row->name === Acl\Authorizator::ROLE_MEMBER) {
 
 		}
 	}
