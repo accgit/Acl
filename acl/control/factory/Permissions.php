@@ -94,7 +94,6 @@ class Permissions
 
 			} catch (Dibi\Exception $e) {
 				\Tracy\Debugger::barDump($e);
-				return;
 			}
 		};
 		return $form;

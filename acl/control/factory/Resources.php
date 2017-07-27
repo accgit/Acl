@@ -56,7 +56,6 @@ class Resources
 				if ($e->getCode() === 1062) {
 					$form->addError('Tento zdroj již existuje, zvolte si prosím jiný.');
 				}
-				return;
 			}
 		};
 		return $form;
