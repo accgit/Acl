@@ -24,10 +24,10 @@
 	</tr>
 	{foreach $roles as $row}
 	<tr>
-		<td>{$row->name}</td>
-		<td>{$row->parent}</td>
-		<td style="width: 8%;"><a href="{link delete!, $row->id}" title="Smazat">&Cross;</a></td>
-		<td style="width: 8%;"><a href="{link edit!, $row->id}" title="Upravit">&dtrif;</a></td>
+		<td style="width: 43%;">{$row->name}</td>
+		<td style="width: 43%;">{$row->parent}</td>
+		<td style="width: 7%;"><a href="{link delete!, $row->id}" title="Smazat">&Cross;</a></td>
+		<td style="width: 7%;"><a href="{link edit!, $row->id}" title="Upravit">&dtrif;</a></td>
 	</tr>
 	{/foreach}
 </table>

@@ -37,11 +37,11 @@
 		{foreach $permissions as $row}
 		{if $row->role == $role->name}
 		<tr>
-			<td>{$row->resource}</td>
-			<td>{$row->privilege}</td>
-			<td n:class="$row->allowed == 'yes' ? 'bull allowed' : 'bull deny'">&bull;</td>
-			<td><a n:href="delete!, $row->id" title="Smazat">&Cross;</a></td>
-			<td><a n:href="edit!, $row->id" title="Upravit">&dtrif;</a></td>
+			<td style="width: 33%;">{$row->resource}</td>
+			<td style="width: 33%;">{$row->privilege}</td>
+			<td style="width: 20%;" n:class="$row->allowed == 'yes' ? 'bull allowed' : 'bull deny'">&bull;</td>
+			<td style="width: 7%;"><a n:href="delete!, $row->id" title="Smazat">&Cross;</a></td>
+			<td style="width: 7%;"><a n:href="edit!, $row->id" title="Upravit">&dtrif;</a></td>
 		</tr>
 		{/if}
 		{/foreach}
@@ -49,4 +49,5 @@
 	{/if}
 	{/foreach}
 {/foreach}
+
 {/if}
