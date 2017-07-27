@@ -63,7 +63,7 @@ class Roles
 				$roles->save($entity);
 
 			} catch (Dibi\Exception $e) {
-				if ($e->getCode() == 1062) {
+				if ($e->getCode() === 1062) {
 					$form->addError('Tato role již existuje, zvolte si prosím jinou.', 'error');
 				}
 				return;

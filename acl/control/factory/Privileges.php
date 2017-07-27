@@ -54,7 +54,7 @@ class Privileges
 				$privileges->save($entity);
 
 			} catch (Dibi\Exception $e) {
-				if ($e->getCode() == 1062) {
+				if ($e->getCode() === 1062) {
 					$form->addError('Tento název akce již existuje, zvolte si prosím jiný.', 'error');
 				}
 				return;
