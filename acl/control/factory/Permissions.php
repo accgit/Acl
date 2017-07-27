@@ -84,7 +84,6 @@ class Permissions
 		$form->addSubmit('send', 'Přidat');
 		$form->onSuccess[] = function (UI\Form $form, $values) use ($permissions)  {
 			try {
-
 				$entity = $this->entity;
 				$entity->setId($values->id);
 				$entity->role = $values->role;

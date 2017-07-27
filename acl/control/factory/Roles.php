@@ -55,7 +55,6 @@ class Roles
 		$form->addSubmit('send', 'Přidat');
 		$form->onSuccess[] = function (UI\Form $form, $values) use ($roles)  {
 			try {
-
 				$entity = $this->entity;
 				$entity->setId($values->id);
 				$entity->name = $values->name;

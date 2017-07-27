@@ -47,7 +47,6 @@ class Resources
 		$form->addSubmit('send', 'Přidat');
 		$form->onSuccess[] = function (UI\Form $form, $values) use ($resources) {
 			try {
-
 				$entity = $this->entity;
 				$entity->setId($values->id);
 				$entity->name = $values->name;
