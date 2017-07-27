@@ -19,7 +19,7 @@ class Permissions extends Drago\Database\Connection
 {
         // Exceptions errors.
 	const
-		ROLE_NOT_FOUND = 1;
+		RECORD_NOT_FOUND = 1;
 
 	/**
 	 * Database table.
@@ -55,7 +55,7 @@ class Permissions extends Drago\Database\Connection
 			->fetch();
 
 		if (!$row) {
-			throw new Exception('Sorry, but the record was not found.', self::ROLE_NOT_FOUND);
+			throw new Exception('Sorry, but the record was not found.', self::RECORD_NOT_FOUND);
 		}
 		return $row;
 	}

@@ -83,7 +83,7 @@ class Roles extends UI\Control
 
 		} catch (Exception $e) {
 			if ($e->getCode() === 1) {
-				$this->flashMessage('Je nám líto, ale záznam nebyl nalezen.', 'error');
+				$this->flashMessage('Litujeme, ale záznam nebyl nalezen.', 'error');
 			}
 		}
 	}
@@ -94,15 +94,23 @@ class Roles extends UI\Control
 	public function handleDelete($id = 0)
 	{
 		try {
-			$this->roles->delete($id);
-			$this->flashMessage('Role byla úspěšně vymazána.', 'info');
+			if (!$this->roles->findParent($id)) {
+				$this->roles->delete($id);
+				$this->flashMessage('Role byla úspěšně vymazána.', 'info');
+			}
 
 		} catch (Exception $e) {
-			if ($e->getCode() === 1451) {
-				$this->flashMessage('Litujeme, ale aktuální roli nelze vymazat, nejprve vymažte záznamy, které se vážou na roli.', 'error');
+			if ($e->getCode() === 1) {
+				$this->flashMessage('Litujeme, ale záznam nebyl nalezen.', 'error');
 
-			} elseif($e->getCode() === 1) {
-				$this->flashMessage('Litujeme, ale aktuální roli nelze vymazat, nejprve vymažte role, které ji dědí.', 'error');
+			} elseif ($e->getCode() === 2) {
+				$this->flashMessage('Litujeme, ale záznam nelze vymazat, nejprve vymažte role, které ji dědí.', 'error');
+
+			} elseif ($e->getCode() === 3) {
+				$this->flashMessage('Litujeme, ale záznam není povoleno smazat.', 'error');
+
+			} elseif ($e->getCode() === 1451) {
+				$this->flashMessage('Litujeme, ale záznam nelze smazat, nejprve vymažte nastavené oprávnění, které se váže na tento záznam.', 'error');
 			}
 		}
 		$this->redirect('this');
