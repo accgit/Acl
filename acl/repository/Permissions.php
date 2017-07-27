@@ -6,7 +6,7 @@
  */
 namespace Component\Acl\Repository;
 
-use Drago;
+use Drago, Exception;
 use Drago\Database\Iterator;
 
 use Component\Acl;
