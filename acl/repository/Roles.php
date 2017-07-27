@@ -21,7 +21,8 @@ class Roles extends Drago\Database\Connection
 	const
 		RECORD_NOT_FOUND   = 1,
 		PARENT_ROLE_EXIST  = 2,
-		NOT_ALLOWED_DELETE = 3;
+		NOT_ALLOWED_DELETE = 3,
+		INVALID_ROLE_NAME  = 4;
 
 	/**
 	 * Database table.
@@ -99,6 +100,9 @@ class Roles extends Drago\Database\Connection
 	public function save(Acl\Entity\Roles $entity)
 	{
 		if (!$entity->getId()) {
+			if ($entity->name === Acl\Authorizator::ROLE_ADMIN) {
+				throw new Exception('Invalid role name.', self::INVALID_ROLE_NAME);
+			}
 			return $this->db
 				->insert($this->table, Iterator::set($entity))
 				->execute();

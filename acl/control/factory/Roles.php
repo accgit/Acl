@@ -6,7 +6,7 @@
  */
 namespace Component\Acl\Factory;
 
-use Dibi;
+use Exception;
 use Drago\Application;
 use Nette\Application\UI;
 
@@ -61,11 +61,13 @@ class Roles
 				$entity->parent = $values->parent == NULL ? 0 : $values->parent;
 				$roles->save($entity);
 
-			} catch (Dibi\Exception $e) {
-				if ($e->getCode() === 1062) {
+			} catch (Exception $e) {
+				if ($e->getCode() === 4) {
+					$form->addError('Název role není povolený, zvolte si prosím jiný.');
+
+				} elseif($e->getCode() === 1062) {
 					$form->addError('Tato role již existuje, zvolte si prosím jinou.');
 				}
-				return;
 			}
 		};
 		return $form;
