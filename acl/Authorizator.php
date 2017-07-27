@@ -70,8 +70,11 @@ class Authorizator
 
 			// Add roles.
 			foreach ($this->roles->all() as $role) {
-				$parent = $this->roles->find($role->parent);
-				$role->parent = $parent['name'];
+				$roleParent = $role->parent;
+				if ($roleParent > 0) {
+					$roleParent = $this->roles->find($roleParent);
+				}
+				$role->parent = $roleParent['name'];
 				$acl->addRole($role->name, $role->parent === 0 ? NULL : $role->parent);
 			}
 
@@ -86,6 +89,7 @@ class Authorizator
 			}
 
 			// Admin role that can do everything.
+			$acl->addRole(self::ROLE_ADMIN);
 			$acl->allow(self::ROLE_ADMIN, Security\Permission::ALL, Security\Permission::ALL);
 
 			// Save permissions to cache.
