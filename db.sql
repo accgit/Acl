@@ -19,7 +19,8 @@ CREATE TABLE `resources` (
 
 INSERT INTO `resources` (`id`, `name`) VALUES
 (NULL, 'Web:Web'),
-(NULL, 'Web:Login');
+(NULL, 'Web:Login'),
+(NULL, 'Admin:Admin');
 
 CREATE TABLE `roles` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
@@ -31,7 +32,8 @@ CREATE TABLE `roles` (
 
 INSERT INTO `roles` (`id`, `name`, `parent`) VALUES
 (NULL, 'guest',  0),
-(NULL, 'member', 1);
+(NULL, 'member', 1),
+(NULL, 'admin',  1);
 
 CREATE TABLE `permissions` (
   `id` int(11) NOT NULL AUTO_INCREMENT,

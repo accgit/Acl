@@ -89,7 +89,6 @@ class Authorizator
 			}
 
 			// Admin role that can do everything.
-			$acl->addRole(self::ROLE_ADMIN);
 			$acl->allow(self::ROLE_ADMIN, Security\Permission::ALL, Security\Permission::ALL);
 
 			// Save permissions to cache.
