@@ -55,7 +55,7 @@ class Resources
 
 			} catch (Dibi\Exception $e) {
 				if ($e->getCode() === 1062) {
-					$form->addError('Tento zdroj již existuje, zvolte si prosím jiný.', 'error');
+					$form->addError('Tento zdroj již existuje, zvolte si prosím jiný.');
 				}
 				return;
 			}

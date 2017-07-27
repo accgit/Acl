@@ -64,7 +64,7 @@ class Roles
 
 			} catch (Dibi\Exception $e) {
 				if ($e->getCode() === 1062) {
-					$form->addError('Tato role již existuje, zvolte si prosím jinou.', 'error');
+					$form->addError('Tato role již existuje, zvolte si prosím jinou.');
 				}
 				return;
 			}
