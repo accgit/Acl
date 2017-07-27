@@ -64,11 +64,16 @@ class Privileges extends UI\Control
 	 */
 	public function handleEdit($id = 0)
 	{
-		$data = $this->privileges->find($id);
-		$form = $this['privileges'];
-		$form['send']->caption = 'Aktualizovat';
-		if ($data) {
+		try {
+			$data = $this->privileges->find($id);
+			$form = $this['privileges'];
+			$form['send']->caption = 'Aktualizovat';
 			$form->setDefaults($data);
+
+		} catch (Exception $e) {
+			if ($e->getCode() === 1) {
+				$this->flashMessage('Je nám líto, ale záznam nebyl nalezen.', 'error');
+			}
 		}
 	}
 

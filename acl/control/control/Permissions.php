@@ -86,11 +86,16 @@ class Permissions extends UI\Control
 	 */
 	public function handleEdit($id = 0)
 	{
-		$data = $this->permissions->find($id);
-		$form = $this['permissions'];
-		$form['send']->caption = 'Aktualizovat';
-		if ($data) {
+		try {
+			$data = $this->permissions->find($id);
+			$form = $this['permissions'];
+			$form['send']->caption = 'Aktualizovat';
 			$form->setDefaults($data);
+
+		} catch (Exception $e) {
+			if ($e->getCode() === 1) {
+				$this->flashMessage('Je nám líto, ale záznam nebyl nalezen.', 'error');
+			}
 		}
 	}
 
