@@ -19,8 +19,7 @@ CREATE TABLE `resources` (
 
 INSERT INTO `resources` (`id`, `name`) VALUES
 (NULL, 'Web:Web'),
-(NULL, 'Web:Login'),
-(NULL, 'Admin:Admin');
+(NULL, 'Web:Login');
 
 CREATE TABLE `roles` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
