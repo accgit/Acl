@@ -57,7 +57,7 @@ class Authorizator
 		$this->caches = $caches;
 		$this->roles  = $roles;
 		$this->permissions = $permissions;
-		$this->resources   = $resources;
+		$this->resources = $resources;
 	}
 
 	/**
@@ -70,11 +70,11 @@ class Authorizator
 
 			// Add roles.
 			foreach ($this->roles->all() as $role) {
-				$roleParent = $role->parent;
-				if ($roleParent > 0) {
-					$roleParent = $this->roles->find($roleParent);
+				$parent = $role->parent;
+				if ($parent > 0) {
+					$parent = $this->roles->find($parent);
 				}
-				$role->parent = $roleParent['name'];
+				$role->parent = $parent['name'];
 				$acl->addRole($role->name, $role->parent === 0 ? NULL : $role->parent);
 			}
 

@@ -44,7 +44,7 @@ class Acl extends UI\Control
 	{
 		parent::__construct();
 		$this->roles = $roles;
-		$this->resources   = $resources;
+		$this->resources = $resources;
 		$this->privileges  = $privileges;
 		$this->permissions = $permissions;
 	}

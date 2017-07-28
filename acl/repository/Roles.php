@@ -59,7 +59,7 @@ class Roles extends Drago\Database\Connection
 	}
 
 	/**
-	 * Find exist parent in database.
+	 * Find inherited role parent.
 	 * @param int
 	 * @return bool
 	 */
