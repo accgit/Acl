@@ -83,7 +83,7 @@ class Roles extends Drago\Database\Connection
 	public function delete($id)
 	{
 		$row = $this->find($id);
-		if ($row->name === Acl\Authorizator::ROLE_GUEST or $row->name === Acl\Authorizator::ROLE_MEMBER) {
+		if ($row->name === Acl\Authorizator::ROLE_GUEST or $row->name === Acl\Authorizator::ROLE_MEMBER or $row->name === Acl\Authorizator::ROLE_ADMIN) {
 			throw new Exception('Sorry, this role is not allowed to be deleted.', self::NOT_ALLOWED_DELETE);
 		}
 		return $this->db
