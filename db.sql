@@ -1,82 +1,82 @@
 -- Adminer 4.2.5 MySQL dump
 
-CREATE TABLE `privileges` (
-  `id` int(11) NOT NULL AUTO_INCREMENT,
-  `name` varchar(40) NOT NULL,
+CREATE TABLE `acl` (
+  `id` int(11) unsigned NOT NULL AUTO_INCREMENT,
+  `roleId` int(10) unsigned NOT NULL,
+  `userId` int(11) unsigned NOT NULL,
   PRIMARY KEY (`id`),
-  UNIQUE KEY `name` (`name`)
+  KEY `user` (`userId`),
+  KEY `role` (`roleId`),
+  CONSTRAINT `acl_ibfk_1` FOREIGN KEY (`userId`) REFERENCES `users` (`userId`),
+  CONSTRAINT `acl_ibfk_2` FOREIGN KEY (`roleId`) REFERENCES `roles` (`roleId`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
-INSERT INTO `privileges` (`id`, `name`) VALUES
-(NULL, 'default');
-
-CREATE TABLE `resources` (
-  `id` int(11) NOT NULL AUTO_INCREMENT,
-  `name` varchar(40) NOT NULL,
-  PRIMARY KEY (`id`),
-  UNIQUE KEY `name` (`name`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
-
-INSERT INTO `resources` (`id`, `name`) VALUES
-(NULL, 'Web:Web'),
-(NULL, 'Web:Login'),
-(NULL, 'Admin:Admin');
-
-CREATE TABLE `roles` (
-  `id` int(11) NOT NULL AUTO_INCREMENT,
-  `name` varchar(40) NOT NULL,
-  `parent` int(11) NOT NULL,
-  PRIMARY KEY (`id`),
-  UNIQUE KEY `name` (`name`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
-
-INSERT INTO `roles` (`id`, `name`, `parent`) VALUES
-(NULL, 'guest',  0),
-(NULL, 'member', 1),
-(NULL, 'admin',  2);
+INSERT INTO `acl` (`id`, `roleId`, `userId`) VALUES
+(1,	3,	1);
 
 CREATE TABLE `permissions` (
-  `id` int(11) NOT NULL AUTO_INCREMENT,
-  `role` int(11) NOT NULL,
-  `resource` int(11) NOT NULL,
-  `privilege` int(11) NOT NULL,
+  `id` int(11) unsigned NOT NULL AUTO_INCREMENT,
+  `roleId` int(10) unsigned NOT NULL,
+  `resourceId` int(11) unsigned NOT NULL,
+  `privilegeId` int(11) unsigned NOT NULL,
   `allowed` enum('no','yes') NOT NULL DEFAULT 'yes',
   PRIMARY KEY (`id`),
-  KEY `resource` (`resource`),
-  KEY `role` (`role`),
-  KEY `privilege` (`privilege`),
-  CONSTRAINT `permissions_ibfk_1` FOREIGN KEY (`resource`) REFERENCES `resources` (`id`),
-  CONSTRAINT `permissions_ibfk_2` FOREIGN KEY (`role`) REFERENCES `roles` (`id`),
-  CONSTRAINT `permissions_ibfk_3` FOREIGN KEY (`privilege`) REFERENCES `privileges` (`id`)
+  KEY `resource` (`resourceId`),
+  KEY `role` (`roleId`),
+  KEY `privilege` (`privilegeId`),
+  CONSTRAINT `permissions_ibfk_1` FOREIGN KEY (`resourceId`) REFERENCES `resources` (`resourceId`),
+  CONSTRAINT `permissions_ibfk_2` FOREIGN KEY (`roleId`) REFERENCES `roles` (`roleId`),
+  CONSTRAINT `permissions_ibfk_3` FOREIGN KEY (`privilegeId`) REFERENCES `privileges` (`privilegeId`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
-INSERT INTO `permissions` (`id`, `role`, `resource`, `privilege`, `allowed`) VALUES
-(NULL, 1, 1, 1, 'yes'),
-(NULL, 1, 2, 1, 'yes');
+INSERT INTO `permissions` (`id`, `roleId`, `resourceId`, `privilegeId`, `allowed`) VALUES
+(1,	1,	1,	1,	'yes'),
+(2,	1,	2,	1,	'yes');
+
+CREATE TABLE `privileges` (
+  `privilegeId` int(11) unsigned NOT NULL AUTO_INCREMENT,
+  `name` varchar(40) NOT NULL,
+  PRIMARY KEY (`privilegeId`),
+  UNIQUE KEY `name` (`name`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+INSERT INTO `privileges` (`privilegeId`, `name`) VALUES
+(1,	'default');
+
+CREATE TABLE `resources` (
+  `resourceId` int(11) unsigned NOT NULL AUTO_INCREMENT,
+  `name` varchar(40) NOT NULL,
+  PRIMARY KEY (`resourceId`),
+  UNIQUE KEY `name` (`name`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+INSERT INTO `resources` (`resourceId`, `name`) VALUES
+(3,	'Admin:Admin'),
+(2,	'Web:Login'),
+(1,	'Web:Web');
+
+CREATE TABLE `roles` (
+  `roleId` int(11) unsigned NOT NULL AUTO_INCREMENT,
+  `name` varchar(40) NOT NULL,
+  `parent` int(11) NOT NULL,
+  PRIMARY KEY (`roleId`),
+  UNIQUE KEY `name` (`name`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+INSERT INTO `roles` (`roleId`, `name`, `parent`) VALUES
+(1,	'guest',	0),
+(2,	'member',	1),
+(3,	'admin',	2);
 
 CREATE TABLE `users` (
-  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `userId` int(11) unsigned NOT NULL AUTO_INCREMENT,
   `realname` varchar(60) NOT NULL,
   `email` varchar(60) NOT NULL,
   `password` char(60) NOT NULL,
-  PRIMARY KEY (`id`)
+  PRIMARY KEY (`userId`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
-INSERT INTO `users` (`id`, `realname`, `email`, `password`) VALUES
-(NULL, 'Root', 'root@root.local', '$2y$10$N8V61Vhx8P4qAFcFE/ZSjuAmFtxHt28FZMShsb4ADYTHZTFdlM/Oi');
-
-CREATE TABLE `access` (
-  `id` int(11) NOT NULL AUTO_INCREMENT,
-  `role` int(11) NOT NULL,
-  `user` int(11) NOT NULL,
-  PRIMARY KEY (`id`),
-  KEY `user` (`user`),
-  KEY `role` (`role`),
-  CONSTRAINT `access_ibfk_1` FOREIGN KEY (`user`) REFERENCES `users` (`id`),
-  CONSTRAINT `access_ibfk_2` FOREIGN KEY (`role`) REFERENCES `roles` (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
-
-INSERT INTO `access` (`id`, `role`, `user`) VALUES
-(NULL, 3, 1);
+INSERT INTO `users` (`userId`, `realname`, `email`, `password`) VALUES
+(1,	'Root',	'root@root.local',	'$2y$10$N8V61Vhx8P4qAFcFE/ZSjuAmFtxHt28FZMShsb4ADYTHZTFdlM/Oi');
 
 -- 2017-05-23 05:29:29
