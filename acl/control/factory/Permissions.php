@@ -46,28 +46,28 @@ class Permissions
 		$form = $this->factory->create();
 		$rowsRoles = [];
 		foreach ($roles->all() as $role) {
-			$rowsRoles[$role->id] = $role->name;
+			$rowsRoles[$role->roleId] = $role->name;
 		}
 
-		$form->addSelect('role', 'Role:', $rowsRoles)
+		$form->addSelect('roleId', 'Role:', $rowsRoles)
 			->setPrompt(NULL)
 			->setRequired();
 
 		$rowsResource = [];
 		foreach ($resources->all() as $resource) {
-			$rowsResource[$resource->id] = $resource->name;
+			$rowsResource[$resource->resourceId] = $resource->name;
 		}
 
-		$form->addSelect('resource', 'Zdroj:', $rowsResource)
+		$form->addSelect('resourceId', 'Zdroj:', $rowsResource)
 			->setPrompt(NULL)
 			->setRequired();
 
 		$rowsPrivilege = [];
 		foreach ($privileges->all() as $privilege) {
-			$rowsPrivilege[$privilege->id] = $privilege->name;
+			$rowsPrivilege[$privilege->privilegeId] = $privilege->name;
 		}
 
-		$form->addSelect('privilege', 'Akce:', $rowsPrivilege)
+		$form->addSelect('privilegeId', 'Akce:', $rowsPrivilege)
 			->setPrompt(NULL)
 			->setRequired();
 
@@ -86,9 +86,9 @@ class Permissions
 			try {
 				$entity = $this->entity;
 				$entity->setId($values->id);
-				$entity->role = $values->role;
-				$entity->resource  = $values->resource;
-				$entity->privilege = $values->privilege;
+				$entity->roleId = $values->roleId;
+				$entity->resourceId  = $values->resourceId;
+				$entity->privilegeId = $values->privilegeId;
 				$entity->allowed = $values->allowed;
 				$permissions->save($entity);
 

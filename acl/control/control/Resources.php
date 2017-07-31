@@ -52,7 +52,7 @@ class Resources extends UI\Control
 	{
 		$factory = $this->factory->create($this->resources);
 		$factory->onSuccess[] = function ($form) {
-			$message = $form->values->id ? 'Aktualizace zdroje proběha v pořádku.' : 'Nový zdroj byl úspěšně vytvořen.';
+			$message = $form->values->resourceId ? 'Aktualizace zdroje proběha v pořádku.' : 'Nový zdroj byl úspěšně vytvořen.';
 			$this->flashMessage($message, 'success');
 			$this->redirect('this');
 		};

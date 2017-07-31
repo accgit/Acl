@@ -43,12 +43,12 @@ class Privileges
 		$form->addText('name', 'Název:')
 			->setRequired();
 
-		$form->addHidden('id');
+		$form->addHidden('privilegeId');
 		$form->addSubmit('send', 'Přidat');
 		$form->onSuccess[] = function (UI\Form $form, $values) use ($privileges) {
 			try {
 				$entity = $this->entity;
-				$entity->setId($values->id);
+				$entity->setId($values->privilegeId);
 				$entity->name = $values->name;
 				$privileges->save($entity);
 

@@ -36,7 +36,7 @@ class Resources extends Drago\Database\Connection
 		return $this->db
 			->select('*')
 			->from($this->table)
-			->orderBy('id asc');
+			->orderBy('resourceId asc');
 	}
 
 	/**
@@ -47,7 +47,7 @@ class Resources extends Drago\Database\Connection
 	public function find($id)
 	{
 		$row = $this->all()
-			->where('id = ?', $id)
+			->where('resourceId = ?', $id)
 			->fetch();
 
 		if (!$row) {
@@ -65,7 +65,7 @@ class Resources extends Drago\Database\Connection
 	{
 		return $this->db
 			->delete($this->table)
-			->where('id = ?', $id)
+			->where('resourceId = ?', $id)
 			->execute();
 	}
 
@@ -83,7 +83,7 @@ class Resources extends Drago\Database\Connection
 		} else {
 			return $this->db
 				->update($this->table, Iterator::set($entity))
-				->where('id = ?', $entity->getId())
+				->where('resourceId = ?', $entity->getId())
 				->execute();
 		}
 	}

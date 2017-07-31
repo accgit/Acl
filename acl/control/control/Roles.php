@@ -62,7 +62,7 @@ class Roles extends UI\Control
 	{
 		$factory = $this->factory->create($this->roles);
 		$factory->onSuccess[] = function ($form) {
-			$message = $form->values->id ? 'Aktualizace role proběha v pořádku.' : 'Nová role byla úspěšně vytvořená.';
+			$message = $form->values->roleId ? 'Aktualizace role proběha v pořádku.' : 'Nová role byla úspěšně vytvořená.';
 			$this->flashMessage($message, 'success');
 			$this->redirect('this');
 		};

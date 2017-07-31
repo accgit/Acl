@@ -20,8 +20,8 @@
 	{foreach $resources as $row}
 	<tr>
 		<td style="width: 86%;">{$row->name}</td>
-		<td style="width: 7%;"><a href="{link delete!, $row->id}" title="Smazat">&Cross;</a></td>
-		<td style="width: 7%;"><a href="{link edit!, $row->id}" title="Upravit">&dtrif;</a></td>
+		<td style="width: 7%;"><a href="{link delete!, $row->resourceId}" title="Smazat">&Cross;</a></td>
+		<td style="width: 7%;"><a href="{link edit!, $row->resourceId}" title="Upravit">&dtrif;</a></td>
 	</tr>
 	{/foreach}
 </table>

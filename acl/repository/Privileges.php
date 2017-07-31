@@ -46,7 +46,7 @@ class Privileges extends Drago\Database\Connection
 	public function find($id)
 	{
 		$row = $this->all()
-			->where('id = ?', $id)
+			->where('privilegeId = ?', $id)
 			->fetch();
 
 		if (!$row) {
@@ -64,7 +64,7 @@ class Privileges extends Drago\Database\Connection
 	{
 		return $this->db
 			->delete($this->table)
-			->where('id = ?', $id)
+			->where('privilegeId = ?', $id)
 			->execute();
 	}
 
@@ -82,7 +82,7 @@ class Privileges extends Drago\Database\Connection
 		} else {
 			return $this->db
 				->update($this->table, Iterator::set($entity))
-				->where('id = ?', $entity->getId())
+				->where('privilegeId = ?', $entity->getId())
 				->execute();
 		}
 	}

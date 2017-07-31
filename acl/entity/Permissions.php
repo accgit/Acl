@@ -14,19 +14,19 @@ use Drago\Database;
 class Permissions extends Database\Entity
 {
 	/**
-	 * @var string
+	 * @var int
 	 */
-	public $role;
+	public $roleId;
 
 	/**
-	 * @var string
+	 * @var int
 	 */
-	public $resource;
+	public $resourceId;
 
 	/**
-	 * @var string
+	 * @var int
 	 */
-	public $privilege;
+	public $privilegeId;
 
 	/**
 	 * @var string

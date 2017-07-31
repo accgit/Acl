@@ -52,7 +52,7 @@ class Privileges extends UI\Control
 	{
 		$factory = $this->factory->create($this->privileges);
 		$factory->onSuccess[] = function ($form) {
-			$message = $form->values->id ? 'Aktualizace akce proběha v pořádku.' : 'Nová akce byla úspěšně vytvořená.';
+			$message = $form->values->privilegeId ? 'Aktualizace akce proběha v pořádku.' : 'Nová akce byla úspěšně vytvořená.';
 			$this->flashMessage($message, 'success');
 			$this->redirect('this');
 		};

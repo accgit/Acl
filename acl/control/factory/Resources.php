@@ -43,12 +43,12 @@ class Resources
 		$form->addText('name', 'Název:')
 			->setRequired();
 
-		$form->addHidden('id');
+		$form->addHidden('resourceId');
 		$form->addSubmit('send', 'Přidat');
 		$form->onSuccess[] = function (UI\Form $form, $values) use ($resources) {
 			try {
 				$entity = $this->entity;
-				$entity->setId($values->id);
+				$entity->setId($values->resourceId);
 				$entity->name = $values->name;
 				$resources->save($entity);
 

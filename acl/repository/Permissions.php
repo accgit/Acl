@@ -36,9 +36,9 @@ class Permissions extends Drago\Database\Connection
 		return $this->db
 			->query(''
 				. 'SELECT a.id, a.allowed, r.name AS role, res.name AS resource, p.name AS privilege FROM :prefix:permissions AS a '
-				. 'LEFT JOIN :prefix:resources AS res ON a.resource = res.id '
-				. 'LEFT JOIN :prefix:privileges AS p ON a.privilege = p.id  '
-				. 'LEFT JOIN :prefix:roles AS r ON r.id = a.role');
+				. 'JOIN :prefix:resources AS res using (resourceId) '
+				. 'JOIN :prefix:privileges AS p using (privilegeId) '
+				. 'JOIN :prefix:roles AS r using (roleId)');
 	}
 
 	/**

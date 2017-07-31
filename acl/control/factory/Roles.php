@@ -45,18 +45,18 @@ class Roles
 
 		$rows = [];
 		foreach ($roles->all() as $role) {
-			$rows[$role->id] = $role->name;
+			$rows[$role->roleId] = $role->name;
 		}
 
 		$form->addSelect('parent', 'Převzít roli:', $rows)
 			->setPrompt(NULL);
 
-		$form->addHidden('id');
+		$form->addHidden('roleId');
 		$form->addSubmit('send', 'Přidat');
 		$form->onSuccess[] = function (UI\Form $form, $values) use ($roles)  {
 			try {
 				$entity = $this->entity;
-				$entity->setId($values->id);
+				$entity->setId($values->roleId);
 				$entity->name = $values->name;
 				$entity->parent = $values->parent == NULL ? 0 : $values->parent;
 				$roles->save($entity);
