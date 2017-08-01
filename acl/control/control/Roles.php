@@ -11,6 +11,7 @@ use Nette\Application\UI;
 
 use Component\Acl\Repository;
 use Component\Acl\Factory;
+use Component\Acl\Authorizator;
 
 /**
  * Roles control.
@@ -76,6 +77,10 @@ class Roles extends UI\Control
 	{
 		try {
 			$data = $this->roles->find($id);
+			if ($data->name === Authorizator::ROLE_GUEST or $data->name === Authorizator::ROLE_MEMBER or $data->name === Authorizator::ROLE_ADMIN) {
+				$this->flashMessage('Litujeme, ale tento záznam není povoleno editovat.', 'error');
+				$this->redirect('this');
+			}
 			$form = $this['roles'];
 			$form['send']->caption = 'Aktualizovat';
 			$data->parent = $data->parent === 0 ? NULL : $data->parent;
