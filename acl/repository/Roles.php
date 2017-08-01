@@ -10,7 +10,7 @@ use Drago, Exception;
 use Drago\Database\Iterator;
 
 use Component\Acl;
-use Component\Acl\Authorizator as Acl;
+use Component\Acl\Authorizator as Auth;
 
 /**
  * Roles repository.
@@ -84,7 +84,7 @@ class Roles extends Drago\Database\Connection
 	public function delete($id)
 	{
 		$row = $this->find($id);
-		if ($row->name === Acl::ROLE_GUEST or $row->name === Acl::ROLE_MEMBER or $row->name === Acl::ROLE_ADMIN) {
+		if ($row->name === Auth::ROLE_GUEST or $row->name === Auth::ROLE_MEMBER or $row->name === Auth::ROLE_ADMIN) {
 			throw new Exception('Sorry, this role is not allowed to be deleted.', self::NOT_ALLOWED_DELETE);
 		}
 		return $this->db
