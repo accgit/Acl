@@ -6,20 +6,18 @@
  */
 namespace Component\Acl\Repository;
 
-use Drago, Exception;
+use Exception;
 use Drago\Database\Iterator;
-
 use Component\Acl;
 
 /**
  * Permissions repository.
  * @author Zdeněk Papučík
  */
-class Permissions extends Drago\Database\Connection
+class Permissions extends BaseRepository
 {
         // Exceptions errors.
-	const
-		RECORD_NOT_FOUND = 1;
+	const RECORD_NOT_FOUND = 1;
 
 	/**
 	 * Database table.
@@ -44,7 +42,8 @@ class Permissions extends Drago\Database\Connection
 	/**
 	 * Returned record by id.
 	 * @param int
-	 * @return array
+	 * @return void
+	 * @throws Exception
 	 */
 	public function find($id)
 	{
@@ -67,28 +66,30 @@ class Permissions extends Drago\Database\Connection
 	 */
 	public function delete($id)
 	{
-		return $this->db
-			->delete($this->table)
-			->where('id = ?', $id)
-			->execute();
+		$row = $this->db->delete($this->table)->where('id = ?', $id)->execute();
+		$this->caches->removeCache(Acl\Authorizator::ACL_CACHE);
+		return $row;
 	}
 
 	/**
 	 * Insert or update record.
-	 * @param mixed
+	 * @param Acl\Entity\Permissions
 	 * @return void
 	 */
 	public function save(Acl\Entity\Permissions $entity)
 	{
 		if (!$entity->getId()) {
-			return $this->db
-				->insert($this->table, Iterator::set($entity))
-				->execute();
+			$row = $this->db->insert($this->table, Iterator::set($entity))->execute();
+			$this->caches->removeCache(Acl\Authorizator::ACL_CACHE);
+			return $row;
 		} else {
-			return $this->db
+			$row = $this->db
 				->update($this->table, Iterator::set($entity))
 				->where('id = ?', $entity->getId())
 				->execute();
+
+			$this->caches->removeCache(Acl\Authorizator::ACL_CACHE);
+			return $row;
 		}
 	}
 

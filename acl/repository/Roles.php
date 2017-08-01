@@ -6,7 +6,7 @@
  */
 namespace Component\Acl\Repository;
 
-use Drago, Exception;
+use Exception;
 use Drago\Database\Iterator;
 
 use Component\Acl;
@@ -16,7 +16,7 @@ use Component\Acl\Authorizator as Auth;
  * Roles repository.
  * @author Zdeněk Papučík
  */
-class Roles extends Drago\Database\Connection
+class Roles extends BaseRepository
 {
 	// Exceptions errors.
 	const
@@ -45,7 +45,8 @@ class Roles extends Drago\Database\Connection
 	/**
 	 * Returned record by id.
 	 * @param int
-	 * @return array
+	 * @return void
+	 * @throws Exception
 	 */
 	public function find($id)
 	{
@@ -62,7 +63,8 @@ class Roles extends Drago\Database\Connection
 	/**
 	 * Find inherited role parent.
 	 * @param int
-	 * @return bool
+	 * @return void
+	 * @throws Exception
 	 */
 	public function findParent($id)
 	{
@@ -80,6 +82,7 @@ class Roles extends Drago\Database\Connection
 	 * Delete record.
 	 * @param int
 	 * @return void
+	 * @throws Exception
 	 */
 	public function delete($id)
 	{
@@ -87,16 +90,16 @@ class Roles extends Drago\Database\Connection
 		if ($row->name === Auth::ROLE_GUEST or $row->name === Auth::ROLE_MEMBER or $row->name === Auth::ROLE_ADMIN) {
 			throw new Exception('Sorry, this role is not allowed to be deleted.', self::NOT_ALLOWED_DELETE);
 		}
-		return $this->db
-			->delete($this->table)
-			->where('roleId = ?', $id)
-			->execute();
+		$db  = $this->db->delete($this->table)->where('roleId = ?', $id)->execute();
+		$this->caches->removeCache(Auth::ACL_CACHE);
+		return $db;
 	}
 
 	/**
 	 * Insert or update record.
-	 * @param mixed
+	 * @param Acl\Entity\Roles
 	 * @return void
+	 * @throws Exception
 	 */
 	public function save(Acl\Entity\Roles $entity)
 	{
@@ -104,14 +107,18 @@ class Roles extends Drago\Database\Connection
 			if ($entity->name === Acl\Authorizator::ROLE_ADMIN) {
 				throw new Exception('Invalid role name.', self::INVALID_ROLE_NAME);
 			}
-			return $this->db
-				->insert($this->table, Iterator::set($entity))
-				->execute();
+			$db = $this->db->insert($this->table, Iterator::set($entity))->execute();
+			$this->caches->removeCache(Auth::ACL_CACHE);
+			return $db;
+
 		} else {
-			return $this->db
+			$db = $this->db
 				->update($this->table, Iterator::set($entity))
 				->where('roleId = ?', $entity->getId())
 				->execute();
+
+			$this->caches->removeCache(Auth::ACL_CACHE);
+			return $db;
 		}
 	}
 

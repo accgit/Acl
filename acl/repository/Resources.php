@@ -6,20 +6,18 @@
  */
 namespace Component\Acl\Repository;
 
-use Drago, Exception;
+use Exception;
 use Drago\Database\Iterator;
-
 use Component\Acl;
 
 /**
  * Resources repository.
  * @author Zdeněk Papučík
  */
-class Resources extends Drago\Database\Connection
+class Resources extends BaseRepository
 {
     	// Exceptions errors.
-	const
-		RECORD_NOT_FOUND = 1;
+	const RECORD_NOT_FOUND = 1;
 
 	/**
 	 * Database table.
@@ -42,7 +40,8 @@ class Resources extends Drago\Database\Connection
 	/**
 	 * Returned record by id.
 	 * @param int
-	 * @return array
+	 * @return void
+	 * @throws Exception
 	 */
 	public function find($id)
 	{
@@ -63,28 +62,30 @@ class Resources extends Drago\Database\Connection
 	 */
 	public function delete($id)
 	{
-		return $this->db
-			->delete($this->table)
-			->where('resourceId = ?', $id)
-			->execute();
+		$row = $this->db->delete($this->table)->where('resourceId = ?', $id)->execute();
+		$this->caches->removeCache(Acl\Authorizator::ACL_CACHE);
+		return $row;
 	}
 
 	/**
 	 * Insert or update records.
-	 * @param mixed
+	 * @param Acl\Entity\Resources
 	 * @return void
 	 */
 	public function save(Acl\Entity\Resources $entity)
 	{
 		if (!$entity->getId()) {
-			return $this->db
-				->insert($this->table, Iterator::set($entity))
-				->execute();
+			$row = $this->db->insert($this->table, Iterator::set($entity))->execute();
+			$this->caches->removeCache(Acl\Authorizator::ACL_CACHE);
+			return $row;
 		} else {
-			return $this->db
+			$row = $this->db
 				->update($this->table, Iterator::set($entity))
 				->where('resourceId = ?', $entity->getId())
 				->execute();
+
+			$this->caches->removeCache(Acl\Authorizator::ACL_CACHE);
+			return $row;
 		}
 	}
 

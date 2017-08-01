@@ -22,11 +22,8 @@ class Authorizator
 		ROLE_MEMBER = 'member',
 		ROLE_ADMIN  = 'admin';
 
-	/**
-	 * Key for cache.
-	 * @var string
-	 */
-	private $key = 'cache.permissions';
+	// Acl cache.
+	const ACL_CACHE = 'acl.cache';
 
 	/**
 	 * @var Repository\Roles;
@@ -66,7 +63,7 @@ class Authorizator
 	public function create()
 	{
 		$acl = new Security\Permission();
-		if (!$this->caches->isCacheExist($this->key)) {
+		if (!$this->caches->isCacheExist(self::ACL_CACHE)) {
 
 			// Add roles.
 			foreach ($this->roles->all() as $role) {
@@ -92,12 +89,12 @@ class Authorizator
 			$acl->allow(self::ROLE_ADMIN, Security\Permission::ALL, Security\Permission::ALL);
 
 			// Save permissions to cache.
-			$this->caches->setToCache($this->key, $acl);
+			$this->caches->setToCache(self::ACL_CACHE, $acl);
 		}
 
 		// Load permissions form cache.
-		if ($this->caches->isCacheExist($this->key)) {
-			$acl = $this->caches->getFromCache($this->key);
+		if ($this->caches->isCacheExist(self::ACL_CACHE)) {
+			$acl = $this->caches->getFromCache(self::ACL_CACHE);
 			return $acl;
 		}
 	}
