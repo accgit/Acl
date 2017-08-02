@@ -7,7 +7,7 @@
 namespace Component\Acl\Repository;
 
 use Exception;
-use Drago\Database\Iterator;
+use Drago\Database;
 use Component\Acl;
 
 /**
@@ -75,12 +75,12 @@ class Resources extends BaseRepository
 	public function save(Acl\Entity\Resources $entity)
 	{
 		if (!$entity->getId()) {
-			$row = $this->db->insert($this->table, Iterator::set($entity))->execute();
+			$row = $this->db->insert($this->table, Database\Iterator::set($entity))->execute();
 			$this->caches->removeCache(Acl\Authorizator::ACL_CACHE);
 			return $row;
 		} else {
 			$row = $this->db
-				->update($this->table, Iterator::set($entity))
+				->update($this->table, Database\Iterator::set($entity))
 				->where('resourceId = ?', $entity->getId())
 				->execute();
 

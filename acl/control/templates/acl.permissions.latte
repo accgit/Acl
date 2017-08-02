@@ -1,27 +1,20 @@
 
 {include '@acl.latte'}
-{form permissions}
-<ul class="errors" n:if="$form->hasErrors()">
-	<li n:foreach="$form->errors as $error">{$error}</li>
-</ul>
-<fieldset>
-	<legend>Nastavení oprávnění</legend>
-	{label roleId/}
-	{input roleId}
-
-	{label resourceId/}
-	{input resourceId}
-
-	{label privilegeId/}
-	{input privilegeId}
-
-	{label allowed/}
-	{input allowed}
-
-	{input send}
-</fieldset>
-{/form}
-
+<div class="wrapping">
+	{form permissions}
+		<ul class="errors" n:if="$form->hasErrors()">
+			<li n:foreach="$form->errors as $error">{$error}</li>
+		</ul>
+		<fieldset>
+			<legend>Nastavení oprávnění</legend>
+			{input roleId class      => 'full width'}
+			{input resourceId class  => 'full width'}
+			{input privilegeId class => 'full width'}
+			{input allowed class     => 'full width'}
+			{input send class        => 'button primary'}
+		</fieldset>
+	{/form}
+</div>
 {if count($permissions)}
 {foreach $permissions as $row}
 	{foreach $roles as $role}
@@ -32,22 +25,25 @@
 			<th>Zdroj</th>
 			<th>Akce</th>
 			<th>Přístup</th>
-			<th colspan="2">&nbsp;</th>
+			<th>&nbsp;</th>
 		</tr>
-		{foreach $permissions as $row}
-		{if $row->role == $role->name}
-		<tr>
-			<td style="width: 33%;">{$row->resource}</td>
-			<td style="width: 33%;">{$row->privilege}</td>
-			<td style="width: 20%;" n:class="$row->allowed == 'yes' ? 'bull allowed' : 'bull deny'">&bull;</td>
-			<td style="width: 7%;"><a n:href="delete!, $row->id" title="Smazat">&Cross;</a></td>
-			<td style="width: 7%;"><a n:href="edit!, $row->id" title="Upravit">&dtrif;</a></td>
+		<tr n:foreach="$permissions as $row" n:if="$row->role == $role->name">
+			<td style="width: 145px;">{$row->resource}</td>
+			<td style="width: 145px;">{$row->privilege}</td>
+			<td style="width: 80px;" class="permissions">
+				<i n:class="$row->allowed == 'yes' ? 'fa fa-check' : 'fa fa-times'" aria-hidden="true"></i>
+			</td>
+			<td style="width: 80px;">
+				<a n:href="edit!, $row->id" title="Upravit" class="action">
+					<i class="fa fa-pencil" aria-hidden="true"></i>
+				</a>
+				<a n:href="delete!, $row->id" title="Smazat" class="action">
+					<i class="fa fa-times" aria-hidden="true"></i>
+				</a>
+			</td>
 		</tr>
-		{/if}
-		{/foreach}
 	</table>
 	{/if}
 	{/foreach}
 {/foreach}
-
 {/if}

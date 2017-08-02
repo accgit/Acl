@@ -1,28 +1,31 @@
 
 {include '@acl.latte'}
-{form resources}
-<ul class="errors" n:if="$form->hasErrors()">
-	<li n:foreach="$form->errors as $error">{$error}</li>
-</ul>
-<fieldset>
-	<legend>Zdroje</legend>
-	{label name/}
-	{input name}
-	{input send}
-</fieldset>
-{/form}
-{if count($resources)}
-<table>
+<div class="wrapping">
+	{form resources}
+		<ul class="errors" n:if="$form->hasErrors()">
+			<li n:foreach="$form->errors as $error">{$error}</li>
+		</ul>
+		<fieldset>
+			<legend>Zdroje</legend>
+			{input name class => 'full width'}
+			{input send class => 'button primary'}
+		</fieldset>
+	{/form}
+</div>
+<table n:if="count($resources)">
 	<tr>
 		<th>Zdroje</th>
 		<th colspan="2">&nbsp;</th>
 	</tr>
-	{foreach $resources as $row}
-	<tr>
-		<td style="width: 86%;">{$row->name}</td>
-		<td style="width: 7%;"><a href="{link delete!, $row->resourceId}" title="Smazat">&Cross;</a></td>
-		<td style="width: 7%;"><a href="{link edit!, $row->resourceId}" title="Upravit">&dtrif;</a></td>
+	<tr n:foreach="$resources as $row" class="default">
+		<td style="width: 370px;">{$row->name}</td>
+		<td style="width: 80px;">
+			<a href="{link edit!, $row->resourceId}" title="Upravit" class="action">
+				<i class="fa fa-pencil" aria-hidden="true"></i>
+			</a>
+			<a href="{link delete!, $row->resourceId}" title="Smazat" class="action">
+				<i class="fa fa-times" aria-hidden="true"></i>
+			</a>
+		</td>
 	</tr>
-	{/foreach}
 </table>
-{/if}

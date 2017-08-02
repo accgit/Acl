@@ -7,10 +7,8 @@
 namespace Component\Acl\Repository;
 
 use Exception;
-use Drago\Database\Iterator;
-
+use Drago\Database;
 use Component\Acl;
-use Component\Acl\Authorizator as Auth;
 
 /**
  * Roles repository.
@@ -87,11 +85,11 @@ class Roles extends BaseRepository
 	public function delete($id)
 	{
 		$row = $this->find($id);
-		if ($row->name === Auth::ROLE_GUEST or $row->name === Auth::ROLE_MEMBER or $row->name === Auth::ROLE_ADMIN) {
+		if ($row->name === Acl\Authorizator::ROLE_GUEST or $row->name === Acl\Authorizator::ROLE_MEMBER or $row->name === Acl\Authorizator::ROLE_ADMIN) {
 			throw new Exception('Sorry, this role is not allowed to be deleted.', self::NOT_ALLOWED_DELETE);
 		}
 		$db  = $this->db->delete($this->table)->where('roleId = ?', $id)->execute();
-		$this->caches->removeCache(Auth::ACL_CACHE);
+		$this->caches->removeCache(Acl\Authorizator::ACL_CACHE);
 		return $db;
 	}
 
@@ -107,17 +105,17 @@ class Roles extends BaseRepository
 			if ($entity->name === Acl\Authorizator::ROLE_ADMIN) {
 				throw new Exception('Invalid role name.', self::INVALID_ROLE_NAME);
 			}
-			$db = $this->db->insert($this->table, Iterator::set($entity))->execute();
-			$this->caches->removeCache(Auth::ACL_CACHE);
+			$db = $this->db->insert($this->table, Database\Iterator::set($entity))->execute();
+			$this->caches->removeCache(Acl\Authorizator::ACL_CACHE);
 			return $db;
 
 		} else {
 			$db = $this->db
-				->update($this->table, Iterator::set($entity))
+				->update($this->table, Database\Iterator::set($entity))
 				->where('roleId = ?', $entity->getId())
 				->execute();
 
-			$this->caches->removeCache(Auth::ACL_CACHE);
+			$this->caches->removeCache(Acl\Authorizator::ACL_CACHE);
 			return $db;
 		}
 	}

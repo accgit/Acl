@@ -63,7 +63,7 @@ class Roles extends UI\Control
 	{
 		$factory = $this->factory->create($this->roles);
 		$factory->onSuccess[] = function ($form) {
-			$message = $form->values->roleId ? 'Aktualizace role proběha v pořádku.' : 'Nová role byla úspěšně vytvořená.';
+			$message = $form->values->roleId ? 'Aktualizace role proběha v pořádku.' : 'Nová role byla úspěšně přidána.';
 			$this->flashMessage($message, 'success');
 			$this->redirect('this');
 		};
@@ -78,7 +78,7 @@ class Roles extends UI\Control
 		try {
 			$data = $this->roles->find($id);
 			if ($data->name === Authorizator::ROLE_GUEST or $data->name === Authorizator::ROLE_MEMBER or $data->name === Authorizator::ROLE_ADMIN) {
-				$this->flashMessage('Litujeme, ale tento záznam není povoleno editovat.', 'error');
+				$this->flashMessage('Je nám líto, ale roli není povoleno jakkoliv upravovat.', 'warning');
 				$this->redirect('this');
 			}
 			$form = $this['roles'];
@@ -88,7 +88,7 @@ class Roles extends UI\Control
 
 		} catch (Exception $e) {
 			if ($e->getCode() === 1) {
-				$this->flashMessage('Litujeme, ale záznam nebyl nalezen.', 'error');
+				$this->flashMessage('Je nám líto, ale role nebyla nalezená.', 'warning');
 			}
 		}
 	}
@@ -101,21 +101,21 @@ class Roles extends UI\Control
 		try {
 			if (!$this->roles->findParent($id)) {
 				$this->roles->delete($id);
-				$this->flashMessage('Role byla úspěšně vymazána.', 'info');
+				$this->flashMessage('Role byla úspěšně odstraněna.', 'info');
 			}
 
 		} catch (Exception $e) {
 			if ($e->getCode() === 1) {
-				$this->flashMessage('Litujeme, ale záznam nebyl nalezen.', 'error');
+				$this->flashMessage('Je nám líto, ale role nebyla nalezená.', 'warning');
 
 			} elseif ($e->getCode() === 2) {
-				$this->flashMessage('Litujeme, ale záznam nelze vymazat, nejprve vymažte role, které ji dědí.', 'error');
+				$this->flashMessage('Je nám líto, ale roli nelze odstranit, nejprve odstrante role, které se odkazují na tuto roli.', 'warning');
 
 			} elseif ($e->getCode() === 3) {
-				$this->flashMessage('Litujeme, ale záznam není povoleno smazat.', 'error');
+				$this->flashMessage('Je nám líto, ale roli není povoleno odstranit.', 'warning');
 
 			} elseif ($e->getCode() === 1451) {
-				$this->flashMessage('Litujeme, ale záznam nelze smazat, nejprve vymažte nastavené oprávnění, které se váže na tento záznam.', 'error');
+				$this->flashMessage('Je nám líto, ale roli nelze odstranit, nejprve odstrante přidělené oprávnění, které se odkazují na tuto roli.', 'warning');
 			}
 		}
 		$this->redirect('this');

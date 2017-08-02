@@ -40,7 +40,8 @@ class Privileges
 	public function create(Repository\Privileges $privileges)
 	{
 		$form = $this->factory->create();
-		$form->addText('name', 'Název:')
+		$form->addText('name', 'Název')
+			->setAttribute('placeholder', 'Zadejte název akce')
 			->setRequired();
 
 		$form->addHidden('privilegeId');
@@ -54,7 +55,7 @@ class Privileges
 
 			} catch (Dibi\Exception $e) {
 				if ($e->getCode() === 1062) {
-					$form->addError('Tento název akce již existuje, zvolte si prosím jiný.');
+					$form->addError('Je nám líto, ale tato akce již exsistuje.');
 				}
 			}
 		};

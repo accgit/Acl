@@ -52,7 +52,7 @@ class Privileges extends UI\Control
 	{
 		$factory = $this->factory->create($this->privileges);
 		$factory->onSuccess[] = function ($form) {
-			$message = $form->values->privilegeId ? 'Aktualizace akce proběha v pořádku.' : 'Nová akce byla úspěšně vytvořená.';
+			$message = $form->values->privilegeId ? 'Aktualizace akce proběha v pořádku.' : 'Nová akce byla úspěšně přidána.';
 			$this->flashMessage($message, 'success');
 			$this->redirect('this');
 		};
@@ -72,7 +72,7 @@ class Privileges extends UI\Control
 
 		} catch (Exception $e) {
 			if ($e->getCode() === 1) {
-				$this->flashMessage('Je nám líto, ale záznam nebyl nalezen.', 'error');
+				$this->flashMessage('Je nám líto, ale akce nebyla nalezena.', 'warning');
 			}
 		}
 	}
@@ -82,16 +82,13 @@ class Privileges extends UI\Control
 	 */
 	public function handleDelete($id = 0)
 	{
-		$row = $this->privileges->find($id);
-		if ($row) {
-			try {
-				$this->privileges->delete($id);
-				$this->flashMessage('Akce byla úspěšně vymazána.', 'info');
+		try {
+			$this->privileges->delete($id);
+			$this->flashMessage('Akce byla úspěšně odstraněna.', 'info');
 
-			} catch (Exception $e) {
-				if ($e->getCode() === 1451) {
-					$this->flashMessage('Litujeme, ale aktuální akci nelze vymazat, nejprve vymažte záznamy, které se vážou na akci.', 'error');
-				}
+		} catch (Exception $e) {
+			if ($e->getCode() === 1451) {
+				$this->flashMessage('Je nám líto, ale akce nelze odstranit, nejprve odstrante přidělené oprávnění, které se odkazují na tuto akci.', 'warning');
 			}
 		}
 		$this->redirect('this');

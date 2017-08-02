@@ -40,7 +40,8 @@ class Roles
 	public function create(Repository\Roles $roles)
 	{
 		$form = $this->factory->create();
-		$form->addText('name', 'Název:')
+		$form->addText('name', 'Název')
+			->setAttribute('placeholder', 'Zadejte název role')
 			->setRequired();
 
 		$rows = [];
@@ -48,8 +49,8 @@ class Roles
 			$rows[$role->roleId] = $role->name;
 		}
 
-		$form->addSelect('parent', 'Převzít roli:', $rows)
-			->setPrompt(NULL);
+		$form->addSelect('parent', 'Rodič', $rows)
+			->setPrompt('Zvolte rodiče');
 
 		$form->addHidden('roleId');
 		$form->addSubmit('send', 'Přidat');
@@ -63,10 +64,10 @@ class Roles
 
 			} catch (Exception $e) {
 				if ($e->getCode() === 4) {
-					$form->addError('Název role není povolený, zvolte si prosím jiný.');
+					$form->addError('Je nám líto, ale název této role není povolený.');
 
 				} elseif($e->getCode() === 1062) {
-					$form->addError('Tato role již existuje, zvolte si prosím jinou.');
+					$form->addError('Je nám líto, ale tato role již exsistuje.');
 				}
 			}
 		};

@@ -6,9 +6,9 @@
  */
 namespace Component\Acl\Repository;
 
-use Drago, Exception;
-use Drago\Database\Iterator;
-
+use Drago;
+use Exception;
+use Drago\Database;
 use Component\Acl;
 
 /**
@@ -18,8 +18,7 @@ use Component\Acl;
 class Privileges extends Drago\Database\Connection
 {
         // Exceptions errors.
-	const
-		RECORD_NOT_FOUND = 1;
+	const RECORD_NOT_FOUND = 1;
 
 	/**
 	 * Database table.
@@ -41,7 +40,8 @@ class Privileges extends Drago\Database\Connection
 	/**
 	 * Returned record by id.
 	 * @param int
-	 * @return array
+	 * @return void
+	 * @throws Exception
 	 */
 	public function find($id)
 	{
@@ -70,18 +70,18 @@ class Privileges extends Drago\Database\Connection
 
 	/**
 	 * Insert or update record.
-	 * @param mixed
+	 * @param Acl\Entity\Privileges
 	 * @return void
 	 */
 	public function save(Acl\Entity\Privileges $entity)
 	{
 		if (!$entity->getId()) {
 			return $this->db
-				->insert($this->table, Iterator::set($entity))
+				->insert($this->table, Database\Iterator::set($entity))
 				->execute();
 		} else {
 			return $this->db
-				->update($this->table, Iterator::set($entity))
+				->update($this->table, Database\Iterator::set($entity))
 				->where('privilegeId = ?', $entity->getId())
 				->execute();
 		}

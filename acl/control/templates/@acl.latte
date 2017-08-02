@@ -1,110 +1,70 @@
 
+{* css styles *}
 <style>
+
+    @import url(https://css-ui.github.io/css/css.ui.min.css);
+    @import url(https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css);
     body {
-	margin: 25px;
-	 color: #282828;
+	font-family: 'Segoe UI', Frutiger, 'Frutiger Linotype', 'Dejavu Sans', 'Helvetica Neue', Arial, sans-serif;
+	  max-width: 450px;
+	    padding: 15px;
     }
 
     p.role {
-	margin-bottom: 5px;
-	  font-weight: 700;
+	font-weight: 700;
+	     margin: 0;
+	      color: #00a4e4;
     }
 
-    p.message {
-	border-radius: 3px;
-	      padding: 10px;
-	        width: 380px;
-    }
-
-    p.message.success {
-	background: #9ceda7;
-	     color: #277b35;
-    }
-
-    p.message.error {
-	background: #ed9c9c;
-	     color: #7b2727;
-    }
-
-    p.message.info {
-	background: #9cd9ed;
-	     color: #27667b;
+    table td,
+    table th {
+	padding: 7px 0;
     }
 
     table {
 	border-collapse: collapse;
-	  margin-bottom: 20px;
-	          width: 400px;
     }
 
-    table th,
-    table td {
-	text-align: left;
-	   padding: 3px 6px;
-	    border: 1px solid #c7c7c7;
+    table th:first-child,
+    table td:first-child {
+	padding-left: 8px;
     }
 
-    table td a {
-	text-decoration: none;
-	      font-size: 18px;
-	          color: #282828;
-    }
-
-    table td.bull {
-	text-align: center;
-	 font-size: 18px;
-    }
-
-    table td.bull.allowed {
-	color: #2f9613;
-    }
-
-    table td.bull.deny {
-	color: #961313;
-    }
-
+    table tr.default:nth-child(odd),
     form fieldset {
 	background-color: #f4f4f4;
-	   margin-bottom: 15px;
-	         padding: 20px;
-	          border: 1px solid #c7c7c7;
-	           width: 356px;
     }
 
-    form label {
-	margin-bottom: 5px;
-	      display: block;
+    td.permissions i.fa.fa-check {
+	color: #4ca01e;
     }
 
-    form [type="text"],
-    form select {
-	margin-bottom: 5px;
-	border-radius: 3px;
-	   box-sizing: border-box;
-	      padding: 4px 8px;
-	      display: block;
-	       border: 1px solid #c7c7c7;
-	       height: 28px;
-	        width: 100%;
+    td.permissions i.fa.fa-times {
+	color: #a01e1e;
     }
 
-    form [type="text"]:focus,
-    form select:focus {
-	outline: 0;
-	 border: 1px solid #919191;
+    a.action {
+	text-decoration: none;
+	  border-radius: 3px;
+	   margin-right: 2px;
+	     text-align: center;
+	        display: block;
+		  float: left;
+		  width: 26px;
+		  color: #939393;
     }
 
-    form [type="submit"] {
-	margin-top: 8px;
-	   display: block;
-	    cursor: pointer;
-	    height: 25px;
-	     width: 100px;
+    a.action:hover {
+	background-color: #939393;
+	           color: white;
     }
 
     ul.errors {
-	color: #9c2a2a;
+	font-weight: 500;
+	      color: #c64747;
     }
+
+
 </style>
 
 {* flash message *}

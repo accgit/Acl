@@ -52,7 +52,7 @@ class Resources extends UI\Control
 	{
 		$factory = $this->factory->create($this->resources);
 		$factory->onSuccess[] = function ($form) {
-			$message = $form->values->resourceId ? 'Aktualizace zdroje proběha v pořádku.' : 'Nový zdroj byl úspěšně vytvořen.';
+			$message = $form->values->resourceId ? 'Aktualizace zdroje proběha v pořádku.' : 'Nový zdroj byl úspěšně přidán.';
 			$this->flashMessage($message, 'success');
 			$this->redirect('this');
 		};
@@ -72,7 +72,7 @@ class Resources extends UI\Control
 
 		} catch (Exception $e) {
 			if ($e->getCode() === 1) {
-				$this->flashMessage('Je nám líto, ale záznam nebyl nalezen.', 'error');
+				$this->flashMessage('Je nám líto, ale zdroj nebyl nalezen.', 'warning');
 			}
 		}
 	}
@@ -82,16 +82,13 @@ class Resources extends UI\Control
 	 */
 	public function handleDelete($id = 0)
 	{
-		$row = $this->resources->find($id);
-		if ($row) {
-			try {
-				$this->resources->delete($id);
-				$this->flashMessage('Zdroj byl úspěšně vymazán.', 'info');
+		try {
+			$this->resources->delete($id);
+			$this->flashMessage('Zdroj byl úspěšně odstraněn.', 'info');
 
-			} catch (Exception $e) {
-				if ($e->getCode() === 1451) {
-					$this->flashMessage('Litujeme, ale aktuální zdroj nelze vymazat, nejprve vymažte záznamy, které se vážou na zdroj.', 'error');
-				}
+		} catch (Exception $e) {
+			if ($e->getCode() === 1451) {
+				$this->flashMessage('Je nám líto, ale zdroj nelze odstranit, nejprve odstrante přidělené oprávnění, které se odkazují na tuto zdroj.', 'warning');
 			}
 		}
 		$this->redirect('this');

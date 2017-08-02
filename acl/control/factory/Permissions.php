@@ -49,8 +49,8 @@ class Permissions
 			$rowsRoles[$role->roleId] = $role->name;
 		}
 
-		$form->addSelect('roleId', 'Role:', $rowsRoles)
-			->setPrompt(NULL)
+		$form->addSelect('roleId', 'Role', $rowsRoles)
+			->setPrompt('Zvolte roli')
 			->setRequired();
 
 		$rowsResource = [];
@@ -58,8 +58,8 @@ class Permissions
 			$rowsResource[$resource->resourceId] = $resource->name;
 		}
 
-		$form->addSelect('resourceId', 'Zdroj:', $rowsResource)
-			->setPrompt(NULL)
+		$form->addSelect('resourceId', 'Zdroj', $rowsResource)
+			->setPrompt('Zvolte zdroj')
 			->setRequired();
 
 		$rowsPrivilege = [];
@@ -67,8 +67,8 @@ class Permissions
 			$rowsPrivilege[$privilege->privilegeId] = $privilege->name;
 		}
 
-		$form->addSelect('privilegeId', 'Akce:', $rowsPrivilege)
-			->setPrompt(NULL)
+		$form->addSelect('privilegeId', 'Akce', $rowsPrivilege)
+			->setPrompt('Zvolte akci')
 			->setRequired();
 
 		$allowed = [
@@ -77,7 +77,7 @@ class Permissions
 		];
 
 		$form->addSelect('allowed', 'Přístup:', $allowed)
-			->setPrompt(NULL)
+			->setPrompt('Zvolte přístup')
 			->setRequired();
 
 		$form->addHidden('id');

@@ -1,34 +1,34 @@
 
 {include '@acl.latte'}
-{form roles}
-<ul class="errors" n:if="$form->hasErrors()">
-	<li n:foreach="$form->errors as $error">{$error}</li>
-</ul>
-<fieldset>
-	<legend>Role</legend>
-	{label name/}
-	{input name}
-
-	{label parent/}
-	{input parent}
-
-	{input send}
-</fieldset>
-{/form}
-{if count($roles)}
-<table>
+<div class="wrapping">
+	{form roles}
+		<ul class="errors" n:if="$form->hasErrors()">
+			<li n:foreach="$form->errors as $error">{$error}</li>
+		</ul>
+		<fieldset>
+			<legend>Role</legend>
+			{input name class   => 'full width'}
+			{input parent class => 'full width'}
+			{input send class   => 'button primary'}
+		</fieldset>
+	{/form}
+</div>
+<table n:if="count($roles)" class="full width">
 	<tr>
 		<th>Role</th>
-		<th>Převzatá role</th>
-		<th colspan="2">&nbsp;</th>
+		<th>Rodič role</th>
+		<th>&nbsp;</th>
 	</tr>
-	{foreach $roles as $row}
-	<tr>
-		<td style="width: 43%;">{$row->name}</td>
-		<td style="width: 43%;">{$row->parent}</td>
-		<td style="width: 7%;"><a href="{link delete!, $row->roleId}" title="Smazat">&Cross;</a></td>
-		<td style="width: 7%;"><a href="{link edit!, $row->roleId}" title="Upravit">&dtrif;</a></td>
+	<tr n:foreach="$roles as $row" class="default">
+		<td style="width: 185px;">{$row->name}</td>
+		<td style="width: 185px;">{$row->parent}</td>
+		<td style="width: 80px;">
+			<a href="{link edit!, $row->roleId}" title="Upravit" class="action">
+				<i class="fa fa-pencil" aria-hidden="true"></i>
+			</a>
+			<a href="{link delete!, $row->roleId}" title="Smazat" class="action">
+				<i class="fa fa-times" aria-hidden="true"></i>
+			</a>
+		</td>
 	</tr>
-	{/foreach}
 </table>
-{/if}

@@ -74,7 +74,7 @@ class Permissions extends UI\Control
 	{
 		$factory = $this->factory->create($this->roles, $this->resources, $this->privileges, $this->permissions);
 		$factory->onSuccess[] = function ($form) {
-			$message = $form->values->id ? 'Aktualizace přístupu proběha v pořádku.' : 'Nový přístup byl úspěšně vytvořen.';
+			$message = $form->values->id ? 'Aktualizace přístupu proběha v pořádku.' : 'Nový přístup byl úspěšně přidán.';
 			$this->flashMessage($message, 'success');
 			$this->redirect('this');
 		};
@@ -94,7 +94,7 @@ class Permissions extends UI\Control
 
 		} catch (Exception $e) {
 			if ($e->getCode() === 1) {
-				$this->flashMessage('Je nám líto, ale záznam nebyl nalezen.', 'error');
+				$this->flashMessage('Je nám líto, ale nastavení přístupu nebylo nalezeno.', 'warning');
 			}
 		}
 	}
@@ -106,7 +106,7 @@ class Permissions extends UI\Control
 	{
 		try {
 			$this->permissions->delete($id);
-			$this->flashMessage('Přístup byl úspěšně vymazán.', 'info');
+			$this->flashMessage('Přístup byl úspěšně odstraněn.', 'info');
 
 		} catch (Exception $e) {
 			\Tracy\Debugger::barDump($e);

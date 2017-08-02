@@ -40,7 +40,8 @@ class Resources
 	public function create(Repository\Resources $resources)
 	{
 		$form = $this->factory->create();
-		$form->addText('name', 'Název:')
+		$form->addText('name', 'Název')
+			->setAttribute('placeholder', 'Zadejte název zdroje')
 			->setRequired();
 
 		$form->addHidden('resourceId');
@@ -54,7 +55,7 @@ class Resources
 
 			} catch (Dibi\Exception $e) {
 				if ($e->getCode() === 1062) {
-					$form->addError('Tento zdroj již existuje, zvolte si prosím jiný.');
+					$form->addError('Je nám líto, ale tento zdroj již exsistuje.');
 				}
 			}
 		};
