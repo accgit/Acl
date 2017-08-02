@@ -31,7 +31,7 @@
 			<td style="width: 145px;">{$row->resource}</td>
 			<td style="width: 145px;">{$row->privilege}</td>
 			<td style="width: 80px;" class="permissions">
-				<i n:class="$row->allowed == 'yes' ? 'fa fa-check' : 'fa fa-times'" aria-hidden="true"></i>
+				<i n:class="$row->allowed == 'yes' ? 'fa fa-circle allowed' : 'fa fa-circle allowed deny'" aria-hidden="true"></i>
 			</td>
 			<td style="width: 80px;">
 				<a n:href="edit!, $row->id" title="Upravit" class="action">
