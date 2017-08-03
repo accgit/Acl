@@ -70,7 +70,7 @@ CREATE TABLE `users` (
 	`realname` varchar(60) NOT NULL,
 	`email` varchar(60) NOT NULL,
 	`password` char(60) NOT NULL,
-  PRIMARY KEY (`userId`)
+	PRIMARY KEY (`userId`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 -- ---- insert data in users table:
