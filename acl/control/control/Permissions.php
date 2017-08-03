@@ -88,9 +88,11 @@ class Permissions extends UI\Control
 	{
 		try {
 			$data = $this->permissions->find($id);
-			$form = $this['permissions'];
-			$form['send']->caption = 'Aktualizovat';
-			$form->setDefaults($data);
+			if ($data) {
+			    	$form = $this['permissions'];
+				$form['send']->caption = 'Aktualizovat';
+				$form->setDefaults($data);
+			}
 
 		} catch (Exception $e) {
 			if ($e->getCode() === 1) {
@@ -105,11 +107,15 @@ class Permissions extends UI\Control
 	public function handleDelete($id = 0)
 	{
 		try {
-			$this->permissions->delete($id);
-			$this->flashMessage('Přístup byl úspěšně odstraněn.', 'info');
+			if ($this->resources->find($id)) {
+			    	$this->permissions->delete($id);
+				$this->flashMessage('Přístup byl úspěšně odstraněn.', 'info');
+			}
 
 		} catch (Exception $e) {
-			\Tracy\Debugger::barDump($e);
+			if ($e->getCode() === 1) {
+				$this->flashMessage('Je nám líto, ale přístup nebyl nalezen.', 'warning');
+			}
 		}
 	}
 

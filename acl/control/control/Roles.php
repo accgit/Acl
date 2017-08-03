@@ -77,9 +77,11 @@ class Roles extends UI\Control
 	{
 		try {
 			$data = $this->roles->find($id);
-			if ($data->name === Authorizator::ROLE_GUEST or $data->name === Authorizator::ROLE_MEMBER or $data->name === Authorizator::ROLE_ADMIN) {
-				$this->flashMessage('Je nám líto, ale roli není povoleno jakkoliv upravovat.', 'warning');
-				$this->redirect('this');
+			if ($data) {
+				if ($data->name === Authorizator::ROLE_GUEST or $data->name === Authorizator::ROLE_MEMBER or $data->name === Authorizator::ROLE_ADMIN) {
+					$this->flashMessage('Je nám líto, ale roli není povoleno jakkoliv upravovat.', 'warning');
+					$this->redirect('this');
+				}
 			}
 			$form = $this['roles'];
 			$form['send']->caption = 'Aktualizovat';
@@ -88,7 +90,7 @@ class Roles extends UI\Control
 
 		} catch (Exception $e) {
 			if ($e->getCode() === 1) {
-				$this->flashMessage('Je nám líto, ale role nebyla nalezená.', 'warning');
+				$this->flashMessage('Je nám líto, ale role nebyla nalezena.', 'warning');
 			}
 		}
 	}
@@ -99,14 +101,16 @@ class Roles extends UI\Control
 	public function handleDelete($id = 0)
 	{
 		try {
-			if (!$this->roles->findParent($id)) {
-				$this->roles->delete($id);
-				$this->flashMessage('Role byla úspěšně odstraněna.', 'info');
+			if ($this->roles->find($id)) {
+				if (!$this->roles->findParent($id)) {
+					$this->roles->delete($id);
+					$this->flashMessage('Role byla úspěšně odstraněna.', 'info');
+				}
 			}
 
 		} catch (Exception $e) {
 			if ($e->getCode() === 1) {
-				$this->flashMessage('Je nám líto, ale role nebyla nalezená.', 'warning');
+				$this->flashMessage('Je nám líto, ale role nebyla nalezena.', 'warning');
 
 			} elseif ($e->getCode() === 2) {
 				$this->flashMessage('Je nám líto, ale roli nelze odstranit, nejprve odstrante role, které se odkazují na tuto roli.', 'warning');
