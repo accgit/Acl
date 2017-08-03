@@ -24,9 +24,9 @@ CREATE TABLE `resources` (
 
 -- ---- insert data in resources table:
 INSERT INTO `resources` (`resourceId`, `name`) VALUES
-(NULL, 'Admin:Admin'),
+(NULL, 'Web:Web'),
 (NULL, 'Web:Login'),
-(NULL, 'Web:Web');
+(NULL, 'Admin:Admin');
 
 -- ---- create roles table:
 CREATE TABLE `roles` (
