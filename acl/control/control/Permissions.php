@@ -107,15 +107,11 @@ class Permissions extends UI\Control
 	public function handleDelete($id = 0)
 	{
 		try {
-			if ($this->resources->find($id)) {
-			    	$this->permissions->delete($id);
-				$this->flashMessage('Přístup byl úspěšně odstraněn.', 'info');
-			}
+			$this->permissions->delete($id);
+			$this->flashMessage('Přístup byl úspěšně odstraněn.', 'info');
 
 		} catch (Exception $e) {
-			if ($e->getCode() === 1) {
-				$this->flashMessage('Je nám líto, ale přístup nebyl nalezen.', 'warning');
-			}
+			\Tracy\Debugger::barDump($e);
 		}
 	}
 

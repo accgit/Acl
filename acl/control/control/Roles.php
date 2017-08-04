@@ -101,18 +101,13 @@ class Roles extends UI\Control
 	public function handleDelete($id = 0)
 	{
 		try {
-			if ($this->roles->find($id)) {
-				if (!$this->roles->findParent($id)) {
-					$this->roles->delete($id);
-					$this->flashMessage('Role byla úspěšně odstraněna.', 'info');
-				}
+			if (!$this->roles->findParent($id)) {
+				$this->roles->delete($id);
+				$this->flashMessage('Role byla úspěšně odstraněna.', 'info');
 			}
 
 		} catch (Exception $e) {
-			if ($e->getCode() === 1) {
-				$this->flashMessage('Je nám líto, ale role nebyla nalezena.', 'warning');
-
-			} elseif ($e->getCode() === 2) {
+			if ($e->getCode() === 2) {
 				$this->flashMessage('Je nám líto, ale roli nelze odstranit, nejprve odstrante role, které se odkazují na tuto roli.', 'warning');
 
 			} elseif ($e->getCode() === 3) {

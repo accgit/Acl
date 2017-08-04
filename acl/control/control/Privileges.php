@@ -85,16 +85,11 @@ class Privileges extends UI\Control
 	public function handleDelete($id = 0)
 	{
 		try {
-			if ($this->privileges->find($id)) {
-			    	$this->privileges->delete($id);
-				$this->flashMessage('Akce byla úspěšně odstraněna.', 'info');
-			}
+			$this->privileges->delete($id);
+			$this->flashMessage('Akce byla úspěšně odstraněna.', 'info');
 
 		} catch (Exception $e) {
-			if ($e->getCode() === 1) {
-				$this->flashMessage('Je nám líto, ale akce nebyla nalezena.', 'warning');
-
-			} elseif ($e->getCode() === 1451) {
+			if ($e->getCode() === 1451) {
 				$this->flashMessage('Je nám líto, ale akce nelze odstranit, nejprve odstrante přidělené oprávnění, které se odkazují na tuto akci.', 'warning');
 			}
 		}

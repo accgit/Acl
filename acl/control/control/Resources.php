@@ -85,16 +85,11 @@ class Resources extends UI\Control
 	public function handleDelete($id = 0)
 	{
 		try {
-			if ($this->resources->find($id)) {
-			    	$this->resources->delete($id);
-				$this->flashMessage('Zdroj byl úspěšně odstraněn.', 'info');
-			}
+			$this->resources->delete($id);
+			$this->flashMessage('Zdroj byl úspěšně odstraněn.', 'info');
 
 		} catch (Exception $e) {
-			if ($e->getCode() === 1) {
-				$this->flashMessage('Je nám líto, ale zdroj nebyl nalezen.', 'warning');
-
-			} elseif ($e->getCode() === 1451) {
+			if ($e->getCode() === 1451) {
 				$this->flashMessage('Je nám líto, ale zdroj nelze odstranit, nejprve odstrante přidělené oprávnění, které se odkazují na tuto zdroj.', 'warning');
 			}
 		}
