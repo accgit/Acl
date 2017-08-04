@@ -41,6 +41,16 @@ class Roles extends BaseRepository
 	}
 
 	/**
+	 * Returned the roles that are being used.
+	 * @return array
+	 */
+	public function findRoles()
+	{
+		return $this->all()
+			->where('roleId in (select distinct roleId from :prefix:permissions)');
+	}
+
+	/**
 	 * Returned record by id.
 	 * @param int
 	 * @return void

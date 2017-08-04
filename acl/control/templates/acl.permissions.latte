@@ -16,34 +16,30 @@
 	{/form}
 </div>
 {if count($permissions)}
-{foreach $permissions as $row}
 	{foreach $roles as $role}
-	{if $row->role == $role->name}
-	<p class="role">Role: {$role->name}</p>
-	<table>
-		<tr>
-			<th>Zdroj</th>
-			<th>Akce</th>
-			<th>Přístup</th>
-			<th>&nbsp;</th>
-		</tr>
-		<tr n:foreach="$permissions as $row" n:if="$row->role == $role->name">
-			<td style="width: 145px;">{$row->resource}</td>
-			<td style="width: 145px;">{$row->privilege}</td>
-			<td style="width: 80px;" class="permissions">
-				<i n:class="$row->allowed == 'yes' ? 'fa fa-circle allowed' : 'fa fa-circle allowed deny'" aria-hidden="true"></i>
-			</td>
-			<td style="width: 80px;">
-				<a n:href="edit!, $row->id" title="Upravit" class="action">
-					<i class="fa fa-pencil" aria-hidden="true"></i>
-				</a>
-				<a n:href="delete!, $row->id" title="Smazat" class="action">
-					<i class="fa fa-times" aria-hidden="true"></i>
-				</a>
-			</td>
-		</tr>
-	</table>
-	{/if}
+		<p class="role">Role: {$role->name}</p>
+		<table>
+			<tr>
+				<th>Zdroj</th>
+				<th>Akce</th>
+				<th>Přístup</th>
+				<th>&nbsp;</th>
+			</tr>
+			<tr n:foreach="$permissions as $row" n:if="$role->name == $row->role">
+				<td style="width: 145px;">{$row->resource}</td>
+				<td style="width: 145px;">{$row->privilege}</td>
+				<td style="width: 80px;" class="permissions">
+					<i n:class="$row->allowed == 'yes' ? 'fa fa-circle allowed' : 'fa fa-circle allowed deny'" aria-hidden="true"></i>
+				</td>
+				<td style="width: 80px;">
+					<a n:href="edit!, $row->id" title="Upravit" class="action">
+						<i class="fa fa-pencil" aria-hidden="true"></i>
+					</a>
+					<a n:href="delete!, $row->id" title="Smazat" class="action">
+						<i class="fa fa-times" aria-hidden="true"></i>
+					</a>
+				</td>
+			</tr>
+		</table>
 	{/foreach}
-{/foreach}
 {/if}

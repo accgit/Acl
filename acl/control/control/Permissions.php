@@ -61,7 +61,7 @@ class Permissions extends UI\Control
 	public function render()
 	{
 		$template = $this->template;
-		$template->roles = $this->roles->all();
+		$template->roles = $this->roles->findRoles();
 		$template->permissions = $this->permissions->all();
 		$template->setFile(__DIR__ . '/../templates/acl.permissions.latte');
 		$template->render();
