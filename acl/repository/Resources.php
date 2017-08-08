@@ -34,7 +34,7 @@ class Resources extends BaseRepository
 		return $this->db
 			->select('*')
 			->from($this->table)
-			->orderBy('resourceId asc');
+			->orderBy('name asc');
 	}
 
 	/**
