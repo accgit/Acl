@@ -9,7 +9,6 @@ use Drago\Database;
 
 /**
  * Resources entity.
- * @author Zdeněk Papučík
  */
 class Resources extends Database\Entity
 {
