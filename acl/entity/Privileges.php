@@ -9,7 +9,6 @@ use Drago\Database;
 
 /**
  * Privileges entity.
- * @author Zdeněk Papučík
  */
 class Privileges extends Database\Entity
 {
