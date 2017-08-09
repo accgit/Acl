@@ -15,7 +15,6 @@ use Component\Acl\Repository;
 
 /**
  * Privileges factory.
- * @author Zdeněk Papučík
  */
 class Privileges
 {
