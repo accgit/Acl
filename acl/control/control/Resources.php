@@ -14,7 +14,6 @@ use Component\Acl\Factory;
 
 /**
  * Resources control.
- * @author Zdeněk Papučík
  */
 class Resources extends UI\Control
 {
