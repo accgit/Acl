@@ -14,7 +14,6 @@ use Component\Acl\Factory;
 
 /**
  * Permissions control.
- * @author Zdeněk Papučík
  */
 class Permissions extends UI\Control
 {
