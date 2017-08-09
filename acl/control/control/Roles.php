@@ -15,7 +15,6 @@ use Component\Acl\Authorizator;
 
 /**
  * Roles control.
- * @author Zdeněk Papučík
  */
 class Roles extends UI\Control
 {
