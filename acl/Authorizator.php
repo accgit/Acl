@@ -12,7 +12,6 @@ use Drago\Caching\Caches;
 
 /**
  * Managing User Permissions.
- * @author Zdeněk Papučík
  */
 class Authorizator
 {
