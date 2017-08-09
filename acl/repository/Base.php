@@ -11,7 +11,6 @@ use Drago;
 
 /**
  * Base for repository.
- * @author Zdeněk Papučík
  */
 abstract class BaseRepository extends Drago\Database\Connection
 {
