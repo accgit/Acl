@@ -12,7 +12,6 @@ use Component\Acl;
 
 /**
  * Resources repository.
- * @author Zdeněk Papučík
  */
 class Resources extends BaseRepository
 {
