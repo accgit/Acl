@@ -12,7 +12,6 @@ use Component\Acl;
 
 /**
  * Permissions repository.
- * @author Zdeněk Papučík
  */
 class Permissions extends BaseRepository
 {
