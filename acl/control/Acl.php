@@ -12,7 +12,6 @@ use Nette\Application\UI;
 
 /**
  * Dynamic processing of user roles.
- * @author Zdeněk Papučík
  */
 class Acl extends UI\Control
 {
