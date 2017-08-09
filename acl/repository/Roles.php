@@ -12,7 +12,6 @@ use Component\Acl;
 
 /**
  * Roles repository.
- * @author Zdeněk Papučík
  */
 class Roles extends BaseRepository
 {
