@@ -15,7 +15,6 @@ use Component\Acl\Repository;
 
 /**
  * Resources factory.
- * @author Zdeněk Papučík
  */
 class Resources
 {
