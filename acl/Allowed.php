@@ -12,7 +12,6 @@ use Nette\Security;
 
 /**
  * Protected access.
- * @author Zdeněk Papučík
  */
 class Allowed
 {
