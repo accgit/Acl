@@ -15,7 +15,6 @@ use Component\Acl\Repository;
 
 /**
  * Roles factory.
- * @author Zdeněk Papučík
  */
 class Roles
 {
