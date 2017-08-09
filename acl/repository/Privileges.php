@@ -13,7 +13,6 @@ use Component\Acl;
 
 /**
  * Privileges repository.
- * @author Zdeněk Papučík
  */
 class Privileges extends Drago\Database\Connection
 {
