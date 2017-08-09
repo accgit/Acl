@@ -9,7 +9,6 @@ use Drago\Database;
 
 /**
  * Roles entity.
- * @author Zdeněk Papučík
  */
 class Roles extends Database\Entity
 {
