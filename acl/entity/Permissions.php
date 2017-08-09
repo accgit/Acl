@@ -9,7 +9,6 @@ use Drago\Database;
 
 /**
  * Permissions entity.
- * @author Zdeněk Papučík
  */
 class Permissions extends Database\Entity
 {
