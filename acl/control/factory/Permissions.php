@@ -15,7 +15,6 @@ use Component\Acl\Repository;
 
 /**
  * Permissions factory.
- * @author Zdeněk Papučík
  */
 class Permissions
 {
