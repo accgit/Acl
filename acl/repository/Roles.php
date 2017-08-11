@@ -23,13 +23,12 @@ class Roles extends BaseRepository
 		INVALID_ROLE_NAME  = 4;
 
 	/**
-	 * Database table.
 	 * @var string
 	 */
 	private $table = ':prefix:roles';
 
 	/**
-	 * Returned all records.
+	 * Returns all records.
 	 * @return array
 	 */
 	public function all()
@@ -40,7 +39,7 @@ class Roles extends BaseRepository
 	}
 
 	/**
-	 * Returned the roles that are being used.
+	 * Find records.
 	 * @return array
 	 */
 	public function findRoles()
@@ -50,7 +49,7 @@ class Roles extends BaseRepository
 	}
 
 	/**
-	 * Returned record by id.
+	 * Find record by id.
 	 * @param int
 	 * @return void
 	 * @throws Exception
@@ -68,7 +67,7 @@ class Roles extends BaseRepository
 	}
 
 	/**
-	 * Find inherited role parent.
+	 * Find record by id.
 	 * @param int
 	 * @return void
 	 * @throws Exception
@@ -103,7 +102,7 @@ class Roles extends BaseRepository
 	}
 
 	/**
-	 * Insert or update record.
+	 * Save record.
 	 * @param Acl\Entity\Roles
 	 * @return void
 	 * @throws Exception
