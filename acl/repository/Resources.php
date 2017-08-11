@@ -19,13 +19,12 @@ class Resources extends BaseRepository
 	const RECORD_NOT_FOUND = 1;
 
 	/**
-	 * Database table.
 	 * @var string
 	 */
 	private $table = ':prefix:resources';
 
 	/**
-	 * Returned all records.
+	 * Returns all records.
 	 * @return array
 	 */
 	public function all()
@@ -37,7 +36,7 @@ class Resources extends BaseRepository
 	}
 
 	/**
-	 * Returned record by id.
+	 * Find record by id.
 	 * @param int
 	 * @return void
 	 * @throws Exception
@@ -67,7 +66,7 @@ class Resources extends BaseRepository
 	}
 
 	/**
-	 * Insert or update records.
+	 * Save record.
 	 * @param Acl\Entity\Resources
 	 * @return void
 	 */
