@@ -20,13 +20,12 @@ class Privileges extends Drago\Database\Connection
 	const RECORD_NOT_FOUND = 1;
 
 	/**
-	 * Database table.
 	 * @var string
 	 */
 	private $table = ':prefix:privileges';
 
 	/**
-	 * Returned all records.
+	 * Returns all records.
 	 * @return array
 	 */
 	public function all()
@@ -37,7 +36,7 @@ class Privileges extends Drago\Database\Connection
 	}
 
 	/**
-	 * Returned record by id.
+	 * Find record by id.
 	 * @param int
 	 * @return void
 	 * @throws Exception
@@ -68,7 +67,7 @@ class Privileges extends Drago\Database\Connection
 	}
 
 	/**
-	 * Insert or update record.
+	 * Save record.
 	 * @param Acl\Entity\Privileges
 	 * @return void
 	 */
