@@ -19,13 +19,12 @@ class Permissions extends BaseRepository
 	const RECORD_NOT_FOUND = 1;
 
 	/**
-	 * Database table.
 	 * @var string
 	 */
 	private $table = ':prefix:permissions';
 
 	/**
-	 * Returned all records.
+	 * Returns all records.
 	 * @return array
 	 */
 	public function all()
@@ -39,7 +38,7 @@ class Permissions extends BaseRepository
 	}
 
 	/**
-	 * Returned record by id.
+	 * Find record by id.
 	 * @param int
 	 * @return void
 	 * @throws Exception
@@ -71,7 +70,7 @@ class Permissions extends BaseRepository
 	}
 
 	/**
-	 * Insert or update record.
+	 * Save record.
 	 * @param Acl\Entity\Permissions
 	 * @return void
 	 */
