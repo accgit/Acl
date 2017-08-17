@@ -32,7 +32,8 @@ class Privileges extends Drago\Database\Connection
 	{
 		return $this->db
 			->select('*')
-			->from($this->table);
+			->from($this->table)
+			->orderBy('name asc');
 	}
 
 	/**
