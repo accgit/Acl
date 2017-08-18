@@ -32,7 +32,7 @@ public function checkRequirements($element)
 
 	// Check what the user can and can not do.
 	} elseif ($element instanceof \ReflectionMethod) {
-		if (!$this->user->isAllowed($this->name, $this->signal ?: $this->action)) {
+		if (!$this->user->isAllowed($this->name, $this->signal[1] ?: $this->action)) {
 			$this->messageWarning('You do not have permission.');
 			$this->redirect('Homepage:');
 		}
