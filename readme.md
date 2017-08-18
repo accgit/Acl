@@ -7,7 +7,7 @@ Built on Nette Framework
 
 ## Installation
 
-1) Put this code into the Presenter's Base.
+**1) Put this code into the Presenter's Base.**
 
 ```php
 /**
@@ -40,7 +40,7 @@ public function checkRequirements($element)
 }
 ```
 
-2) Add a property annotation for the class.
+**2) Add a property annotation for the class.**
 
 ```php
 /**
@@ -48,7 +48,7 @@ public function checkRequirements($element)
  */
 ```
 
-3) Add query to user roles.
+**3) Add query to user roles.**
 
 ```php
 /**
@@ -63,7 +63,7 @@ public function findRoles($userId)
 }
 ```
 
-4) We pass roles and assign identity to users.
+**4) We pass roles and assign identity to users.**
 
 ```php
 $roles = $this->repository->findRoles($row->userId);
