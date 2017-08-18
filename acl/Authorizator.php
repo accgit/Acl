@@ -81,6 +81,7 @@ class Authorizator
 
 			// Add permissions.
 			foreach ($this->permissions->all() as $row) {
+				$row->privilege === 'all' ? $row->privilege = Security\Permission::ALL : $row->privilege;
 				$acl->{$row->allowed === 'yes' ? 'allow' : 'deny'}($row->role, $row->resource, $row->privilege);
 			}
 
