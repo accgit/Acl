@@ -66,10 +66,10 @@ public function findRoles($userId)
 **4) We go through the roles that are assigned to users and return them to the identity.**
 
 ```php
-$roles = $this->repository->findRoles($row->userId);
+$roles = $this->findRoles($row->userId);
 foreach ($roles as $role) {
 	$userRoles[] = $role['role'];
 }
 
-return new Security\Identity($row->userId, $userRoles, $row->toArray());
+return new Security\Identity($id, $userRoles, $data);
 ```
