@@ -48,9 +48,7 @@ public function checkRequirements($element)
 **2) Add a property annotation for the class (Presenter's Base).**
 
 ```php
-/**
- * @property-read array $signal
- */
+@property-read array $signal
 ```
 
 **3) We create a query for assigning roles to users.**
