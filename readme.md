@@ -47,7 +47,7 @@ public function checkRequirements($element)
 
 **2) Add a property annotation for the class (Presenter's Base).**
 
-```php
+```
 @property-read array $signal
 ```
 
