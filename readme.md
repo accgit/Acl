@@ -1,9 +1,14 @@
 
-## Simple management of users' permissions
-
-Built on Nette Framework
+## ACL
 
 [![Codacy Badge](https://api.codacy.com/project/badge/Grade/e26c8a01b9674c198a68185187c469a7)](https://www.codacy.com/app/accgit/Acl?utm_source=github.com&utm_medium=referral&utm_content=accgit/Acl&utm_campaign=badger)
+
+Simple management of users' permissions.
+
+## Requirements
+
+- PHP 7.0.8 or higher
+- [Nette Framework](https://github.com/nette/nette)
 
 ## Installation
 
@@ -70,7 +75,6 @@ $roles = $this->repository->findRoles($row->userId);
 foreach ($roles as $role) {
 	$userRoles[] = $role['role'];
 }
-
 return new Security\Identity($row->userId, $userRoles, $row->toArray());
 ```
 
@@ -84,3 +88,5 @@ return new Security\Identity($row->userId, $userRoles, $row->toArray());
 	}
 }
 ```
+
+**6) Include `conf.neon` in component to Configuration File or register to bootstrap class.**
