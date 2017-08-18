@@ -40,7 +40,7 @@ public function checkRequirements($element)
 }
 ```
 
-**2) Add a property annotation for the class.**
+**2) Add a property annotation for the class (Presenter's Base).**
 
 ```php
 /**
@@ -72,4 +72,15 @@ foreach ($roles as $role) {
 }
 
 return new Security\Identity($row->userId, $userRoles, $row->toArray());
+```
+
+**5) Installing dependencies via composer.**
+
+```json
+{
+	"require": {
+		"drago-ex/application": "~1.0.0",
+		"drago-ex/cache": "~1.0.0"
+	}
+}
 ```
