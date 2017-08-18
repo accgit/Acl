@@ -53,7 +53,7 @@ public function checkRequirements($element)
 ```php
 /**
  * Returned record by id.
- * @param intd
+ * @param int
  * @return array
  */
 public function findRoles($userId)
