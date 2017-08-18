@@ -7,7 +7,7 @@ Built on Nette Framework
 
 ## Installation
 
-Put this code into the Presenter's Base.
+1) Put this code into the Presenter's Base.
 
 ```php
 /**
@@ -38,4 +38,38 @@ public function checkRequirements($element)
 		}
 	}
 }
+```
+
+2) Add a property annotation for the class.
+
+```php
+/**
+ * @property-read array $signal
+ */
+```
+
+3) Add query to user roles.
+
+```php
+/**
+ * Returned record by id.
+ * @param intd
+ * @return array
+ */
+public function findRoles($userId)
+{
+	return $this->db
+		->query('SELECT r.name AS role FROM acl AS a JOIN roles AS r USING (roleId) WHERE a.userId = ?', $userId);
+}
+```
+
+4) We pass roles and assign identity to users.
+
+```php
+$roles = $this->repository->findRoles($row->userId);
+foreach ($roles as $role) {
+	$userRoles[] = $role['role'];
+}
+
+return new Security\Identity($row->userId, $userRoles, $row->toArray());
 ```
