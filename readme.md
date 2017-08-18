@@ -48,7 +48,7 @@ public function checkRequirements($element)
  */
 ```
 
-**3) Add query to user roles.**
+**3) We create a query for assigning roles to users.**
 
 ```php
 /**
@@ -63,7 +63,7 @@ public function findRoles($userId)
 }
 ```
 
-**4) We pass roles and assign identity to users.**
+**4) We go through the roles that are assigned to users and return them to the identity.**
 
 ```php
 $roles = $this->repository->findRoles($row->userId);
