@@ -87,7 +87,7 @@ return new Security\Identity($row->userId, $userRoles, $row->toArray());
 }
 ```
 
-**6) Include [conf.neon](https://github.com/accgit/acl/blob/master/acl/conf.neon) in ACL component to Configuration File or register to bootstrap class.**
+**6) Include [conf.neon](https://github.com/accgit/acl/blob/master/src/acl/conf.neon) in ACL component to Configuration File or register to bootstrap class.**
 
 ```php
 $configurator->addConfig(__DIR__ . '/components/acl/config.nenon');
