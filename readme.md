@@ -88,3 +88,28 @@ return new Security\Identity($row->userId, $userRoles, $row->toArray());
 ```
 
 **6) Include [conf.neon](https://github.com/accgit/acl/blob/master/acl/conf.neon) in ACL component to Configuration File or register to bootstrap class.**
+
+**7) Inject Component\Acl to Presenter and create factory.
+
+```php
+/**
+ * @return Acle
+ */
+protected function createComponentAcl()
+{
+	return $this->acl;
+}
+```
+
+**8) In the template, call acl components
+
+```latte
+{control acl-roles}
+{control acl-privileges}
+{control acl-resources}
+{control acl-permissions}
+```
+
+**9) Copy and pase files from www foldier.
+
+Enjoy.
