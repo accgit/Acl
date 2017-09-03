@@ -111,5 +111,3 @@ protected function createComponentAcl()
 ```
 
 **9) Copy and pase files from www foldier.**
-
-Enjoy.
