@@ -6,23 +6,22 @@
  */
 namespace Component\Acl\Repository;
 
-use Drago;
 use Exception;
 use Drago\Database;
 use Component\Acl;
 
 /**
- * Privileges repository.
+ * Resources repository.
  */
-class Privileges extends Drago\Database\Connection
+class Resources extends BaseRepository
 {
-        // Exceptions errors.
+	// Exceptions errors.
 	const RECORD_NOT_FOUND = 1;
 
 	/**
 	 * @var string
 	 */
-	private $table = ':prefix:privileges';
+	private $table = ':prefix:resources';
 
 	/**
 	 * Returns all records.
@@ -45,7 +44,7 @@ class Privileges extends Drago\Database\Connection
 	public function find($id)
 	{
 		$row = $this->all()
-			->where('privilegeId = ?', $id)
+			->where('resourceId = ?', $id)
 			->fetch();
 
 		if (!$row) {
@@ -61,28 +60,30 @@ class Privileges extends Drago\Database\Connection
 	 */
 	public function delete($id)
 	{
-		return $this->db
-			->delete($this->table)
-			->where('privilegeId = ?', $id)
-			->execute();
+		$row = $this->db->delete($this->table)->where('resourceId = ?', $id)->execute();
+		$this->caches->removeCache(Acl\Authorizator::ACL_CACHE);
+		return $row;
 	}
 
 	/**
 	 * Save record.
-	 * @param Acl\Entity\Privileges
+	 * @param Acl\Entity\Resources
 	 * @return void
 	 */
-	public function save(Acl\Entity\Privileges $entity)
+	public function save(Acl\Entity\Resources $entity)
 	{
 		if (!$entity->getId()) {
-			return $this->db
-				->insert($this->table, Database\Iterator::set($entity))
-				->execute();
+			$row = $this->db->insert($this->table, Database\Iterator::set($entity))->execute();
+			$this->caches->removeCache(Acl\Authorizator::ACL_CACHE);
+			return $row;
 		} else {
-			return $this->db
+			$row = $this->db
 				->update($this->table, Database\Iterator::set($entity))
-				->where('privilegeId = ?', $entity->getId())
+				->where('resourceId = ?', $entity->getId())
 				->execute();
+
+			$this->caches->removeCache(Acl\Authorizator::ACL_CACHE);
+			return $row;
 		}
 	}
 

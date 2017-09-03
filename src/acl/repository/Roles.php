@@ -19,8 +19,8 @@ class Roles extends BaseRepository
 	const
 		RECORD_NOT_FOUND   = 1,
 		PARENT_ROLE_EXIST  = 2,
-		NOT_ALLOWED_DELETE = 3,
-		INVALID_ROLE_NAME  = 4;
+		NOT_ALLOWED_EDIT   = 3,
+		NOT_ALLOWED_DELETE = 4;
 
 	/**
 	 * @var string
@@ -49,6 +49,21 @@ class Roles extends BaseRepository
 	}
 
 	/**
+	 * List of roles that are not allowed to be edited or deleted.
+	 * @param array
+	 * @return boolean
+	 */
+	private function notAllowed($row)
+	{
+		if (
+			$row->name === Acl\Authorizator::ROLE_GUEST or
+			$row->name === Acl\Authorizator::ROLE_MEMBER or
+			$row->name === Acl\Authorizator::ROLE_ADMIN) {
+			return TRUE;
+		}
+	}
+
+	/**
 	 * Find record by id.
 	 * @param int
 	 * @return void
@@ -62,6 +77,22 @@ class Roles extends BaseRepository
 
 		if (!$row) {
 			throw new Exception('Sorry, but the record was not found.', self::RECORD_NOT_FOUND);
+
+		}
+		return $row;
+	}
+
+	/**
+	 * Find role.
+	 * @param int
+	 * @return array
+	 * @throws Exception
+	 */
+	public function findRole($id)
+	{
+		$row = $this->find($id);
+		if ($this->notAllowed($row)) {
+			throw new Exception('The role is not allowed to be edited anyway.', self::NOT_ALLOWED_EDIT);
 		}
 		return $row;
 	}
@@ -93,7 +124,7 @@ class Roles extends BaseRepository
 	public function delete($id)
 	{
 		$row = $this->find($id);
-		if ($row->name === Acl\Authorizator::ROLE_GUEST or $row->name === Acl\Authorizator::ROLE_MEMBER or $row->name === Acl\Authorizator::ROLE_ADMIN) {
+		if ($this->notAllowed($row)) {
 			throw new Exception('Sorry, this role is not allowed to be deleted.', self::NOT_ALLOWED_DELETE);
 		}
 		$db  = $this->db->delete($this->table)->where('roleId = ?', $id)->execute();
@@ -110,9 +141,6 @@ class Roles extends BaseRepository
 	public function save(Acl\Entity\Roles $entity)
 	{
 		if (!$entity->getId()) {
-			if ($entity->name === Acl\Authorizator::ROLE_ADMIN) {
-				throw new Exception('Invalid role name.', self::INVALID_ROLE_NAME);
-			}
 			$db = $this->db->insert($this->table, Database\Iterator::set($entity))->execute();
 			$this->caches->removeCache(Acl\Authorizator::ACL_CACHE);
 			return $db;

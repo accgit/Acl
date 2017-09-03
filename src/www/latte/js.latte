@@ -1,0 +1,86 @@
+
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/2.2.4/jquery.min.js"></script>
+<script src="https://nette.github.io/resources/js/netteForms.js"></script>
+<script>
+	function showErrors(errors, focus) {
+		errors.forEach(function(error) {
+			if (error.message) {
+				$(error.element).closest('div').addClass('has-error').find('.error').remove();
+				$('<span class="error">').text(error.message).insertAfter(error.element);
+			}
+
+			if (focus && error.element.focus) {
+				error.element.focus();
+				focus = false;
+			}
+		});
+	}
+
+	function removeErrors(elem) {
+		if ($(elem).is('form')) {
+			$('.has-error', elem).removeClass('has-error');
+			$('.error', elem).remove();
+
+		} else {
+			$(elem).closest('div').removeClass('has-error').find('.error').remove();
+		}
+	}
+
+	Nette.showFormErrors = function(form, errors) {
+		removeErrors(form);
+		showErrors(errors, true);
+	};
+
+	$(function() {
+		$(':input').keypress(function() {
+			removeErrors(this);
+		});
+
+		$(':input').blur(function() {
+			Nette.formErrors = [];
+			Nette.validateControl(this);
+			showErrors(Nette.formErrors);
+		});
+	});
+</script>
+<script src="{$basePath}/www/js/nette.ajax.js"></script>
+<script src="{$basePath}/www/js/jquery.simplemodal.js"></script>
+<script>
+	$(function() {
+		var options = {
+			opacity: 85,
+			position:    ['10%', '35%'],
+			overlayId:   'modal-overlay',
+			containerId: 'modal-container',
+			closeHTML:   '<a class="modal-close-ico" title="Zavřít"></a>'
+		};
+		$.nette.ext('modal', {
+			load: function() {
+				$('.modal').click(function () {
+					var modalId = $(this).attr('id');
+					modalId = modalId.replace('modal','#modal-box');
+					$(modalId).modal(options);
+					return false;
+				});
+			},
+			success: function(payload) {
+				if (payload.modal === 'close') {
+					$.modal.close();
+
+				} else if (payload.modal === 'roles') {
+					$('#modal-box-roles').modal(options);
+
+				} else if (payload.modal === 'privileges') {
+					$('#modal-box-privileges').modal(options);
+
+				} else if (payload.modal === 'resources') {
+					$('#modal-box-resources').modal(options);
+
+				} else if (payload.modal === 'permissions') {
+					$('#modal-box-permissions').modal(options);
+				}
+			}
+		});
+		$.nette.init();
+	});
+</script>

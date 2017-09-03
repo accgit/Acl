@@ -1,0 +1,68 @@
+
+{* permissions latte *}
+<div class="wrapping">
+
+	{* flash message *}
+	{snippet message}
+	<div class="wrapping">
+		<p n:foreach="$flashes as $flash" class="message {$flash->type}">{$flash->message}</p>
+	</div>
+	{/snippet}
+
+	{* title *}
+	<p class="title">
+		<a href="#" id="modal-permissions" class="modal">Oprávnění</a>
+	</p>
+
+	{* factory *}
+	{snippet factory}
+	<div id="modal-box-permissions" class="screen reader">
+		{snippet errors}
+		{form factory class => 'ajax'}
+			<h3>Oprávnění</h3>
+			<ul class="errors" n:if="$form->hasErrors()">
+				<li n:foreach="$form->errors as $error">{$error}</li>
+			</ul>
+			<div class="row">
+				<div class="six columns">{input roleId}</div>
+				<div class="six columns">{input resourceId}</div>
+			</div>
+			<div class="row">
+				<div class="six columns">{input privilegeId}</div>
+				<div class="six columns">{input allowed}</div>
+			</div>
+			{input send class => 'button primary'}
+		{/form}
+		{/snippet}
+	</div>
+	{/snippet}
+
+	{* items *}
+	{snippet items}
+	{if count($items)}
+	<div class="tree">
+		<ul>
+		{foreach $roles as $role}
+			<li>
+				<span class="name">{$role->name}</span>
+				<ul n:foreach="$items as $item" n:if="$role->name == $item->role">
+					<li>
+						<span class="name">{$item->resource}</span> ({$item->privilege})
+						<ul>
+							<li>
+								<span class="permission"><i n:class="$item->allowed == 'yes' ? 'allowed fa fa-check' : 'deny fa fa-times'" aria-hidden="true"></i></span>
+								<a n:href="edit!, $item->id" title="Upravit" class="ajax action"><i class="fa fa-pencil" aria-hidden="true"></i></a>
+								<a n:href="delete!, $item->id" title="Smazat" class="ajax action"><i class="fa fa-times" aria-hidden="true"></i></a>
+							</li>
+						</ul>
+					</li>
+				</ul>
+			</li>
+		{/foreach}
+		</ul>
+	</div>
+	{else}
+		<p class="na">n/a</p>
+	{/if}
+	{/snippet}
+</div>

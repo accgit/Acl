@@ -7,21 +7,21 @@
 namespace Component\Acl\Repository;
 
 use Exception;
-use Drago\Database;
+use Drago\Database\Iterator;
 use Component\Acl;
 
 /**
- * Resources repository.
+ * Permissions repository.
  */
-class Resources extends BaseRepository
+class Permissions extends BaseRepository
 {
-    	// Exceptions errors.
+	// Exceptions errors.
 	const RECORD_NOT_FOUND = 1;
 
 	/**
 	 * @var string
 	 */
-	private $table = ':prefix:resources';
+	private $table = ':prefix:permissions';
 
 	/**
 	 * Returns all records.
@@ -30,9 +30,11 @@ class Resources extends BaseRepository
 	public function all()
 	{
 		return $this->db
-			->select('*')
-			->from($this->table)
-			->orderBy('name asc');
+			->query(''
+				. 'SELECT a.id, a.allowed, r.name AS role, res.name AS resource, p.name AS privilege FROM :prefix:permissions AS a '
+				. 'JOIN :prefix:resources AS res using (resourceId) '
+				. 'JOIN :prefix:privileges AS p using (privilegeId) '
+				. 'JOIN :prefix:roles AS r using (roleId)');
 	}
 
 	/**
@@ -43,8 +45,10 @@ class Resources extends BaseRepository
 	 */
 	public function find($id)
 	{
-		$row = $this->all()
-			->where('resourceId = ?', $id)
+		$row = $this->db
+			->select('*')
+			->from($this->table)
+			->where('id = ?', $id)
 			->fetch();
 
 		if (!$row) {
@@ -60,26 +64,26 @@ class Resources extends BaseRepository
 	 */
 	public function delete($id)
 	{
-		$row = $this->db->delete($this->table)->where('resourceId = ?', $id)->execute();
+		$row = $this->db->delete($this->table)->where('id = ?', $id)->execute();
 		$this->caches->removeCache(Acl\Authorizator::ACL_CACHE);
 		return $row;
 	}
 
 	/**
 	 * Save record.
-	 * @param Acl\Entity\Resources
+	 * @param Acl\Entity\Permissions
 	 * @return void
 	 */
-	public function save(Acl\Entity\Resources $entity)
+	public function save(Acl\Entity\Permissions $entity)
 	{
 		if (!$entity->getId()) {
-			$row = $this->db->insert($this->table, Database\Iterator::set($entity))->execute();
+			$row = $this->db->insert($this->table, Iterator::set($entity))->execute();
 			$this->caches->removeCache(Acl\Authorizator::ACL_CACHE);
 			return $row;
 		} else {
 			$row = $this->db
-				->update($this->table, Database\Iterator::set($entity))
-				->where('resourceId = ?', $entity->getId())
+				->update($this->table, Iterator::set($entity))
+				->where('id = ?', $entity->getId())
 				->execute();
 
 			$this->caches->removeCache(Acl\Authorizator::ACL_CACHE);

@@ -1,0 +1,51 @@
+
+{* roles resources *}
+<div class="wrapping">
+
+	{* flash message *}
+	{snippet message}
+	<div class="wrapping">
+		<p n:foreach="$flashes as $flash" class="message {$flash->type}">{$flash->message}</p>
+	</div>
+	{/snippet}
+
+	{* title *}
+	<p class="title">
+		<a href="#" id="modal-resources" class="modal">Zdroje</a>
+	</p>
+
+	{* factory *}
+	{snippet factory}
+	<div id="modal-box-resources" class="screen reader">
+		{snippet errors}
+			{form factory class => 'ajax'}
+				<h3>Zdroje</h3>
+				<ul class="errors" n:if="$form->hasErrors()">
+					<li n:foreach="$form->errors as $error">{$error}</li>
+				</ul>
+				{input name class => 'full width'}
+				{input send class => 'button primary'}
+			{/form}
+		{/snippet}
+	</div>
+	{/snippet}
+
+	{* items *}
+	{snippet items}
+	{if count($items)}
+	<div class="tree">
+		<ul>
+			<li n:foreach="$items as $item">
+				<span class="name">{$item->name}</span>
+				<span class="float right">
+					<a n:href="edit!, $item->resourceId" class="ajax action"><i class="fa fa-pencil" aria-hidden="true"></i></a>
+					<a n:href="delete!, $item->resourceId" class="ajax action"><i class="fa fa-times" aria-hidden="true"></i></a>
+				</span>
+			</li>
+		</ul>
+	</div>
+	{else}
+		<p class="na">n/a</p>
+	{/if}
+	{/snippet}
+</div>

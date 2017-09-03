@@ -1,0 +1,162 @@
+
+    /*
+	acl style
+    */
+    @import url(https://css-ui.github.io/css/css.ui.min.css);
+    @import url(https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css);
+
+    body {
+	font-family: 'Segoe UI', Frutiger, 'Frutiger Linotype', 'Dejavu Sans', 'Helvetica Neue', Arial, sans-serif;
+	    padding: 15px;
+    }
+
+    /*
+	tree
+    */
+    .tree ul {
+	list-style: none outside none;
+	 font-size: 1em;
+    }
+
+    .tree li {
+	background-color: #f4f4f4;
+	   border-radius: 3px;
+	         padding: 5px;
+		  margin: 0 0 2px 0;
+		   color: #858585;
+    }
+
+    .tree li ul li {
+	margin-bottom: 5px;
+	      padding: 0;
+    }
+
+    .tree ul li ul {
+	border-left: 1px solid #cecece;
+	   overflow: hidden;
+	    padding: 0 0 0 25px;
+	     margin: 0 0 0 15px;
+    }
+
+    .tree ul li ul li {
+	position: relative;
+    }
+
+    .tree ul li ul li:before {
+	border-bottom: 1px dashed #cecece;
+	     position: absolute;
+	      content: '';
+	        width: 15px;
+		 left: -20px;
+		  top: 12px;
+    }
+
+    /*
+	without tree
+    */
+    .tree ul li span.name {
+	margin-left: 12px;
+	font-weight: 500;
+	      color: #5d5d5d;
+    }
+
+    /*
+	tree link action
+    */
+    .tree li a.action {
+	border-radius: 3px;
+	 margin-right: 2px;
+	   text-align: center;
+	      display: block;
+		float: left;
+		width: 25px;
+    }
+
+    .tree li a.action {
+	background-color: #10a2f1;
+	           color: white;
+    }
+
+    .tree li a.action:hover {
+	background-color: #0f9ce8;
+	           color: white;
+    }
+
+    .tree .permission {
+	background-color: #5d5d5d;
+	border-radius: 3px;
+	 margin-right: 2px;
+	   text-align: center;
+	      display: block;
+		float: left;
+		width: 25px;
+    }
+
+    .tree .permission .allowed {
+	color: #fff;
+    }
+
+    .tree .permission .deny {
+	color: #fff;
+    }
+
+    /*
+	tree heading
+    */
+    .title {
+	margin-bottom: 8px;
+	    font-size: 1.5em;
+    }
+
+    .title a {
+	text-decoration: none;
+	          color: #545454;
+    }
+
+    .title a:hover {
+	text-decoration: underline;
+    }
+
+    /*
+	modal
+    */
+    #modal-overlay {
+	background-color: #000;
+    }
+
+    #modal-container {
+	background-color: white;
+	   border-radius: 6px;
+	         padding: 10px 25px;
+		  height: 280px;
+		   width: 460px;
+    }
+
+    #modal-container a.modal-close-ico {
+	background: url(../img/close.png) no-repeat;
+	  position: absolute;
+	   display: inline;
+	   z-index: 3200;
+	    height: 35px;
+	    cursor: pointer;
+	     width: 35px;
+	     right: -12px;
+	       top: -10px;
+    }
+
+    /*
+	form errors
+    */
+    span.error {
+	margin-bottom: 7px;
+	  font-weight: 500;
+	      display: block;
+	        color: #d53a3a;
+    }
+
+    /*
+	other
+    */
+    p.na {
+	margin-bottom: 0;
+    }
