@@ -19,7 +19,7 @@
 	<div id="modal-box-roles" class="screen reader">
 		{snippet errors}
 			{form factory class => 'ajax'}
-				<h3>Role</h3>
+				<h3 class="modal-title">Role</h3>
 				<ul class="errors" n:if="$form->hasErrors()">
 					<li n:foreach="$form->errors as $error">{$error}</li>
 				</ul>
@@ -28,6 +28,9 @@
 				{input send class   => 'button primary'}
 			{/form}
 		{/snippet}
+		<div class="wrapping">
+			<a n:href="close!" class="modal-close ajax" id="close" title="Zavřít"></a>
+		</div>
 	</div>
 	{/snippet}
 

@@ -132,7 +132,7 @@
 		   width: 460px;
     }
 
-    #modal-container a.modal-close-ico {
+    #modal-container a.modal-close {
 	background: url(../img/close.png) no-repeat;
 	  position: absolute;
 	   display: inline;
@@ -147,6 +147,12 @@
     /*
 	form errors
     */
+    ul.errors {
+	list-style: none;
+	margin: 0;
+    }
+
+    ul.errors li,
     span.error {
 	margin-bottom: 7px;
 	  font-weight: 500;
@@ -159,4 +165,8 @@
     */
     p.na {
 	margin-bottom: 0;
+    }
+
+    h3.modal-title {
+	margin-bottom: 0.250em;
     }
