@@ -7,7 +7,6 @@
 namespace Component\Acl\Control;
 
 use Exception;
-use Drago\Application;
 use Nette\Application\UI;
 
 use Component\Acl\Entity;
@@ -29,11 +28,10 @@ class Privileges extends BaseControl
 	private $repository;
 
 	public function __construct(
-		Application\UI\Factory $factory,
 		Entity\Privileges $entity,
 		Repository\Privileges $repository)
 	{
-		parent::__construct($factory);
+		parent::__construct();
 		$this->entity = $entity;
 		$this->repository = $repository;
 	}
@@ -52,7 +50,7 @@ class Privileges extends BaseControl
 	 */
 	protected function createComponentFactory()
 	{
-		$form = $this->factory->create();
+		$form = $this->factory();
 		$form->addText('name', 'Název')
 			->setAttribute('placeholder', 'Zadejte název akce nebo signálu.')
 			->setRequired();

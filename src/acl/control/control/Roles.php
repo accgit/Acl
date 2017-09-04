@@ -7,7 +7,6 @@
 namespace Component\Acl\Control;
 
 use Exception;
-use Drago\Application;
 use Nette\Application\UI;
 
 use Component\Acl\Entity;
@@ -29,11 +28,10 @@ class Roles extends BaseControl
 	private $repository;
 
 	public function __construct(
-		Application\UI\Factory $factory,
 		Entity\Roles $entity,
 		Repository\Roles $repository)
 	{
-		parent::__construct($factory);
+		parent::__construct();
 		$this->entity = $entity;
 		$this->repository = $repository;
 	}
@@ -84,7 +82,7 @@ class Roles extends BaseControl
 	 */
 	protected function createComponentFactory()
 	{
-		$form = $this->factory->create();
+		$form = $this->factory();
 		$form->addText('name', 'Název')
 			->setAttribute('placeholder', 'Zadejte název role.')
 			->setRequired();

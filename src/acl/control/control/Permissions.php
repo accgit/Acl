@@ -7,7 +7,6 @@
 namespace Component\Acl\Control;
 
 use Exception;
-use Drago\Application;
 use Nette\Application\UI;
 
 use Component\Acl\Entity;
@@ -44,14 +43,13 @@ class Permissions extends BaseControl
 	private $permissions;
 
 	public function __construct(
-		Application\UI\Factory $factory,
 		Entity\Permissions $entity,
 		Repository\Roles $roles,
 		Repository\Resources $resources,
 		Repository\Privileges $privileges,
 		Repository\Permissions $permissions)
 	{
-		parent::__construct($factory);
+		parent::__construct();
 		$this->entity = $entity;
 		$this->roles  = $roles;
 		$this->resources = $resources;
@@ -74,7 +72,7 @@ class Permissions extends BaseControl
 	 */
 	protected function createComponentFactory()
 	{
-		$form  = $this->factory->create();
+		$form  = $this->factory();
 		$roles = [];
 		foreach ($this->roles->all() as $role) {
 			$roles[$role->roleId] = $role->name;

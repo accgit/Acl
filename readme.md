@@ -81,7 +81,6 @@ return new Security\Identity($row->userId, $userRoles, $row->toArray());
 ```json
 {
 	"require": {
-		"drago-ex/application": "~1.0.0",
 		"drago-ex/cache": "~1.0.0"
 	}
 }

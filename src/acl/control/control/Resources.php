@@ -7,7 +7,6 @@
 namespace Component\Acl\Control;
 
 use Exception;
-use Drago\Application;
 use Nette\Application\UI;
 
 use Component\Acl\Entity;
@@ -29,11 +28,10 @@ class Resources extends BaseControl
 	private $repository;
 
 	public function __construct(
-		Application\UI\Factory $factory,
 		Entity\Resources $entity,
 		Repository\Resources $repository)
 	{
-		parent::__construct($factory);
+		parent::__construct();
 		$this->entity = $entity;
 		$this->repository = $repository;
 	}
@@ -52,7 +50,7 @@ class Resources extends BaseControl
 	 */
 	protected function createComponentFactory()
 	{
-		$form = $this->factory->create();
+		$form = $this->factory();
 		$form->addText('name', 'Název')
 			->setAttribute('placeholder', 'Zadejte název zdroje.')
 			->setRequired('Prosím, vyplňte povinnu položku.');
