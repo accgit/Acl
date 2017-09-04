@@ -35,12 +35,6 @@
 		$(':input').keypress(function() {
 			removeErrors(this);
 		});
-
-		$(':input').blur(function() {
-			Nette.formErrors = [];
-			Nette.validateControl(this);
-			showErrors(Nette.formErrors);
-		});
 	});
 </script>
 <script src="{$basePath}/www/js/nette.ajax.js"></script>
