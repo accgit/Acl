@@ -48,16 +48,14 @@
 <script>
 	$(function() {
 		var options = {
-			opacity: 85,
-			position:    ['10%', '35%'],
-			overlayId:   'modal-overlay',
-			containerId: 'modal-container'
+			opacity:  85,
+			position: ['10%', '35%']
 		};
 		$.nette.ext('modal', {
 			load: function() {
 				$('.modal').click(function () {
 					var modalId = $(this).attr('id');
-					modalId = modalId.replace('modal','#modal-box');
+					modalId = modalId.replace('modal','#simplemodal');
 					$(modalId).modal(options);
 					return false;
 				});
@@ -67,16 +65,16 @@
 					$.modal.close();
 
 				} else if (payload.modal === 'roles') {
-					$('#modal-box-roles').modal(options);
+					$('#simplemodal-roles').modal(options);
 
 				} else if (payload.modal === 'privileges') {
-					$('#modal-box-privileges').modal(options);
+					$('#simplemodal-privileges').modal(options);
 
 				} else if (payload.modal === 'resources') {
-					$('#modal-box-resources').modal(options);
+					$('#simplemodal-resources').modal(options);
 
 				} else if (payload.modal === 'permissions') {
-					$('#modal-box-permissions').modal(options);
+					$('#simplemodal-permissions').modal(options);
 				}
 			}
 		});

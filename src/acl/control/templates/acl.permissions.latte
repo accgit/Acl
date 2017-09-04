@@ -10,13 +10,13 @@
 	{/snippet}
 
 	{* title *}
-	<p class="title">
+	<p class="heading">
 		<a href="#" id="modal-permissions" class="modal">Oprávnění</a>
 	</p>
 
 	{* factory *}
 	{snippet factory}
-	<div id="modal-box-permissions" class="screen reader">
+	<div id="simplemodal-permissions" class="screen reader">
 		{snippet errors}
 		{form factory class => 'ajax'}
 			<h3>Oprávnění</h3>
@@ -50,12 +50,12 @@
 				<span class="name">{$role->name}</span>
 				<ul n:foreach="$items as $item" n:if="$role->name == $item->role">
 					<li>
-						<span class="name">{$item->resource}</span> ({$item->privilege})
+						<span class="name">{$item->resource}</span>:{$item->privilege}
 						<ul>
 							<li>
-								<span class="permission"><i n:class="$item->allowed == 'yes' ? 'allowed fa fa-check' : 'deny fa fa-times'" aria-hidden="true"></i></span>
-								<a n:href="edit!, $item->id" title="Upravit" class="ajax action"><i class="fa fa-pencil" aria-hidden="true"></i></a>
-								<a n:href="delete!, $item->id" title="Smazat" class="ajax action"><i class="fa fa-times" aria-hidden="true"></i></a>
+								<span class="permission"><i n:class="$item->allowed == 'yes' ? 'fa fa-circle allowed' : 'fa fa-circle deny'" aria-hidden="true"></i></span>
+								<a n:href="edit!, $item->id" title="Upravit" class="link ajax"><i class="fa fa-pencil" aria-hidden="true"></i></a>
+								<a n:href="delete!, $item->id" title="Smazat" class="link ajax"><i class="fa fa-times" aria-hidden="true"></i></a>
 							</li>
 						</ul>
 					</li>

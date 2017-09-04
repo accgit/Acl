@@ -34,12 +34,13 @@
     .tree ul li ul {
 	border-left: 1px solid #cecece;
 	   overflow: hidden;
-	    padding: 0 0 0 25px;
+	    padding: 0 0 8px 25px;
 	     margin: 0 0 0 15px;
     }
 
     .tree ul li ul li {
 	position: relative;
+	  margin: 0;
     }
 
     .tree ul li ul li:before {
@@ -51,80 +52,79 @@
 		  top: 12px;
     }
 
-    /*
-	without tree
-    */
     .tree ul li span.name {
 	margin-left: 12px;
 	font-weight: 500;
 	      color: #5d5d5d;
     }
 
-    /*
-	tree link action
-    */
-    .tree li a.action {
+    .tree ul li span.permission {
+	margin-top: 3px;
 	border-radius: 3px;
 	 margin-right: 2px;
 	   text-align: center;
+	    font-size: 0.83em;
 	      display: block;
 		float: left;
 		width: 25px;
     }
 
-    .tree li a.action {
-	background-color: #10a2f1;
-	           color: white;
+    .tree ul li span.permission i.allowed {
+	color: #6eaf34;
     }
 
-    .tree li a.action:hover {
+    .tree ul li span.permission .deny {
+	color: #af3434;
+    }
+
+    .tree ul li a.link {
+	background-color: #10a2f1;
+	   border-radius: 3px;
+	    margin-right: 2px;
+	      text-align: center;
+	         display: block;
+	           color: white;
+		   float: left;
+		   width: 25px;
+    }
+
+    .tree ul li a.link:hover {
 	background-color: #0f9ce8;
 	           color: white;
     }
 
-    .tree .permission {
-	background-color: #5d5d5d;
-	border-radius: 3px;
-	 margin-right: 2px;
-	   text-align: center;
-	      display: block;
-		float: left;
-		width: 25px;
-    }
-
-    .tree .permission .allowed {
-	color: #fff;
-    }
-
-    .tree .permission .deny {
-	color: #fff;
-    }
-
     /*
-	tree heading
+	heading
     */
-    .title {
+    .heading {
 	margin-bottom: 8px;
 	    font-size: 1.5em;
     }
 
-    .title a {
+    .heading a {
 	text-decoration: none;
 	          color: #545454;
     }
 
-    .title a:hover {
+    .heading a:hover {
 	text-decoration: underline;
     }
 
     /*
-	modal
+	simple modal
     */
-    #modal-overlay {
+    #simplemodal-roles h3,
+    #simplemodal-privileges h3,
+    #simplemodal-resources h3,
+    #simplemodal-permissions h3 {
+	margin-bottom: 0.250em;
+    }
+
+    #simplemodal-overlay {
 	background-color: #000;
     }
 
-    #modal-container {
+    #simplemodal-container {
 	background-color: white;
 	   border-radius: 6px;
 	         padding: 10px 25px;
@@ -132,7 +132,7 @@
 		   width: 460px;
     }
 
-    #modal-container a.modal-close {
+    #simplemodal-container a.modal-close {
 	background: url(../img/close.png) no-repeat;
 	  position: absolute;
 	   display: inline;
@@ -149,7 +149,7 @@
     */
     ul.errors {
 	list-style: none;
-	margin: 0;
+	    margin: 0;
     }
 
     ul.errors li,
@@ -165,8 +165,4 @@
     */
     p.na {
 	margin-bottom: 0;
-    }
-
-    h3.modal-title {
-	margin-bottom: 0.250em;
     }
