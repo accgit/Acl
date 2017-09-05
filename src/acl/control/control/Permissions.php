@@ -121,24 +121,41 @@ class Permissions extends BaseControl
 	 */
 	public function process(UI\Form $form)
 	{
-		$values = $form->values;
-		$entity = $this->entity;
-		$entity->setId($values->id);
-		$entity->roleId = $values->roleId;
-		$entity->resourceId  = $values->resourceId;
-		$entity->privilegeId = $values->privilegeId;
-		$entity->allowed = $values->allowed;
+		try {
+		    	$values = $form->values;
+			if ($this->permissions->isRule($values) === FALSE) {
+				$entity = $this->entity;
+				$entity->setId($values->id);
+				$entity->roleId = $values->roleId;
+				$entity->resourceId  = $values->resourceId;
+				$entity->privilegeId = $values->privilegeId;
+				$entity->allowed = $values->allowed;
 
-		$this->permissions->save($entity);
-		$message = $values->id ? 'Oprávnění bylo aktualizováno.' : 'Oprávnění bylo vloženo.';
-		$this->flashMessage($message, 'success');
+				$this->permissions->save($entity);
+				$message = $values->id ? 'Oprávnění bylo aktualizováno.' : 'Oprávnění bylo vloženo.';
+				$this->flashMessage($message, 'success');
 
-		if ($this->isAjax()) {
-			$form->setValues([], TRUE);
-			$this->presenter->payload->modal = 'close';
-			$this->redrawControl('items');
-			$this->redrawControl('message');
-			$this->redrawControl('factory');
+				if ($this->isAjax()) {
+					$form->setValues([], TRUE);
+					$this->presenter->payload->modal = 'close';
+					$this->redrawControl('items');
+					$this->redrawControl('message');
+					$this->redrawControl('factory');
+				}
+			}
+
+		} catch (Exception $e) {
+			if ($e->getCode() === 2) {
+				$form->addError('Toto pravidlo je již nastaveno.', 'warning');
+			}
+
+			if ($this->isAjax()) {
+				$this->redrawControl('errors');
+			}
+		}
+
+		if (!$this->isAjax()) {
+			$this->redirect('this');
 		}
 	}
 

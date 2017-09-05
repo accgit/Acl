@@ -40,7 +40,7 @@
 		<ul>
 		{block items}
 			<li n:foreach="$items as $item">
-				<span class="name">{$item->name}</span>
+				<a>{$item->name}</a>
 				<ul>
 					<li>
 						<a n:href="edit!, $item->roleId" class="link ajax"><i class="fa fa-pencil" aria-hidden="true"></i></a>

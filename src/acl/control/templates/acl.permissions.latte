@@ -47,13 +47,16 @@
 		<ul>
 		{foreach $roles as $role}
 			<li>
-				<span class="name">{$role->name}</span>
+				<a>{$role->name}</a>
 				<ul n:foreach="$items as $item" n:if="$role->name == $item->role">
 					<li>
-						<span class="name">{$item->resource}</span>:{$item->privilege}
+						<a>
+							{if $item->allowed == 'yes'}(<span class="allowed">P</span>){else}(<span class="deny">Z</span>){/if}
+							{$item->resource}<span class="privilege">({$item->privilege})</span>
+						</a>
 						<ul>
 							<li>
-								<span class="permission"><i n:class="$item->allowed == 'yes' ? 'fa fa-circle allowed' : 'fa fa-circle deny'" aria-hidden="true"></i></span>
+
 								<a n:href="edit!, $item->id" title="Upravit" class="link ajax"><i class="fa fa-pencil" aria-hidden="true"></i></a>
 								<a n:href="delete!, $item->id" title="Smazat" class="link ajax"><i class="fa fa-times" aria-hidden="true"></i></a>
 							</li>

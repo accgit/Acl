@@ -16,7 +16,10 @@ use Component\Acl;
 class Permissions extends BaseRepository
 {
 	// Exceptions errors.
-	const RECORD_NOT_FOUND = 1;
+	const
+
+		RECORD_NOT_FOUND = 1,
+		DUPLICATION_RULE = 2;
 
 	/**
 	 * @var string
@@ -53,6 +56,28 @@ class Permissions extends BaseRepository
 
 		if (!$row) {
 			throw new Exception('Sorry, but the record was not found.', self::RECORD_NOT_FOUND);
+		}
+		return $row;
+	}
+
+	/**
+	 * Check is rule already.
+	 * @param array
+	 * @return void
+	 * @throws Exception
+	 */
+	public function isRule($values)
+	{
+		$row = $this->db
+			->select('roleId, resourceId, privilegeId')
+			->from($this->table)
+			->where('roleId = ?', $values->roleId)
+			->and('resourceId = ?', $values->resourceId)
+			->and('privilegeId = ?', $values->privilegeId)
+			->fetch();
+
+		if ($row) {
+			throw new Exception('Sorry, this rule is already set.', self::DUPLICATION_RULE);
 		}
 		return $row;
 	}

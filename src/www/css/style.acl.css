@@ -23,7 +23,6 @@
 	   border-radius: 3px;
 	         padding: 5px;
 		  margin: 0 0 2px 0;
-		   color: #858585;
     }
 
     .tree li ul li {
@@ -31,11 +30,43 @@
 	      padding: 0;
     }
 
+    .tree > ul > li > a {
+	text-decoration: none;
+	       position: relative;
+	        display: block;
+    }
+
+    .tree li.parent > a {
+	text-decoration: none;
+	    font-weight: 500;
+	         cursor: pointer;
+	        padding: 0 0 0 25px;
+		  color: #5d5d5d;
+    }
+
     .tree ul li ul {
 	border-left: 1px solid #cecece;
 	   overflow: hidden;
+	    display: none;
 	    padding: 0 0 8px 25px;
 	     margin: 0 0 0 15px;
+    }
+
+    .tree li.parent > a:before {
+	background-position: 25px center;
+	   background-image: url('../img/tree.png');
+	     vertical-align: middle;
+	           position: absolute;
+		   content: '';
+		   display: block;
+		    height: 21px;
+		     width: 23px;
+		      left: 0;
+		       top: 2px;
+    }
+
+    .tree ul li.active > a:before {
+	background-position: 0 center;
     }
 
     .tree ul li ul li {
@@ -58,23 +89,12 @@
 	      color: #5d5d5d;
     }
 
-    .tree ul li span.permission {
-	margin-top: 3px;
-	border-radius: 3px;
-	 margin-right: 2px;
-	   text-align: center;
-	    font-size: 0.83em;
-	      display: block;
-		float: left;
-		width: 25px;
+    .tree ul li span.allowed {
+	color: #10a2f1;
     }
 
-    .tree ul li span.permission i.allowed {
-	color: #6eaf34;
-    }
-
-    .tree ul li span.permission .deny {
-	color: #af3434;
+    .tree ul li span.privilege {
+	color: #858585;
     }
 
     .tree ul li a.link {
