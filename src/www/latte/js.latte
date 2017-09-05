@@ -72,6 +72,19 @@
 				}
 			}
 		});
+		$.nette.ext('tree', {
+			load: function() {
+				$('.tree li').each(function() {
+					if ($(this).children('ul').length > 0 ) {
+							$(this).addClass('parent');
+						}
+					});
+					$(document).off('click').on('click', '.tree li.parent > a', function() {
+						$(this).parent().toggleClass( 'active' );
+						$(this).parent().children('ul').slideToggle('fast');
+					});
+				}
+		});
 		$.nette.init();
 	});
 </script>
