@@ -61,7 +61,9 @@ class Permissions extends BaseControl
 	{
 		$template = $this->template;
 		$template->roles = $this->roles->findRoles();
-		$template->items = $this->permissions->all();
+		$template->rules = $this->permissions->rules();
+		$template->privileges = $this->permissions->privileges();
+		$template->resources = $this->permissions->resources();
 		$template->setFile(__DIR__ . '/../templates/acl.permissions.latte');
 		$template->render();
 	}

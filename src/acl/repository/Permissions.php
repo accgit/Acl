@@ -30,14 +30,25 @@ class Permissions extends BaseRepository
 	 * Returns all records.
 	 * @return array
 	 */
+	public function items()
+	{
+		return $this->db
+			->select('*')
+			->from($this->table);
+	}
+
+	/**
+	 * Returns all from joined tables.
+	 * @return array
+	 */
 	public function all()
 	{
 		return $this->db
-			->query(''
-				. 'SELECT a.id, a.allowed, r.name AS role, res.name AS resource, p.name AS privilege FROM :prefix:permissions AS a '
-				. 'JOIN :prefix:resources AS res using (resourceId) '
-				. 'JOIN :prefix:privileges AS p using (privilegeId) '
-				. 'JOIN :prefix:roles AS r using (roleId)');
+			->query('
+				SELECT a.id, a.allowed, r.name AS role, res.name AS resource, p.name AS privilege
+				FROM :prefix:permissions AS a JOIN :prefix:resources AS res using (resourceId)
+				JOIN :prefix:privileges AS p using (privilegeId)
+				JOIN :prefix:roles AS r using (roleId)');
 	}
 
 	/**
@@ -48,9 +59,7 @@ class Permissions extends BaseRepository
 	 */
 	public function find($id)
 	{
-		$row = $this->db
-			->select('*')
-			->from($this->table)
+		$row = $this->items()
 			->where('id = ?', $id)
 			->fetch();
 
@@ -68,9 +77,7 @@ class Permissions extends BaseRepository
 	 */
 	public function isRule($values)
 	{
-		$row = $this->db
-			->select('roleId, resourceId, privilegeId')
-			->from($this->table)
+		$row = $this->items()
 			->where('roleId = ?', $values->roleId)
 			->and('resourceId = ?', $values->resourceId)
 			->and('privilegeId = ?', $values->privilegeId)
@@ -80,6 +87,40 @@ class Permissions extends BaseRepository
 			throw new Exception('Sorry, this rule is already set.', self::DUPLICATION_RULE);
 		}
 		return $row;
+	}
+
+	/**
+	 * Group by rules.
+	 * @return array
+	 */
+	public function rules()
+	{
+		return $this->items()
+			->groupBy('allowed, roleId');
+	}
+
+	/**
+	 * Group by resources.
+	 * @return array
+	 */
+	public function resources()
+	{
+		return $this->db->query('
+			SELECT a.allowed, r.name AS role, res.name AS resource FROM permissions AS a
+			JOIN resources AS res using (resourceId) JOIN privileges AS p using (privilegeId)
+			JOIN roles AS r using (roleId) group by a.allowed, r.name, res.name');
+	}
+
+	/**
+	 * Group by privileges.
+	 * @return array
+	 */
+	public function privileges()
+	{
+		return $this->db->query('
+			SELECT a.id, a.allowed, r.name AS role, res.name AS resource, p.name as privilege FROM permissions AS a
+			JOIN resources AS res using (resourceId) JOIN privileges AS p using (privilegeId)
+			JOIN roles AS r using (roleId) group by a.allowed, r.name, res.name, p.name');
 	}
 
 	/**
