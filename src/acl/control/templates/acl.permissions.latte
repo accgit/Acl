@@ -24,15 +24,15 @@
 				<li n:foreach="$form->errors as $error">{$error}</li>
 			</ul>
 			<div class="row">
-				<div class="six columns">{input roleId}</div>
-				<div class="six columns">{input resourceId}</div>
+				<div class="six columns">{input roleId class => 'full width'}</div>
+				<div class="six columns">{input resourceId class => 'full width'}</div>
 			</div>
 			<div class="row">
-				<div class="six columns">{input privilegeId}</div>
-				<div class="six columns">{input allowed}</div>
+				<div class="six columns">{input privilegeId class => 'full width'}</div>
+				<div class="six columns">{input allowed class => 'full width'}</div>
 			</div>
 			<div class="wrapping">
-				{input send class => 'button primary full width'}
+				{input send class => 'button primary'}
 			</div>
 		{/form}
 		{/snippet}
