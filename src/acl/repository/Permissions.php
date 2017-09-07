@@ -106,9 +106,9 @@ class Permissions extends BaseRepository
 	public function resources()
 	{
 		return $this->db->query('
-			SELECT a.allowed, r.name AS role, res.name AS resource FROM permissions AS a
-			JOIN resources AS res using (resourceId) JOIN privileges AS p using (privilegeId)
-			JOIN roles AS r using (roleId) group by a.allowed, r.name, res.name');
+			SELECT a.allowed, r.name AS role, res.name AS resource FROM :prefix:permissions AS a
+			JOIN :prefix:resources AS res using (resourceId) JOIN :prefix:privileges AS p using (privilegeId)
+			JOIN :prefix:roles AS r using (roleId) GROUP BY a.allowed, r.name, res.name');
 	}
 
 	/**
@@ -118,9 +118,9 @@ class Permissions extends BaseRepository
 	public function privileges()
 	{
 		return $this->db->query('
-			SELECT a.id, a.allowed, r.name AS role, res.name AS resource, p.name as privilege FROM permissions AS a
-			JOIN resources AS res using (resourceId) JOIN privileges AS p using (privilegeId)
-			JOIN roles AS r using (roleId) group by a.allowed, r.name, res.name, p.name');
+			SELECT a.id, a.allowed, r.name AS role, res.name AS resource, p.name as privilege FROM :prefix:permissions AS a
+			JOIN :prefix:resources AS res using (resourceId) JOIN :prefix:privileges AS p using (privilegeId)
+			JOIN :prefix:roles AS r using (roleId) GROUP BY a.allowed, r.name, res.name, p.name');
 	}
 
 	/**
