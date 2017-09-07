@@ -17,16 +17,16 @@
 	{* factory *}
 	{snippet factory}
 	<div id="simplemodal-2" class="screen reader">
-		{snippet errors}
-			{form factory class => 'ajax'}
-				<h3>Akce a signály</h3>
-				<ul class="errors" n:if="$form->hasErrors()">
-					<li n:foreach="$form->errors as $error">{$error}</li>
-				</ul>
-				{input name class => 'full width'}
-				{input send class => 'button primary'}
-			{/form}
-		{/snippet}
+		{form factory class => 'ajax'}
+			<h3>Akce a signály</h3>
+			{snippet errors}
+			<ul class="errors" n:if="$form->hasErrors()">
+				<li n:foreach="$form->errors as $error">{$error}</li>
+			</ul>
+			{/snippet}
+			{input name class => 'full width'}
+			{input send class => 'button primary'}
+		{/form}
 		<span class="simplemodal-close">
 			<a href="#" class="modal-close" title="Zavřít">
 				<i class="fa fa-times" aria-hidden="true"></i>

@@ -40,6 +40,7 @@ class Privileges extends BaseControl
 	{
 		$template = $this->template;
 		$template->items = $this->repository->all();
+		$template->form = $this['factory'];
 		$template->setFile(__DIR__ . '/../templates/acl.privileges.latte');
 		$template->render();
 	}

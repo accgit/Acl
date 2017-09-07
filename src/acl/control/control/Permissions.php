@@ -64,6 +64,7 @@ class Permissions extends BaseControl
 		$template->rules = $this->permissions->rules();
 		$template->privileges = $this->permissions->privileges();
 		$template->resources = $this->permissions->resources();
+		$template->form = $this['factory'];
 		$template->setFile(__DIR__ . '/../templates/acl.permissions.latte');
 		$template->render();
 	}

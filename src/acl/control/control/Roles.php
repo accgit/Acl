@@ -40,6 +40,7 @@ class Roles extends BaseControl
 	{
 		$template = $this->template;
 		$template->items = $this->buildTree($this->repository->all());
+		$template->form = $this['factory'];
 		$template->setFile(__DIR__ . '/../templates/acl.roles.latte');
 		$template->render();
 	}

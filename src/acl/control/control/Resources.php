@@ -40,6 +40,7 @@ class Resources extends BaseControl
 	{
 		$template = $this->template;
 		$template->items = $this->repository->all();
+		$template->form = $this['factory'];
 		$template->setFile(__DIR__ . '/../templates/acl.resources.latte');
 		$template->render();
 	}
