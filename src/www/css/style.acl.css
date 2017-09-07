@@ -40,7 +40,7 @@
 	text-decoration: none;
 	    font-weight: 500;
 	         cursor: pointer;
-	        padding: 0 0 0 25px;
+	        padding: 0 0 2px 25px;
 		  color: #5d5d5d;
     }
 
@@ -48,7 +48,7 @@
 	border-left: 1px solid #cecece;
 	   overflow: hidden;
 	    display: none;
-	    padding: 0 0 3px 25px;
+	    padding: 0 0 0 25px;
 	     margin: 0 0 0 15px;
     }
 
@@ -149,19 +149,22 @@
 	   border-radius: 6px;
 	         padding: 10px 25px;
 		  height: 280px;
-		   width: 460px;
+		   width: 430px;
     }
 
     #simplemodal-container a.modal-close {
-	background: url(../img/close.png) no-repeat;
-	  position: absolute;
-	   display: inline;
-	   z-index: 3200;
-	    height: 35px;
-	    cursor: pointer;
-	     width: 35px;
-	     right: -12px;
-	       top: -10px;
+	font-size: 1.5em;
+	 position: absolute;
+	  display: inline;
+	  z-index: 3200;
+	   cursor: pointer;
+	    color: #b7b7b7;
+	    right: 12px;
+	      top: 0;
+    }
+
+    #simplemodal-container a.modal-close:hover {
+	color: #959595;
     }
 
     /*

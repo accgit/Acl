@@ -24,16 +24,14 @@
 					<li n:foreach="$form->errors as $error">{$error}</li>
 				</ul>
 				{input name class => 'full width'}
-				<div class="row">
-					<div class="six columns">
-						{input send class => 'button primary full width'}
-					</div>
-					<div class="six columns">
-						<a class="button common full width simplemodal-close">Zrušit</a>
-					</div>
-				</div>
+				{input send class => 'button primary'}
 			{/form}
 		{/snippet}
+		<span class="simplemodal-close">
+			<a href="#" class="modal-close" title="Zavřít">
+				<i class="fa fa-times" aria-hidden="true"></i>
+			</a>
+		</span>
 	</div>
 	{/snippet}
 
