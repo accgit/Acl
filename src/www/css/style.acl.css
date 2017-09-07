@@ -2,8 +2,8 @@
     /*
 	acl style
     */
-    @import url(https://css-ui.github.io/css/css.ui.min.css);
-    @import url(https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css);
+    @import url(css.ui.min.css);
+    @import url(font-awesome.min.css);
 
     body {
 	font-family: 'Segoe UI', Frutiger, 'Frutiger Linotype', 'Dejavu Sans', 'Helvetica Neue', Arial, sans-serif;

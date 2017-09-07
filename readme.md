@@ -93,15 +93,25 @@ return new Security\Identity($row->userId, $userRoles, $row->toArray());
 $configurator->addConfig(__DIR__ . '/components/acl/config.nenon');
 ```
 
-**7) Inject Component\Acl to Presenter and create factory.**
+**7) Inject Component\Acl to Presenter and create factory and handle**
 
 ```php
 /**
- * @return Acle
+ * @return Acl
  */
 protected function createComponentAcl()
 {
 	return $this->acl;
+}
+
+/**
+ * Redraw ACL component.
+ */
+public function handleAcl()
+{
+	if ($this->isAjax()) {
+		$this->redrawControl('acl');
+	}
 }
 ```
 
@@ -111,7 +121,9 @@ protected function createComponentAcl()
 {control acl-roles}
 {control acl-privileges}
 {control acl-resources}
-{control acl-permissions}
+{snippet acl}
+	{control acl-permissions}
+{/snippet}
 ```
 
-**9) Copy and pase files from www foldier.**
+**9) Copy and pase files from www directory.**

@@ -140,6 +140,7 @@ class Permissions extends BaseControl
 				if ($this->isAjax()) {
 					$form->setValues([], TRUE);
 					$this->presenter->payload->modal = 'close';
+					$this->presenter->payload->acl = 'acl';
 					$this->redrawControl('items');
 					$this->redrawControl('message');
 					$this->redrawControl('factory');
@@ -206,6 +207,7 @@ class Permissions extends BaseControl
 				$this->flashMessage('Oprávnění bylo odebráno.', 'info');
 
 				if ($this->isAjax()) {
+					$this->presenter->payload->acl = 'acl';
 					$this->redrawControl('items');
 					$this->redrawControl('factory');
 					$this->redrawControl('message');

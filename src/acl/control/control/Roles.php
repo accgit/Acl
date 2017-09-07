@@ -116,6 +116,7 @@ class Roles extends BaseControl
 			if ($this->isAjax()) {
 				$form->setValues([], TRUE);
 				$this->presenter->payload->modal = 'close';
+				$this->presenter->payload->acl = 'acl';
 				$this['factory']['parent']->setItems($this->factoryItems());
 				$this->redrawControl('items');
 				$this->redrawControl('message');
@@ -190,6 +191,7 @@ class Roles extends BaseControl
 					$this->flashMessage('Role byla odstraněna.', 'info');
 
 					if ($this->isAjax()) {
+						$this->presenter->payload->acl = 'acl';
 						$this->redrawControl('items');
 						$this->redrawControl('factory');
 						$this->redrawControl('message');

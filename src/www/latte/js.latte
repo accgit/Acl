@@ -1,6 +1,6 @@
 
-<script src="https://ajax.googleapis.com/ajax/libs/jquery/2.2.4/jquery.min.js"></script>
-<script src="https://nette.github.io/resources/js/netteForms.js"></script>
+<script src="{$basePath}/www/js/jquery.min.js"></script>
+<script src="{$basePath}/www/js/netteForms.js"></script>
 <script>
 	function showErrors(errors, focus) {
 		errors.forEach(function(error) {
@@ -41,10 +41,6 @@
 <script src="{$basePath}/www/js/jquery.simplemodal.js"></script>
 <script>
 	$(function() {
-		var options = {
-			opacity:  85,
-			position: ['10%', '35%']
-		};
 		$.nette.ext('modal', {
 			load: function() {
 				$('.modal').click(function () {
@@ -55,8 +51,13 @@
 				});
 			},
 			success: function(payload) {
+
 				if (payload.modal === 'close') {
 					$.modal.close();
+					json.data();
+
+				} else if (payload.acl === 'acl') {
+					json.data();
 
 				} else if (payload.modal === 'roles') {
 					$('#simplemodal-roles').modal(options);
@@ -86,5 +87,16 @@
 				}
 		});
 		$.nette.init();
+		var options = {
+			opacity:  85,
+			position: ['10%', '35%']
+		};
+		var json = {
+			data: function () {
+				return $.nette.ajax({
+					url: {link acl!}
+				});
+			}
+		};
 	});
 </script>

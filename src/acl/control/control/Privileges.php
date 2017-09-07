@@ -80,6 +80,7 @@ class Privileges extends BaseControl
 			if ($this->isAjax()) {
 				$form->setValues([], TRUE);
 				$this->presenter->payload->modal = 'close';
+				$this->presenter->payload->acl = 'acl';
 				$this->redrawControl('items');
 				$this->redrawControl('message');
 				$this->redrawControl('factory');
@@ -145,6 +146,7 @@ class Privileges extends BaseControl
 				$this->flashMessage('Akce byla odstraněna.', 'info');
 
 				if ($this->isAjax()) {
+					$this->presenter->payload->acl = 'acl';
 					$this->redrawControl('items');
 					$this->redrawControl('message');
 				}
