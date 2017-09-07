@@ -133,10 +133,10 @@
     /*
 	simple modal
     */
-    #simplemodal-roles h3,
-    #simplemodal-privileges h3,
-    #simplemodal-resources h3,
-    #simplemodal-permissions h3 {
+    #simplemodal-1 h3,
+    #simplemodal-2 h3,
+    #simplemodal-3 h3,
+    #simplemodal-4 h3 {
 	margin-bottom: 0.250em;
     }
 

@@ -51,25 +51,29 @@
 				});
 			},
 			success: function(payload) {
-
-				if (payload.modal === 'close') {
-					$.modal.close();
-					json.data();
-
-				} else if (payload.acl === 'acl') {
-					json.data();
-
-				} else if (payload.modal === 'roles') {
-					$('#simplemodal-roles').modal(options);
-
-				} else if (payload.modal === 'privileges') {
-					$('#simplemodal-privileges').modal(options);
-
-				} else if (payload.modal === 'resources') {
-					$('#simplemodal-resources').modal(options);
-
-				} else if (payload.modal === 'permissions') {
-					$('#simplemodal-permissions').modal(options);
+				switch(payload.modal) {
+					case 'close':
+						$.modal.close();
+						if (payload.acl === 'acl') {
+							json.data();
+						}
+					break;
+					case 'roles':
+						$('#simplemodal-1').modal(options);
+					break;
+					case 'privileges':
+						$('#simplemodal-2').modal(options);
+					break;
+					case 'resources':
+						$('#simplemodal-3').modal(options);
+					break;
+					case 'permissions':
+						$('#simplemodal-4').modal(options);
+					break
+						default:
+							if (payload.acl === 'acl') {
+								json.data();
+							}
 				}
 			}
 		});
