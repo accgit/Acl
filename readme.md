@@ -1,6 +1,8 @@
 
 ## ACL
 
+! Developer version where everything does not work !
+
 Simple management of users' permissions.
 
 ## Requirements
