@@ -35,13 +35,4 @@ abstract class BaseControl extends UI\Control
 		return new UI\Form;
 	}
 
-	// Close modal box.
-	public function handleClose()
-	{
-		if ($this->isAjax()) {
-			$this->presenter->payload->modal = 'close';
-			$this->redrawControl('factory');
-		}
-	}
-
 }
