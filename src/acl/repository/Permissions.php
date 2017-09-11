@@ -81,6 +81,7 @@ class Permissions extends BaseRepository
 			->where('roleId = ?', $values->roleId)
 			->and('resourceId = ?', $values->resourceId)
 			->and('privilegeId = ?', $values->privilegeId)
+			->and('allowed = ?', $values->allowed)
 			->fetch();
 
 		if ($row) {
