@@ -67,6 +67,9 @@
 								json.data();
 							}
 				}
+				setTimeout(function() {
+					$('.message').fadeOut('fast');
+				}, 6000);
 			}
 		});
 		$.nette.ext('tree', {
