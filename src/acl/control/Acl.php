@@ -4,65 +4,50 @@
  * Easy permissions for users.
  * Copyright (c) 2017, Zdeněk Papučík
  */
-
 namespace Component;
-
 use Component\Acl\Control;
-use Nette\Application\UI;
 
 /**
  * Dynamic processing of user roles.
  */
-class Acl extends UI\Control
+trait Acl
 {
 	/**
 	 * @var Control\Roles
 	 */
-	private $roles;
+	protected $roles;
 
 	/**
 	 * @var Control\Resources
 	 */
-	private $resources;
+	protected $resources;
 
 	/**
 	 * @var Control\Privileges
 	 */
-	private $privileges;
+	protected $privileges;
 
 	/**
 	 * @var Control\Permissions
 	 */
-	private $permissions;
+	protected $permissions;
 
-	public function __construct(
+	public function injectAclComponents(
 		Control\Roles $roles,
 		Control\Resources $resources,
 		Control\Privileges $privileges,
 		Control\Permissions $permissions)
 	{
-		parent::__construct();
 		$this->roles = $roles;
 		$this->resources = $resources;
-		$this->privileges  = $privileges;
+		$this->privileges = $privileges;
 		$this->permissions = $permissions;
 	}
-
-	public function render()
-	{
-		$template = $this->template;
-		$template->setFile(__DIR__ . '/templates/acl.roles.latte');
-		$template->setFile(__DIR__ . '/templates/acl.resources.latte');
-		$template->setFile(__DIR__ . '/templates/acl.privileges.latte');
-		$template->setFile(__DIR__ . '/templates/acl.permissions.latte');
-		$template->render();
-	}
-
 
 	/**
 	 * @return Control\Roles
 	 */
-	protected function createComponentRoles()
+	protected function createComponentAclRoles()
 	{
 		return $this->roles;
 	}
@@ -70,7 +55,7 @@ class Acl extends UI\Control
 	/**
 	 * @return Control\Resources
 	 */
-	protected function createComponentResources()
+	protected function createComponentAclResources()
 	{
 		return $this->resources;
 	}
@@ -78,7 +63,7 @@ class Acl extends UI\Control
 	/**
 	 * @return Control\Privileges
 	 */
-	protected function createComponentPrivileges()
+	protected function createComponentAclPrivileges()
 	{
 		return $this->privileges;
 	}
@@ -86,9 +71,19 @@ class Acl extends UI\Control
 	/**
 	 * @return Control\Permissions
 	 */
-	protected function createComponentPermissions()
+	protected function createComponentAclPermissions()
 	{
 		return $this->permissions;
+	}
+
+	/**
+	 * Necessary redraw permissions.
+	 */
+	public function handleAcl()
+	{
+		if ($this->isAjax()) {
+			$this->redrawControl('acl');
+		}
 	}
 
 }

@@ -93,36 +93,20 @@ return new Security\Identity($row->userId, $userRoles, $row->toArray());
 $configurator->addConfig(__DIR__ . '/components/acl/config.nenon');
 ```
 
-**7) Inject Component\Acl to Presenter and create factory and handle**
+**7) Use trait in the Presenter**
 
 ```php
-/**
- * @return Acl
- */
-protected function createComponentAcl()
-{
-	return $this->acl;
-}
-
-/**
- * Redraw ACL component.
- */
-public function handleAcl()
-{
-	if ($this->isAjax()) {
-		$this->redrawControl('acl');
-	}
-}
+use Component\Acl;
 ```
 
 **8) In the template, call acl components.**
 
 ```latte
-{control acl-roles}
-{control acl-privileges}
-{control acl-resources}
+{control aclRoles}
+{control aclPrivileges}
+{control aclResources}
 {snippet acl}
-	{control acl-permissions}
+	{control aclPermissions}
 {/snippet}
 ```
 

@@ -2,8 +2,6 @@
 # Acl component.
 services:
 
-	- Component\Acl
-
 	- Component\Acl\Entity\Roles
 	- Component\Acl\Entity\Resources
 	- Component\Acl\Entity\Privileges
