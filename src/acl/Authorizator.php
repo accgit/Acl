@@ -21,6 +21,10 @@ class Authorizator
 		ROLE_MEMBER = 'member',
 		ROLE_ADMIN  = 'admin';
 
+	// Option to specify privileges for all actions and signals.
+	const
+		PRIVILEGE_ALL = ':all';
+
 	// Acl cache.
 	const ACL_CACHE = 'acl.cache';
 
@@ -81,7 +85,7 @@ class Authorizator
 
 			// Add permissions.
 			foreach ($this->permissions->all() as $row) {
-				$row->privilege === ':all' ? $row->privilege = Security\Permission::ALL : $row->privilege;
+				$row->privilege === self::PRIVILEGE_ALL ? $row->privilege = Security\Permission::ALL : $row->privilege;
 				$acl->{$row->allowed === 'yes' ? 'allow' : 'deny'}($row->role, $row->resource, $row->privilege);
 			}
 
