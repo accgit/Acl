@@ -4,7 +4,7 @@
 
 -- ---- create privileges table:
 CREATE TABLE `privileges` (
-	`privilegeId` int(11) unsigned NOT NULL AUTO_INCREMENT,
+	`privilegeId` smallint(5) unsigned NOT NULL AUTO_INCREMENT,
 	`name` varchar(40) NOT NULL,
 	PRIMARY KEY (`privilegeId`),
 	UNIQUE KEY `name` (`name`)
@@ -17,7 +17,7 @@ INSERT INTO `privileges` (`privilegeId`, `name`) VALUES
 
 -- ---- create resources table:
 CREATE TABLE `resources` (
-	`resourceId` int(11) unsigned NOT NULL AUTO_INCREMENT,
+	`resourceId` smallint(5) unsigned NOT NULL AUTO_INCREMENT,
 	`name` varchar(40) NOT NULL,
 	PRIMARY KEY (`resourceId`),
 	UNIQUE KEY `name` (`name`)
@@ -31,7 +31,7 @@ INSERT INTO `resources` (`resourceId`, `name`) VALUES
 
 -- ---- create roles table:
 CREATE TABLE `roles` (
-	`roleId` int(11) unsigned NOT NULL AUTO_INCREMENT,
+	`roleId` smallint(5) unsigned NOT NULL AUTO_INCREMENT,
 	`name` varchar(40) NOT NULL,
 	`parent` int(11) NOT NULL,
 	PRIMARY KEY (`roleId`),
@@ -46,10 +46,10 @@ INSERT INTO `roles` (`roleId`, `name`, `parent`) VALUES
 
 -- ---- create permissions table:
 CREATE TABLE `permissions` (
-	`id` int(11) unsigned NOT NULL AUTO_INCREMENT,
-	`roleId` int(10) unsigned NOT NULL,
-	`resourceId` int(11) unsigned NOT NULL,
-	`privilegeId` int(11) unsigned NOT NULL,
+	`id` smallint(5) unsigned NOT NULL AUTO_INCREMENT,
+	`roleId` smallint(5) unsigned NOT NULL,
+	`resourceId` smallint(5) unsigned NOT NULL,
+	`privilegeId` smallint(5) unsigned NOT NULL,
 	`allowed` enum('no','yes') NOT NULL DEFAULT 'yes',
 	PRIMARY KEY (`id`),
 	KEY `resource` (`resourceId`),
@@ -67,7 +67,7 @@ INSERT INTO `permissions` (`id`, `roleId`, `resourceId`, `privilegeId`, `allowed
 
 -- ---- create users table:
 CREATE TABLE `users` (
-	`userId` int(11) unsigned NOT NULL AUTO_INCREMENT,
+	`userId` smallint(5) unsigned NOT NULL AUTO_INCREMENT,
 	`realname` varchar(60) NOT NULL,
 	`email` varchar(60) NOT NULL,
 	`password` char(60) NOT NULL,
@@ -80,9 +80,9 @@ INSERT INTO `users` (`userId`, `realname`, `email`, `password`) VALUES
 
 -- ---- create acl table:
 CREATE TABLE `acl` (
-	`id` int(11) unsigned NOT NULL AUTO_INCREMENT,
-	`roleId` int(10) unsigned NOT NULL,
-	`userId` int(11) unsigned NOT NULL,
+	`id` smallint(5) unsigned NOT NULL AUTO_INCREMENT,
+	`roleId` smallint(5) unsigned NOT NULL,
+	`userId` smallint(5) unsigned NOT NULL,
 	PRIMARY KEY (`id`),
 	KEY `user` (`userId`),
 	KEY `role` (`roleId`),
