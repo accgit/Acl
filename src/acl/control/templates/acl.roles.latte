@@ -1,10 +1,10 @@
 
 {* roles latte *}
-<div class="wrapping">
+<div class="wrapper">
 
 	{* flash message *}
 	{snippet message}
-	<div class="wrapping">
+	<div class="wrapper">
 		<p n:foreach="$flashes as $flash" class="message {$flash->type}">{$flash->message}</p>
 	</div>
 	{/snippet}

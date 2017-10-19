@@ -1,10 +1,10 @@
 
 {* permissions latte *}
-<div class="wrapping">
+<div class="wrapper">
 
 	{* flash message *}
 	{snippet message}
-	<div class="wrapping">
+	<div class="wrapper">
 		<p n:foreach="$flashes as $flash" class="message {$flash->type}">{$flash->message}</p>
 	</div>
 	{/snippet}
@@ -32,7 +32,7 @@
 				<div class="six columns">{input privilegeId class => 'full width'}</div>
 				<div class="six columns">{input allowed class => 'full width'}</div>
 			</div>
-			<div class="wrapping">
+			<div class="wrapper">
 				{input send class => 'button primary'}
 			</div>
 		{/form}
