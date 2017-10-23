@@ -58,10 +58,10 @@
 							json.data();
 						}
 					break;
-					case 'roles':       $('#simplemodal-1').modal(); break;
-					case 'privileges':  $('#simplemodal-2').modal(); break;
-					case 'resources':   $('#simplemodal-3').modal(); break;
-					case 'permissions': $('#simplemodal-4').modal(); break;
+					case 'roles':       $('#simplemodal-1').modal(options); break;
+					case 'privileges':  $('#simplemodal-2').modal(options); break;
+					case 'resources':   $('#simplemodal-3').modal(options); break;
+					case 'permissions': $('#simplemodal-4').modal(options); break;
 						default:
 							if (payload.acl === 'acl') {
 								json.data();
