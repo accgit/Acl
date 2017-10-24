@@ -126,7 +126,7 @@ class Permissions extends BaseControl
 	{
 		try {
 		    	$values = $form->values;
-			if ($this->permissions->isRule($values) === FALSE) {
+			if ($this->permissions->isRule($values) === false) {
 				$entity = $this->entity;
 				$entity->setId($values->id);
 				$entity->roleId = $values->roleId;
@@ -139,7 +139,7 @@ class Permissions extends BaseControl
 				$this->flashMessage($message, 'success');
 
 				if ($this->isAjax()) {
-					$form->setValues([], TRUE);
+					$form->setValues([], true);
 					$this->presenter->payload->modal = 'close';
 					$this->redrawControl('items');
 					$this->redrawControl('message');
