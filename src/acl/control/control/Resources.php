@@ -79,7 +79,7 @@ class Resources extends BaseControl
 			$this->flashMessage($message, 'success');
 
 			if ($this->isAjax()) {
-				$form->setValues([], TRUE);
+				$form->setValues([], true);
 				$this->presenter->payload->modal = 'close';
 				$this->presenter->payload->acl = 'acl';
 				$this->redrawControl('items');
