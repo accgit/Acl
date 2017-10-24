@@ -75,7 +75,7 @@ class Authorizator
 					$parent = $this->roles->find($parent);
 				}
 				$role->parent = $parent['name'];
-				$acl->addRole($role->name, $role->parent === 0 ? NULL : $role->parent);
+				$acl->addRole($role->name, $role->parent === 0 ? null : $role->parent);
 			}
 
 			// Add resources.
