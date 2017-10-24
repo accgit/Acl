@@ -59,7 +59,7 @@ class Roles extends BaseRepository
 			$row->name === Acl\Authorizator::ROLE_GUEST or
 			$row->name === Acl\Authorizator::ROLE_MEMBER or
 			$row->name === Acl\Authorizator::ROLE_ADMIN) {
-			return TRUE;
+			return true;
 		}
 	}
 
@@ -107,7 +107,7 @@ class Roles extends BaseRepository
 	{
 		$parent = $this->all()
 			->where('parent = ?', $id)
-			->fetch() ? TRUE : FALSE;
+			->fetch() ? true : false;
 
 		if ($parent) {
 			throw new Exception('The record can not be deleted, you must first delete the records that are associated with it.', self::PARENT_ROLE_EXIST);
