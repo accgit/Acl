@@ -57,7 +57,7 @@ class Roles extends BaseControl
 		foreach ($items as $item) {
 			if ($item->parent === $parent) {
 				$chils = $this->buildTree($items, $item->roleId);
-				isset($chils) === TRUE ? $item->children = $chils : NULL;
+				isset($chils) === true ? $item->children = $chils : null;
 				$arr[] = $item;
 			}
 		}
@@ -108,14 +108,14 @@ class Roles extends BaseControl
 			$entity = $this->entity;
 			$entity->setId($values->roleId);
 			$entity->name = $values->name;
-			$entity->parent = $values->parent === NULL ? 0 : $values->parent;
+			$entity->parent = $values->parent === null ? 0 : $values->parent;
 
 			$this->repository->save($entity);
 			$message = $values->roleId ? 'Role byla aktualizována.' : 'Role byla vložená.';
 			$this->flashMessage($message, 'success');
 
 			if ($this->isAjax()) {
-				$form->setValues([], TRUE);
+				$form->setValues([], true);
 				$this->presenter->payload->modal = 'close';
 				$this->presenter->payload->acl = 'acl';
 				$this['factory']['parent']->setItems($this->factoryItems());
@@ -152,7 +152,7 @@ class Roles extends BaseControl
 			if ($item) {
 				$form = $this['factory'];
 				$form['send']->caption = 'Upravit';
-				$item->parent = $item->parent === 0 ? NULL : $item->parent;
+				$item->parent = $item->parent === 0 ? null : $item->parent;
 				$form->setDefaults($item);
 
 				if ($this->isAjax()) {
