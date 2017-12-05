@@ -30,7 +30,7 @@ public function checkRequirements($element)
 			]);
 
 		// Everything else will check where the user has access.
-		} elseif (!$this->user->isAllowed($this->name, 'default')) {
+		} elseif (!$this->user->isAllowed($this->name, $this->action)) {
 			$this->messageWarning('You do not have permission.');
 			$this->redirect('Homepage:');
 		}
