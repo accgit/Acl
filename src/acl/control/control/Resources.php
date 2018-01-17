@@ -57,14 +57,14 @@ class Resources extends BaseControl
 			->setRequired('Prosím, vyplňte povinnu položku.');
 
 		$form->addHidden('resourceId');
-		$id = (int) $this->getParameter('id');
-		if ($id > 0) {
-			$item = $this->repository->find($id);
-			if ($item) {
+		$form->addSubmit('send', 'Vložit');
+		$signal = $this->presenter->getSignal();
+		if ($signal) {
+			if (in_array('edit', $signal)) {
+				$item = $this->repository->find($this->getParameter('id'));
 				$form->setDefaults($item);
 			}
 		}
-		$form->addSubmit('send', 'Vložit');
 		$form->onSuccess[] = [$this, 'process'];
 		return $form;
 	}
