@@ -96,6 +96,7 @@ class Roles extends BaseControl
 		if ($id > 0) {
 			$item = $this->repository->find($id);
 			if ($item) {
+				$item->parent = $item->parent === 0 ? null : $item->parent;
 				$form->setDefaults($item);
 			}
 		}
