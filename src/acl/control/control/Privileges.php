@@ -56,7 +56,14 @@ class Privileges extends BaseControl
 			->setAttribute('placeholder', 'Zadejte název akce nebo signálu.')
 			->setRequired();
 
-		$form->addHidden('privilegeId');
+		$id = (int) $this->getParameter('id');
+		if ($id > 0) {
+			$item = $this->repository->find($id);
+			if ($item) {
+				$form->setDefaults($item);
+			}
+		}
+
 		$form->addSubmit('send', 'Vložit');
 		$form->onSuccess[] = [$this, 'process'];
 		return $form;
@@ -112,7 +119,6 @@ class Privileges extends BaseControl
 			if ($item) {
 				$form = $this['factory'];
 				$form['send']->caption = 'Upravit';
-				$form->setDefaults($item);
 
 				if ($this->isAjax()) {
 					$this->presenter->payload->modal = 'privileges';
