@@ -56,6 +56,7 @@ class Privileges extends BaseControl
 			->setAttribute('placeholder', 'Zadejte název akce nebo signálu.')
 			->setRequired();
 
+		$form->addHidden('privilegeId');
 		$id = (int) $this->getParameter('id');
 		if ($id > 0) {
 			$item = $this->repository->find($id);
@@ -63,7 +64,6 @@ class Privileges extends BaseControl
 				$form->setDefaults($item);
 			}
 		}
-
 		$form->addSubmit('send', 'Vložit');
 		$form->onSuccess[] = [$this, 'process'];
 		return $form;
