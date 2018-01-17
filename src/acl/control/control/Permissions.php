@@ -113,14 +113,14 @@ class Permissions extends BaseControl
 			->setRequired();
 
 		$form->addHidden('id');
-		$id = (int) $this->getParameter('id');
-		if ($id > 0) {
-			$item = $this->permissions->find($id);
-			if ($item) {
+		$form->addSubmit('send', 'Vložit');
+		$signal = $this->presenter->getSignal();
+		if ($signal) {
+			if (in_array('edit', $signal)) {
+				$item = $this->permissions->find($this->getParameter('id'));
 				$form->setDefaults($item);
 			}
 		}
-		$form->addSubmit('send', 'Vložit');
 		$form->onSuccess[] = [$this, 'process'];
 		return $form;
 	}
