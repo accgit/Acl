@@ -56,7 +56,14 @@ class Resources extends BaseControl
 			->setAttribute('placeholder', 'Zadejte název zdroje.')
 			->setRequired('Prosím, vyplňte povinnu položku.');
 
-		$form->addHidden('resourceId');
+		$id = (int) $this->getParameter('id');
+		if ($id > 0) {
+			$item = $this->repository->find($id);
+			if ($item) {
+				$form->setDefaults($item);
+			}
+		}
+
 		$form->addSubmit('send', 'Vložit');
 		$form->onSuccess[] = [$this, 'process'];
 		return $form;
@@ -112,7 +119,6 @@ class Resources extends BaseControl
 			if ($item) {
 				$form = $this['factory'];
 				$form['send']->caption = 'Upravit';
-				$form->setDefaults($item);
 
 				if ($this->isAjax()) {
 					$this->presenter->payload->modal = 'resources';
