@@ -89,7 +89,7 @@ class Roles extends BaseControl
 			->setRequired();
 
 		$form->addSelect('parent', 'Rodič', $this->factoryItems())
-		->setPrompt('Zvolte rodiče');
+			->setPrompt('Zvolte rodiče');
 
 		$form->addHidden('roleId');
 		$id = (int) $this->getParameter('id');
