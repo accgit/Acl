@@ -112,7 +112,14 @@ class Permissions extends BaseControl
 			->setPrompt('Zvolte přístup')
 			->setRequired();
 
-		$form->addHidden('id');
+		$id = (int) $this->getParameter('id');
+		if ($id > 0) {
+			$item = $this->permissions->find($id);
+			if ($item) {
+				$form->setDefaults($item);
+			}
+		}
+
 		$form->addSubmit('send', 'Vložit');
 		$form->onSuccess[] = [$this, 'process'];
 		return $form;
@@ -154,7 +161,6 @@ class Permissions extends BaseControl
 			if ($item) {
 				$form = $this['factory'];
 				$form['send']->caption = 'Upravit';
-				$form->setDefaults($item);
 
 				if ($this->isAjax()) {
 					$this->presenter->payload->modal = 'permissions';
