@@ -112,6 +112,7 @@ class Permissions extends BaseControl
 			->setPrompt('Zvolte přístup')
 			->setRequired();
 
+		$form->addHidden('id');
 		$id = (int) $this->getParameter('id');
 		if ($id > 0) {
 			$item = $this->permissions->find($id);
@@ -119,7 +120,6 @@ class Permissions extends BaseControl
 				$form->setDefaults($item);
 			}
 		}
-
 		$form->addSubmit('send', 'Vložit');
 		$form->onSuccess[] = [$this, 'process'];
 		return $form;
