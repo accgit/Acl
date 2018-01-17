@@ -57,14 +57,15 @@ class Privileges extends BaseControl
 			->setRequired();
 
 		$form->addHidden('privilegeId');
-		$id = (int) $this->getParameter('id');
-		if ($id > 0) {
-			$item = $this->repository->find($id);
-			if ($item) {
+		$form->addSubmit('send', 'Vložit');
+		$signal = $this->presenter->getSignal();
+		if ($signal) {
+			if (in_array('edit', $signal)) {
+				$item = $this->repository->find($this->getParameter('id'));
+				$item->parent = $item->parent === 0 ? null : $item->parent;
 				$form->setDefaults($item);
 			}
 		}
-		$form->addSubmit('send', 'Vložit');
 		$form->onSuccess[] = [$this, 'process'];
 		return $form;
 	}
