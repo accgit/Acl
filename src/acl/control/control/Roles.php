@@ -91,7 +91,14 @@ class Roles extends BaseControl
 		$form->addSelect('parent', 'Rodič', $this->factoryItems())
 		->setPrompt('Zvolte rodiče');
 
-		$form->addHidden('roleId');
+		$id = (int) $this->getParameter('id');
+		if ($id > 0) {
+			$item = $this->repository->find($id);
+			if ($item) {
+				$form->setDefaults($item);
+			}
+		}
+
 		$form->addSubmit('send', 'Vložit');
 		$form->onSuccess[] = [$this, 'process'];
 		return $form;
@@ -153,7 +160,6 @@ class Roles extends BaseControl
 				$form = $this['factory'];
 				$form['send']->caption = 'Upravit';
 				$item->parent = $item->parent === 0 ? null : $item->parent;
-				$form->setDefaults($item);
 
 				if ($this->isAjax()) {
 					$this->presenter->payload->modal = 'roles';
