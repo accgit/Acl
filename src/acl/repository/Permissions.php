@@ -70,27 +70,6 @@ class Permissions extends BaseRepository
 	}
 
 	/**
-	 * Check is rule already.
-	 * @param array
-	 * @return void
-	 * @throws Exception
-	 */
-	public function isRule($values)
-	{
-		$row = $this->items()
-			->where('roleId = ?', $values->roleId)
-			->and('resourceId = ?', $values->resourceId)
-			->and('privilegeId = ?', $values->privilegeId)
-			->and('allowed = ?', $values->allowed)
-			->fetch();
-
-		if ($row) {
-			throw new Exception('Sorry, this rule is already set.', self::DUPLICATION_RULE);
-		}
-		return $row;
-	}
-
-	/**
 	 * Group by rules.
 	 * @return array
 	 */
