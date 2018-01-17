@@ -56,6 +56,7 @@ class Resources extends BaseControl
 			->setAttribute('placeholder', 'Zadejte název zdroje.')
 			->setRequired('Prosím, vyplňte povinnu položku.');
 
+		$form->addHidden('resourceId');
 		$id = (int) $this->getParameter('id');
 		if ($id > 0) {
 			$item = $this->repository->find($id);
@@ -63,7 +64,6 @@ class Resources extends BaseControl
 				$form->setDefaults($item);
 			}
 		}
-
 		$form->addSubmit('send', 'Vložit');
 		$form->onSuccess[] = [$this, 'process'];
 		return $form;
