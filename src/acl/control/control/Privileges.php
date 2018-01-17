@@ -62,7 +62,6 @@ class Privileges extends BaseControl
 		if ($signal) {
 			if (in_array('edit', $signal)) {
 				$item = $this->repository->find($this->getParameter('id'));
-				$item->parent = $item->parent === 0 ? null : $item->parent;
 				$form->setDefaults($item);
 			}
 		}
