@@ -180,17 +180,10 @@
     /*
 	form errors
     */
-    ul.errors {
-	list-style: none;
-	    margin: 0;
-    }
-
-    ul.errors li,
-    span.error {
-	margin-bottom: 7px;
-	  font-weight: 500;
-	      display: block;
-	        color: #d53a3a;
+    .error {
+	font-weight: 600;
+	  font-size: 1em;
+	      color: #d53a3a;
     }
 
     /*
