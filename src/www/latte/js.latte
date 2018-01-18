@@ -85,7 +85,7 @@
 				});
 				$(document).off('click').on('click', '.tree li.parent > a', function() {
 					$(this).parent().toggleClass('active');
-					$(this).parent().children('ul').slideToggle('fast');
+					$(this).parent().children('ul').toggle();
 				});
 			}
 		});
@@ -105,7 +105,7 @@
 			click: function (selector) {
 				$(selector + '.tree li').each(function() {
 					$(this).toggleClass('active');
-					$(this).children('ul').slideToggle('fast');
+					$(this).children('ul').toggle();
 				});
 			}
 		};
