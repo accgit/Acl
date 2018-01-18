@@ -11,6 +11,9 @@
 
 	{* title *}
 	<p class="heading">
+		<a href="#" id="roles" class="all">
+			<i class="fa fa-folder-open-o" aria-hidden="true"></i>
+		</a>
 		<a href="#" id="modal-1" class="modal">Role</a>
 	</p>
 
@@ -38,7 +41,7 @@
 
 	{* items *}
 	{snippet items}
-	<div class="tree" n:if="count($items)">
+	<div id="roles-1" class="tree" n:if="count($items)">
 		<ul>
 		{block items}
 			<li n:foreach="$items as $item">
