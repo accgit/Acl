@@ -76,7 +76,13 @@
 						$(this).addClass('parent');
 					}
 				});
-				$('#roles').off('click').on('click', function() { tree.click(); });
+				$('.all').off('click').on('click', function() {
+				    	var treeId = $(this).attr('id');
+					switch(treeId) {
+						case 'roles': tree.click('#roles-1'); break;
+						case 'permissions': tree.click('#permissions-1');
+					}
+				});
 				$(document).off('click').on('click', '.tree li.parent > a', function() {
 					$(this).parent().toggleClass('active');
 					$(this).parent().children('ul').slideToggle('fast');
@@ -96,8 +102,8 @@
 			}
 		};
 		var tree = {
-			click: function () {
-				$('.tree li').each(function() {
+			click: function (selector) {
+				$(selector + '.tree li').each(function() {
 					$(this).toggleClass('active');
 					$(this).children('ul').slideToggle('fast');
 				});
