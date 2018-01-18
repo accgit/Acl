@@ -130,6 +130,16 @@
 	text-decoration: underline;
     }
 
+    .heading a.all {
+	text-decoration: none;
+	      font-size: 0.83em;
+	          color: #bbb;
+    }
+
+    .heading a.all:hover {
+	color: #10a2f1;
+    }
+
     /*
 	simple modal
     */
