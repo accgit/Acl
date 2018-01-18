@@ -1,52 +1,28 @@
 
 <script src="{$basePath}/www/js/jquery.min.js"></script>
 <script src="{$basePath}/www/js/netteForms.js"></script>
-<script>
-	function showErrors(errors, focus) {
-		errors.forEach(function(error) {
-			if (error.message) {
-				$(error.element).closest('div').addClass('has-error').find('.error').remove();
-				$('<span class="error">').text(error.message).insertAfter(error.element);
-			}
-
-			if (focus && error.element.focus) {
-				error.element.focus();
-				focus = false;
-			}
-		});
-	}
-
-	function removeErrors(elem) {
-		if ($(elem).is('form')) {
-			$('.has-error', elem).removeClass('has-error');
-			$('.error', elem).remove();
-
-		} else {
-			$(elem).closest('div').removeClass('has-error').find('.error').remove();
-		}
-	}
-
-	Nette.showFormErrors = function(form, errors) {
-		removeErrors(form);
-		showErrors(errors, true);
-	};
-
-	$(function() {
-		$(':input').keypress(function() {
-			removeErrors(this);
-		});
-	});
-</script>
+<script src="{$basePath}/www/js/live-form-validation.js"></script>
 <script src="{$basePath}/www/js/nette.ajax.js"></script>
 <script src="{$basePath}/www/js/jquery.simplemodal.js"></script>
+<script>
+	LiveForm.setOptions({
+		messageErrorPrefix: 'Error: ',
+		wait: 500
+	});
+</script>
 <script>
 	$(function() {
 		$.nette.ext('modal', {
 			load: function() {
 				$('.modal').click(function () {
 					var modalId = $(this).attr('id');
-					modalId = modalId.replace('modal','#simplemodal');
-					$(modalId).modal(options);
+					modalId = modalId.replace('modal', '#simplemodal');
+					switch (modalId) {
+						case '#simplemodal-1': $(modalId).modal(role); break;
+						case '#simplemodal-2': $(modalId).modal(privileges); break;
+						case '#simplemodal-3': $(modalId).modal(resources); break;
+						case '#simplemodal-4': $(modalId).modal(permissions);
+					}
 					return false;
 				});
 			},
@@ -58,10 +34,10 @@
 							json.data();
 						}
 					break;
-					case 'roles':       $('#simplemodal-1').modal(options); break;
-					case 'privileges':  $('#simplemodal-2').modal(options); break;
-					case 'resources':   $('#simplemodal-3').modal(options); break;
-					case 'permissions': $('#simplemodal-4').modal(options); break;
+					case 'roles':       $('#simplemodal-1').modal(role); break;
+					case 'privileges':  $('#simplemodal-2').modal(privileges); break;
+					case 'resources':   $('#simplemodal-3').modal(resources); break;
+					case 'permissions': $('#simplemodal-4').modal(permissions); break;
 						default:
 							if (payload.acl === 'acl') {
 								json.data();
@@ -90,9 +66,29 @@
 			}
 		});
 		$.nette.init();
-		var options = {
+		var role = {
 			opacity:  85,
-			position: ['10%', '35%']
+			position: ['10%', '35%'],
+			minHeight: 256,
+			minWidth: 420
+		};
+		var privileges = {
+			opacity:  85,
+			position: ['10%', '35%'],
+			minHeight: 200,
+			minWidth: 420
+		};
+		var resources = {
+			opacity:  85,
+			position: ['10%', '35%'],
+			minHeight: 200,
+			minWidth: 420
+		};
+		var permissions = {
+			opacity:  85,
+			position: ['10%', '35%'],
+			minHeight: 280,
+			minWidth: 420
 		};
 		var json = {
 			data: function () {
