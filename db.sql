@@ -12,7 +12,7 @@ CREATE TABLE `privileges` (
 
 -- ---- insert data in privileges table:
 INSERT INTO `privileges` (`privilegeId`, `name`) VALUES
-(NULL, ':all'),
+(NULL, '.*'),
 (NULL, 'default');
 
 -- ---- create resources table:
