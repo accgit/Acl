@@ -11,6 +11,9 @@
 
 	{* title *}
 	<p class="heading">
+		<a href="#" id="permissions" class="all">
+			<i class="fa fa-folder-open-o" aria-hidden="true"></i>
+		</a>
 		<a href="#" id="modal-4" class="modal">Oprávnění</a>
 	</p>
 
@@ -47,7 +50,7 @@
 	{* items *}
 	{snippet items}
 	{if count($roles)}
-	<div class="tree">
+	<div id="permissions-1" class="tree">
 		<ul>
 		{foreach $roles as $role}
 			<li>
