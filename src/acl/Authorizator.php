@@ -23,7 +23,7 @@ class Authorizator
 
 	// Option to specify privileges for all actions and signals.
 	const
-		PRIVILEGE_ALL = ':all';
+		PRIVILEGE_ALL = '.*';
 
 	// Acl cache.
 	const ACL_CACHE = 'acl.cache';
