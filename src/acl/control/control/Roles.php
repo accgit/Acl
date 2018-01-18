@@ -160,7 +160,6 @@ class Roles extends BaseControl
 			if ($item) {
 				$form = $this['factory'];
 				$form['send']->caption = 'Upravit';
-				$item->parent = $item->parent === 0 ? null : $item->parent;
 
 				if ($this->isAjax()) {
 					$this->presenter->payload->modal = 'roles';
