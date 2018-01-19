@@ -89,14 +89,6 @@ body {
           color: #5d5d5d;
 }
 
-.tree ul li span.allowed {
-    color: #10a2f1;
-}
-
-.tree ul li span.privilege {
-    color: #858585;
-}
-
 .tree ul li a.link {
     background-color: #10a2f1;
        border-radius: 3px;
