@@ -28,20 +28,11 @@ abstract class BaseControl extends UI\Control
 
 	/**
 	 * Form factory.
-	 * @return \Nette\Application\UI\Form
+	 * @return UI\Form
 	 */
 	public function factory()
 	{
 		return new UI\Form;
-	}
-
-	// Close modal.
-	public function handleClose()
-	{
-		if ($this->isAjax()) {
-			$this->presenter->payload->modal = 'close';
-			$this->redrawControl('factory');
-		}
 	}
 
 }
