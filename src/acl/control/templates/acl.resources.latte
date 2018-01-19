@@ -36,7 +36,7 @@
 		<ul>
 			<li n:foreach="$items as $item">
 				<span class="name">{$item->name}</span>
-				<span class="float right">
+				<span class="float left">
 					<a n:href="edit!, $item->resourceId" class="link ajax"><i class="fa fa-pencil" aria-hidden="true"></i></a>
 					<a n:href="delete!, $item->resourceId" class="link ajax"><i class="fa fa-times" aria-hidden="true"></i></a>
 				</span>
