@@ -1,18 +1,76 @@
 
 ## ACL
 
-**! Developer version where everything does not work !**
-
 Simple management of users' permissions.
 
 ## Requirements
 
 - PHP 7.0.8 or higher
-- [Nette Framework](https://github.com/nette/nette)
+- composer
 
 ## Installation
 
-**1) Put this code into the Presenter's Base.**
+```
+composer require accgit/acl
+```
+
+## Register a configuration file
+
+```php
+$configurator->addConfig(__DIR__ . '/../vendor/accgit/acl/src/acl/conf.neon');
+```
+
+## Add a trait to the Presenter
+
+```php
+use Component\Acl;
+```
+
+## Add components to latte
+
+```phtml
+{control aclPrivileges}
+{control aclResources}
+{control aclRoles}
+{snippet acl}
+	{control aclPermissions}
+{/snippet}
+```
+
+## We create a query for assigning roles to users
+
+```php
+/**
+ * Returned record by id.
+ * @param int
+ * @return array
+ */
+public function findRoles($userId)
+{
+	return $this->db
+		->query('SELECT r.name AS role FROM acl AS a JOIN roles AS r USING (roleId) WHERE a.userId = ?', $userId);
+}
+```
+
+## We go through the roles that are assigned to users and return them to the identity
+
+```php
+$roles = $this->repository->findRoles($row->userId);
+foreach ($roles as $role) {
+	$userRoles[] = $role['role'];
+}
+return new Security\Identity($row->userId, $userRoles, $row->toArray());
+```
+
+## Add a property annotation for the class (Presenter's Base)
+
+```php
+/**
+ * @property-read array $signal
+ */
+```
+
+## We will add an authorization check
 
 ```php
 /**
@@ -45,69 +103,4 @@ public function checkRequirements($element)
 }
 ```
 
-**2) Add a property annotation for the class (Presenter's Base).**
-
-```
-@property-read array $signal
-```
-
-**3) We create a query for assigning roles to users.**
-
-```php
-/**
- * Returned record by id.
- * @param int
- * @return array
- */
-public function findRoles($userId)
-{
-	return $this->db
-		->query('SELECT r.name AS role FROM acl AS a JOIN roles AS r USING (roleId) WHERE a.userId = ?', $userId);
-}
-```
-
-**4) We go through the roles that are assigned to users and return them to the identity.**
-
-```php
-$roles = $this->repository->findRoles($row->userId);
-foreach ($roles as $role) {
-	$userRoles[] = $role['role'];
-}
-return new Security\Identity($row->userId, $userRoles, $row->toArray());
-```
-
-**5) Installing dependencies via composer.**
-
-```json
-{
-	"require": {
-		"drago-ex/cache": "~1.0.0",
-		"dibi/dibi": "~3.0.0"
-	}
-}
-```
-
-**6) Include [conf.neon](https://github.com/accgit/acl/blob/master/src/acl/conf.neon) in ACL component to Configuration File or register to bootstrap class.**
-
-```php
-$configurator->addConfig(__DIR__ . '/components/acl/config.nenon');
-```
-
-**7) Use trait in the Presenter**
-
-```php
-use Component\Acl;
-```
-
-**8) In the template, call acl components.**
-
-```latte
-{control aclRoles}
-{control aclPrivileges}
-{control aclResources}
-{snippet acl}
-	{control aclPermissions}
-{/snippet}
-```
-
-**9) Copy and pase files from www directory.**
+## Copy files from assets
