@@ -11,31 +11,25 @@
 
 	{* title *}
 	<p class="heading">
+		<a href="#" id="form-1" class="toggle">Role</a>
 		<a href="#" id="roles" class="all">
 			<i class="fa fa-folder-open-o" aria-hidden="true"></i>
 		</a>
-		<a href="#" id="modal-1" class="modal">Role</a>
 	</p>
 
 	{* factory *}
 	{snippet factory}
-	<div id="simplemodal-1" class="screen reader">
+	<div class="screen reader toggle-1">
 		{form factory class => 'ajax'}
-			<h3>Role</h3>
 			{snippet errors}
 			<ul class="errors" n:if="$form->hasErrors()">
 				<li n:foreach="$form->errors as $error">{$error}</li>
 			</ul>
 			{/snippet}
-			{input name class   => 'full width'}
-			{input parent class => 'full width'}
-			{input send class   => 'button primary'}
+			<div class="wrapper">{input name}</div>
+			<div class="wrapper">{input parent}</div>
+			{input send class => 'button primary'}
 		{/form}
-		<span class="simplemodal-close">
-			<a n:href="close!" class="modal-close ajax" title="Zavřít">
-				<i class="fa fa-times" aria-hidden="true"></i>
-			</a>
-		</span>
 	</div>
 	{/snippet}
 

@@ -1,9 +1,7 @@
 
-<script src="{$basePath}/www/js/jquery.min.js"></script>
 <script src="{$basePath}/www/js/netteForms.js"></script>
 <script src="{$basePath}/www/js/live-form-validation.js"></script>
 <script src="{$basePath}/www/js/nette.ajax.js"></script>
-<script src="{$basePath}/www/js/jquery.simplemodal.js"></script>
 <script>
 	LiveForm.setOptions({
 		messageErrorClass: 'error',
@@ -13,39 +11,6 @@
 </script>
 <script>
 	$(function() {
-		$.nette.ext('modal', {
-			load: function() {
-				$('.modal').click(function () {
-					var modalId = $(this).attr('id');
-					modalId = modalId.replace('modal', '#simplemodal');
-					switch (modalId) {
-						case '#simplemodal-1': $(modalId).modal(role); break;
-						case '#simplemodal-2': $(modalId).modal(privileges); break;
-						case '#simplemodal-3': $(modalId).modal(resources); break;
-						case '#simplemodal-4': $(modalId).modal(permissions);
-					}
-					return false;
-				});
-			},
-			success: function(payload) {
-				switch(payload.modal) {
-					case 'close':
-						$.modal.close();
-						if (payload.acl === 'acl') {
-							json.data();
-						}
-					break;
-					case 'roles':       $('#simplemodal-1').modal(role); break;
-					case 'privileges':  $('#simplemodal-2').modal(privileges); break;
-					case 'resources':   $('#simplemodal-3').modal(resources); break;
-					case 'permissions': $('#simplemodal-4').modal(permissions); break;
-						default:
-							if (payload.acl === 'acl') {
-								json.data();
-							}
-				}
-			}
-		});
 		$.nette.ext('tree', {
 			load: function() {
 				$('.tree li').each(function() {
@@ -60,49 +25,43 @@
 						case 'permissions': tree.click('#permissions-1');
 					}
 				});
-				$(document).off('click').on('click', '.tree li.parent > a', function() {
+				$('.tree li.parent > a').off('click').on('click', function() {
 					$(this).parent().toggleClass('active');
 					$(this).parent().children('ul').toggle();
 				});
 			}
 		});
-		$.nette.init();
-		var role = {
-			opacity:  85,
-			position: ['10%', '35%'],
-			minHeight: 256,
-			minWidth: 420
-		};
-		var privileges = {
-			opacity:  85,
-			position: ['10%', '35%'],
-			minHeight: 200,
-			minWidth: 420
-		};
-		var resources = {
-			opacity:  85,
-			position: ['10%', '35%'],
-			minHeight: 200,
-			minWidth: 420
-		};
-		var permissions = {
-			opacity:  85,
-			position: ['10%', '35%'],
-			minHeight: 280,
-			minWidth: 420
-		};
-		var json = {
-			data: function () {
-				return $.nette.ajax({
-					url: {link acl!}
+		$.nette.ext('toggle', {
+			load: function() {
+				$('.toggle').off('click').on('click', function() {
+					var idElement = $(this).attr('id');
+					switch (idElement) {
+						case 'form-1': $('.toggle-1').toggle(); break;
+						case 'form-2': $('.toggle-2').toggle(); break;
+						case 'form-3': $('.toggle-3').toggle(); break;
+						case 'form-4': $('.toggle-4').toggle();
+					}
 				});
+			},
+			success: function(payload) {
+				if (payload.acl === 'acl') {
+					json.data();
+				}
 			}
-		};
+		});
+		$.nette.init();
 		var tree = {
 			click: function (selector) {
 				$(selector + '.tree li').each(function() {
 					$(this).toggleClass('active');
 					$(this).children('ul').toggle();
+				});
+			}
+		};
+		var json = {
+			data: function () {
+				return $.nette.ajax({
+					url: {link acl!}
 				});
 			}
 		};

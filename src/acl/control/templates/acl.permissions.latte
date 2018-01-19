@@ -11,39 +11,27 @@
 
 	{* title *}
 	<p class="heading">
+		<a href="#" id="form-4" class="toggle">Oprávnění</a>
 		<a href="#" id="permissions" class="all">
 			<i class="fa fa-folder-open-o" aria-hidden="true"></i>
 		</a>
-		<a href="#" id="modal-4" class="modal">Oprávnění</a>
 	</p>
 
 	{* factory *}
 	{snippet factory}
-	<div id="simplemodal-4" class="screen reader">
+	<div class="screen reader toggle-4">
 		{form factory class => 'ajax'}
-			<h3>Oprávnění</h3>
 			{snippet errors}
 			<ul class="errors" n:if="$form->hasErrors()">
 				<li n:foreach="$form->errors as $error">{$error}</li>
 			</ul>
 			{/snippet}
-			<div class="row">
-				<div class="six columns">{input roleId class => 'full width'}</div>
-				<div class="six columns">{input resourceId class => 'full width'}</div>
-			</div>
-			<div class="row">
-				<div class="six columns">{input privilegeId class => 'full width'}</div>
-				<div class="six columns">{input allowed class => 'full width'}</div>
-			</div>
-			<div class="wrapper">
-				{input send class => 'button primary'}
-			</div>
+			<div class="wrapper">{input roleId}</div>
+			<div class="wrapper">{input resourceId}</div>
+			<div class="wrapper">{input privilegeId}</div>
+			<div class="wrapper">{input allowed}</div>
+			{input send class => 'button primary'}
 		{/form}
-		<span class="simplemodal-close">
-			<a n:href="close!" class="modal-close ajax" title="Zavřít">
-				<i class="fa fa-times" aria-hidden="true"></i>
-			</a>
-		</span>
 	</div>
 	{/snippet}
 

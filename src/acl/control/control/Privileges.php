@@ -53,8 +53,9 @@ class Privileges extends BaseControl
 	{
 		$form = $this->factory();
 		$form->addText('name', 'Název')
-			->setAttribute('placeholder', 'Zadejte název akce nebo signálu.')
-			->setRequired();
+			->setAttribute('placeholder', 'Zadejte název akce.')
+			->setAttribute('autocomplete', 'off')
+			->setRequired('Prosím, vyplňte povinnu položku.');
 
 		$form->addHidden('privilegeId');
 		$form->addSubmit('send', 'Vložit');
@@ -87,7 +88,6 @@ class Privileges extends BaseControl
 
 			if ($this->isAjax()) {
 				$form->setValues([], true);
-				$this->presenter->payload->modal = 'close';
 				$this->presenter->payload->acl = 'acl';
 				$this->redrawControl('items');
 				$this->redrawControl('message');
@@ -121,7 +121,6 @@ class Privileges extends BaseControl
 				$form['send']->caption = 'Upravit';
 
 				if ($this->isAjax()) {
-					$this->presenter->payload->modal = 'privileges';
 					$this->redrawControl('items');
 					$this->redrawControl('factory');
 				}

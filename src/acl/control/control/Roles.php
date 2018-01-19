@@ -86,7 +86,8 @@ class Roles extends BaseControl
 		$form = $this->factory();
 		$form->addText('name', 'Název')
 			->setAttribute('placeholder', 'Zadejte název role.')
-			->setRequired();
+			->setAttribute('autocomplete', 'off')
+			->setRequired('Prosím, vyplňte povinnu položku.');
 
 		$form->addSelect('parent', 'Rodič', $this->factoryItems())
 			->setPrompt('Zvolte rodiče');
@@ -124,7 +125,6 @@ class Roles extends BaseControl
 
 			if ($this->isAjax()) {
 				$form->setValues([], true);
-				$this->presenter->payload->modal = 'close';
 				$this->presenter->payload->acl = 'acl';
 				$this['factory']['parent']->setItems($this->factoryItems());
 				$this->redrawControl('items');
@@ -162,7 +162,6 @@ class Roles extends BaseControl
 				$form['send']->caption = 'Upravit';
 
 				if ($this->isAjax()) {
-					$this->presenter->payload->modal = 'roles';
 					$this->redrawControl('items');
 					$this->redrawControl('factory');
 				}

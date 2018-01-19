@@ -11,27 +11,21 @@
 
 	{* title *}
 	<p class="heading">
-		<a href="#" id="modal-2" class="modal">Akce a signály</a>
+		<a href="#" id="form-2" class="toggle">Akce a signály</a>
 	</p>
 
 	{* factory *}
 	{snippet factory}
-	<div id="simplemodal-2" class="screen reader">
+	<div class="screen reader toggle-2">
 		{form factory class => 'ajax'}
-			<h3>Akce a signály</h3>
 			{snippet errors}
 			<ul class="errors" n:if="$form->hasErrors()">
 				<li n:foreach="$form->errors as $error">{$error}</li>
 			</ul>
 			{/snippet}
-			{input name class => 'full width'}
+			<div class="wrapper">{input name}</div>
 			{input send class => 'button primary'}
 		{/form}
-		<span class="simplemodal-close">
-			<a n:href="close!" class="modal-close ajax" title="Zavřít">
-				<i class="fa fa-times" aria-hidden="true"></i>
-			</a>
-		</span>
 	</div>
 	{/snippet}
 
