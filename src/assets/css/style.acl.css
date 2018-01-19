@@ -39,7 +39,7 @@ body {
 
 .tree li.parent > a {
     text-decoration: none;
-	font-weight: 500;
+	font-weight: 600;
 	     cursor: pointer;
 	    padding: 0 0 2px 25px;
 	      color: #5d5d5d;
@@ -86,7 +86,7 @@ body {
 
 .tree ul li span.name {
     margin-left: 12px;
-    font-weight: 500;
+    font-weight: 600;
           color: #5d5d5d;
 }
 
