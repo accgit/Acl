@@ -1,0 +1,25 @@
+{
+	"name": "accgit/acl",
+	"type": "library",
+	"description": "Simple management of users' permissions.",
+	"license": ["MIT"],
+	"authors": [
+		{
+			"name": "Zdeněk Papučík",
+			"homepage": "https://github.com/accgit"
+		}
+	],
+	"require": {
+		"php": ">=7.0.8",
+		"nette/security": "~2.4",
+		"nette/application": "~2.4",
+		"nette/caching": "~2.4",
+		"nette/di": "~2.4",
+		"latte/latte": "~2.4.0",
+		"drago-ex/cache": "~1.0.0",
+		"drago-ex/database": "~1.0.0"
+	},
+	"autoload": {
+		"classmap": ["src/"]
+	}
+}
