@@ -14,6 +14,10 @@ Simple management of users' permissions.
 composer require accgit/acl
 ```
 
+## Install database
+
+use the db.sql file.
+
 ## Register a configuration file
 
 ```php
@@ -52,7 +56,7 @@ public function findRoles($userId)
 }
 ```
 
-## We go through the roles that are assigned to users and return them to the identity
+## We will add individual roles to users
 
 ```php
 $roles = $this->repository->findRoles($row->userId);
@@ -104,3 +108,5 @@ public function checkRequirements($element)
 ```
 
 ## Copy files from assets
+
+css, js and latte.
