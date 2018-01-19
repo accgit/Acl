@@ -121,6 +121,7 @@ class Privileges extends BaseControl
 				$form['send']->caption = 'Upravit';
 
 				if ($this->isAjax()) {
+					$this->presenter->payload->toggle = 'privileges';
 					$this->redrawControl('items');
 					$this->redrawControl('factory');
 				}

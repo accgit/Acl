@@ -44,8 +44,15 @@
 				});
 			},
 			success: function(payload) {
-				if (payload.acl === 'acl') {
-					json.data();
+				switch(payload.toggle) {
+					case 'roles':       $('.toggle-1').toggle(); break;
+					case 'privileges':  $('.toggle-2').toggle(); break;
+					case 'resources':   $('.toggle-3').toggle(); break;
+					case 'permissions': $('.toggle-4').toggle(); break;
+						default:
+							if (payload.acl === 'acl') {
+								json.data();
+							}
 				}
 			}
 		});

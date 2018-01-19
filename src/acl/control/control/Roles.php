@@ -162,6 +162,7 @@ class Roles extends BaseControl
 				$form['send']->caption = 'Upravit';
 
 				if ($this->isAjax()) {
+					$this->presenter->payload->toggle = 'roles';
 					$this->redrawControl('items');
 					$this->redrawControl('factory');
 				}

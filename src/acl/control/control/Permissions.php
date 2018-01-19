@@ -162,6 +162,7 @@ class Permissions extends BaseControl
 				$form['send']->caption = 'Upravit';
 
 				if ($this->isAjax()) {
+					$this->presenter->payload->toggle = 'permissions';
 					$this->redrawControl('items');
 					$this->redrawControl('factory');
 				}

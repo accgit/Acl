@@ -121,6 +121,7 @@ class Resources extends BaseControl
 				$form['send']->caption = 'Upravit';
 
 				if ($this->isAjax()) {
+					$this->presenter->payload->toggle = 'resources';
 					$this->redrawControl('items');
 					$this->redrawControl('factory');
 				}
