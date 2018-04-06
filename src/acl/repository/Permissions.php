@@ -123,12 +123,12 @@ class Permissions extends BaseRepository
 	public function save(Acl\Entity\Permissions $entity)
 	{
 		if (!$entity->getId()) {
-			$row = $this->db->insert($this->table, Iterator::set($entity))->execute();
+			$row = $this->db->insert($this->table, Iterator::toArray($entity))->execute();
 			$this->caches->removeCache(Acl\Authorizator::ACL_CACHE);
 			return $row;
 		} else {
 			$row = $this->db
-				->update($this->table, Iterator::set($entity))
+				->update($this->table, Iterator::toArray($entity))
 				->where('id = ?', $entity->getId())
 				->execute();
 
