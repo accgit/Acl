@@ -141,13 +141,13 @@ class Roles extends BaseRepository
 	public function save(Acl\Entity\Roles $entity)
 	{
 		if (!$entity->getId()) {
-			$db = $this->db->insert($this->table, Database\Iterator::set($entity))->execute();
+			$db = $this->db->insert($this->table, Database\Iterator::toArray($entity))->execute();
 			$this->caches->removeCache(Acl\Authorizator::ACL_CACHE);
 			return $db;
 
 		} else {
 			$db = $this->db
-				->update($this->table, Database\Iterator::set($entity))
+				->update($this->table, Database\Iterator::toArray($entity))
 				->where('roleId = ?', $entity->getId())
 				->execute();
 
