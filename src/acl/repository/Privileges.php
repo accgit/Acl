@@ -76,11 +76,11 @@ class Privileges extends Drago\Database\Connection
 	{
 		if (!$entity->getId()) {
 			return $this->db
-				->insert($this->table, Database\Iterator::set($entity))
+				->insert($this->table, Database\Iterator::toArray($entity))
 				->execute();
 		} else {
 			return $this->db
-				->update($this->table, Database\Iterator::set($entity))
+				->update($this->table, Database\Iterator::toArray($entity))
 				->where('privilegeId = ?', $entity->getId())
 				->execute();
 		}
