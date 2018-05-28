@@ -22,9 +22,6 @@ services:
 		class: Nette\Caching\Cache
 		arguments: [@Nette\Caching\IStorage, 'Drago.AclCache']
 
-	# Cache for acl.
-	- Drago\Caching\Caches(@cache.acl)
-
 	# Registration authorizator.
 	acl: Component\Acl\Authorizator
 	app.authorizator: @acl::create

@@ -128,7 +128,7 @@ class Roles extends BaseRepository
 			throw new Exception('Sorry, this role is not allowed to be deleted.', self::NOT_ALLOWED_DELETE);
 		}
 		$db  = $this->db->delete($this->table)->where('roleId = ?', $id)->execute();
-		$this->caches->removeCache(Acl\Authorizator::ACL_CACHE);
+		$this->cache->remove(Acl\Authorizator::ACL_CACHE);
 		return $db;
 	}
 
@@ -142,7 +142,7 @@ class Roles extends BaseRepository
 	{
 		if (!$entity->getId()) {
 			$db = $this->db->insert($this->table, Database\Iterator::toArray($entity))->execute();
-			$this->caches->removeCache(Acl\Authorizator::ACL_CACHE);
+			$this->cache->remove(Acl\Authorizator::ACL_CACHE);
 			return $db;
 
 		} else {
@@ -151,7 +151,7 @@ class Roles extends BaseRepository
 				->where('roleId = ?', $entity->getId())
 				->execute();
 
-			$this->caches->removeCache(Acl\Authorizator::ACL_CACHE);
+			$this->cache->remove(Acl\Authorizator::ACL_CACHE);
 			return $db;
 		}
 	}

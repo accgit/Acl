@@ -6,8 +6,8 @@
  */
 namespace Component\Acl\Repository;
 
+use Nette;
 use Dibi;
-use Drago;
 
 /**
  * Base for repository.
@@ -15,16 +15,16 @@ use Drago;
 abstract class BaseRepository extends Drago\Database\Connection
 {
 	/**
-	 * @var Drago\Caching\Caches
+	 * @var Nette\Caching\Cache
 	 */
-	public $caches;
+	public $cache;
 
 	public function __construct(
 		Dibi\Connection $db,
-		Drago\Caching\Caches $caches)
+		Nette\Caching\Cache $cache)
 	{
 		parent::__construct($db);
-		$this->caches = $caches;
+		$this->cache = $cache;
 	}
 
 }

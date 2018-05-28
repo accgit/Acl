@@ -111,7 +111,7 @@ class Permissions extends BaseRepository
 	public function delete($id)
 	{
 		$row = $this->db->delete($this->table)->where('id = ?', $id)->execute();
-		$this->caches->removeCache(Acl\Authorizator::ACL_CACHE);
+		$this->cache->remove(Acl\Authorizator::ACL_CACHE);
 		return $row;
 	}
 
@@ -124,7 +124,7 @@ class Permissions extends BaseRepository
 	{
 		if (!$entity->getId()) {
 			$row = $this->db->insert($this->table, Iterator::toArray($entity))->execute();
-			$this->caches->removeCache(Acl\Authorizator::ACL_CACHE);
+			$this->cache->remove(Acl\Authorizator::ACL_CACHE);
 			return $row;
 		} else {
 			$row = $this->db
@@ -132,7 +132,7 @@ class Permissions extends BaseRepository
 				->where('id = ?', $entity->getId())
 				->execute();
 
-			$this->caches->removeCache(Acl\Authorizator::ACL_CACHE);
+			$this->cache->remove(Acl\Authorizator::ACL_CACHE);
 			return $row;
 		}
 	}

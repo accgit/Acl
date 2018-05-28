@@ -6,9 +6,9 @@
  */
 namespace Component\Acl;
 
+use Nette;
 use Nette\Security;
 use Component\Acl\Repository;
-use Drago\Caching\Caches;
 
 /**
  * Managing User Permissions.
@@ -44,18 +44,18 @@ class Authorizator
 	private $permissions;
 
 	/**
-	 * @var Caches
+	 * @var Nette\Caching\Cache
 	 */
-	private $caches;
+	private $cache;
 
 	public function __construct(
-		Caches $caches,
+		Nette\Caching\Cache $cache,
 		Repository\Roles $roles,
 		Repository\Resources $resources,
 		Repository\Permissions $permissions)
 	{
-		$this->caches = $caches;
-		$this->roles  = $roles;
+		$this->cache = $cache;
+		$this->roles = $roles;
 		$this->permissions = $permissions;
 		$this->resources = $resources;
 	}
@@ -66,7 +66,7 @@ class Authorizator
 	public function create()
 	{
 		$acl = new Security\Permission();
-		if (!$this->caches->isCacheExist(self::ACL_CACHE)) {
+		if (!$this->cache->load(self::ACL_CACHE)) {
 
 			// Add roles.
 			foreach ($this->roles->all() as $role) {
@@ -93,13 +93,12 @@ class Authorizator
 			$acl->allow(self::ROLE_ADMIN, Security\Permission::ALL, Security\Permission::ALL);
 
 			// Save permissions to cache.
-			$this->caches->setToCache(self::ACL_CACHE, $acl);
+			$this->cache->save(self::ACL_CACHE, $acl);
 		}
 
 		// Load permissions form cache.
-		if ($this->caches->isCacheExist(self::ACL_CACHE)) {
-			$acl = $this->caches->getFromCache(self::ACL_CACHE);
-			return $acl;
+		if ($this->cache->load(self::ACL_CACHE)) {
+			return $this->cache->load(self::ACL_CACHE);
 		}
 	}
 

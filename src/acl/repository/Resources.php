@@ -61,7 +61,7 @@ class Resources extends BaseRepository
 	public function delete($id)
 	{
 		$row = $this->db->delete($this->table)->where('resourceId = ?', $id)->execute();
-		$this->caches->removeCache(Acl\Authorizator::ACL_CACHE);
+		$this->cache->remove(Acl\Authorizator::ACL_CACHE);
 		return $row;
 	}
 
@@ -74,7 +74,7 @@ class Resources extends BaseRepository
 	{
 		if (!$entity->getId()) {
 			$row = $this->db->insert($this->table, Database\Iterator::toArray($entity))->execute();
-			$this->caches->removeCache(Acl\Authorizator::ACL_CACHE);
+			$this->cache->remove(Acl\Authorizator::ACL_CACHE);
 			return $row;
 		} else {
 			$row = $this->db
@@ -82,7 +82,7 @@ class Resources extends BaseRepository
 				->where('resourceId = ?', $entity->getId())
 				->execute();
 
-			$this->caches->removeCache(Acl\Authorizator::ACL_CACHE);
+			$this->cache->remove(Acl\Authorizator::ACL_CACHE);
 			return $row;
 		}
 	}
