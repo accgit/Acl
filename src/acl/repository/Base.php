@@ -6,6 +6,7 @@
  */
 namespace Component\Acl\Repository;
 
+use Drago;
 use Nette;
 use Dibi;
 
