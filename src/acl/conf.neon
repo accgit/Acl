@@ -20,7 +20,7 @@ services:
 	# Cache settings.
 	cache.acl:
 		class: Nette\Caching\Cache
-		arguments: [@Nette\Caching\IStorage, 'Drago.AclCache']
+		arguments: [@Nette\Caching\IStorage, 'Acl.Cache']
 
 	# Registration authorizator.
 	acl: Component\Acl\Authorizator
