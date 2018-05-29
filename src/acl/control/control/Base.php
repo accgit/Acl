@@ -24,5 +24,13 @@ abstract class BaseControl extends UI\Control
 	{
 		return $this->presenter->isAjax();
 	}
+	
+	/**
+	 * @return UI\Form
+	 */
+	public function factory()
+	{
+		return $this->factory()->create();
+	}
 
 }
