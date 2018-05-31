@@ -46,7 +46,7 @@ use Component\Acl;
 ```php
 /**
  * Returned record by id.
- * @param int
+ * @param int userId
  * @return array
  */
 public function findRoles($userId)
