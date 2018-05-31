@@ -16,7 +16,9 @@ use Component\Acl;
  */
 class Privileges extends Drago\Database\Connection
 {
-	// Exceptions errors.
+	/**
+	 * Exceptions errors.
+	 */
 	const RECORD_NOT_FOUND = 1;
 
 	/**
@@ -38,7 +40,7 @@ class Privileges extends Drago\Database\Connection
 
 	/**
 	 * Find record by id.
-	 * @param int
+	 * @param int $id
 	 * @return void
 	 * @throws Exception
 	 */
@@ -56,7 +58,7 @@ class Privileges extends Drago\Database\Connection
 
 	/**
 	 * Delete record.
-	 * @param int
+	 * @param int $id
 	 * @return void
 	 */
 	public function delete($id)

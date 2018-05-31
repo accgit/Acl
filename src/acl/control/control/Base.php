@@ -5,13 +5,17 @@
  * Copyright (c) 2017, Zdeněk Papučík
  */
 namespace Component\Acl\Control;
+
 use Nette\Application\UI;
+use Drago\Application;
 
 /**
  * Base control.
  */
 abstract class BaseControl extends UI\Control
 {
+	use Application\UI\Factory;
+
 	public function __construct()
 	{
 		parent::__construct();
@@ -24,15 +28,6 @@ abstract class BaseControl extends UI\Control
 	public function isAjax()
 	{
 		return $this->presenter->isAjax();
-	}
-
-	/**
-	 * Form factory.
-	 * @return UI\Form
-	 */
-	public function factory()
-	{
-		return new UI\Form;
 	}
 
 }

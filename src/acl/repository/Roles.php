@@ -15,7 +15,9 @@ use Component\Acl;
  */
 class Roles extends BaseRepository
 {
-	// Exceptions errors.
+	/**
+	 * Exceptions errors.
+	 */
 	const
 		RECORD_NOT_FOUND   = 1,
 		PARENT_ROLE_EXIST  = 2,
@@ -50,7 +52,7 @@ class Roles extends BaseRepository
 
 	/**
 	 * List of roles that are not allowed to be edited or deleted.
-	 * @param array
+	 * @param array $row
 	 * @return boolean
 	 */
 	private function notAllowed($row)
@@ -65,7 +67,7 @@ class Roles extends BaseRepository
 
 	/**
 	 * Find record by id.
-	 * @param int
+	 * @param int $id
 	 * @return void
 	 * @throws Exception
 	 */
@@ -84,7 +86,7 @@ class Roles extends BaseRepository
 
 	/**
 	 * Find role.
-	 * @param int
+	 * @param int $id
 	 * @return array
 	 * @throws Exception
 	 */
@@ -99,7 +101,7 @@ class Roles extends BaseRepository
 
 	/**
 	 * Find record by id.
-	 * @param int
+	 * @param int $id
 	 * @return void
 	 * @throws Exception
 	 */
@@ -117,7 +119,7 @@ class Roles extends BaseRepository
 
 	/**
 	 * Delete record.
-	 * @param int
+	 * @param int $id
 	 * @return void
 	 * @throws Exception
 	 */

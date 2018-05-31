@@ -75,7 +75,7 @@ class Permissions extends BaseControl
 	 */
 	protected function createComponentFactory()
 	{
-		$form  = $this->factory();
+		$form  = $this->createForm();
 		$roles = [];
 		foreach ($this->roles->all() as $role) {
 			$roles[$role->roleId] = $role->name;
@@ -151,7 +151,7 @@ class Permissions extends BaseControl
 	}
 
 	/**
-	 * @param int
+	 * @param int $id
 	 */
 	public function handleEdit($id = 0)
 	{
@@ -184,7 +184,7 @@ class Permissions extends BaseControl
 	}
 
 	/**
-	 * @param int
+	 * @param int $id
 	 */
 	public function handleDelete($id = 0)
 	{

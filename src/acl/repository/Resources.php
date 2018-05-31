@@ -15,7 +15,9 @@ use Component\Acl;
  */
 class Resources extends BaseRepository
 {
-	// Exceptions errors.
+	/**
+	 * Exceptions errors.
+	 */
 	const RECORD_NOT_FOUND = 1;
 
 	/**
@@ -37,7 +39,7 @@ class Resources extends BaseRepository
 
 	/**
 	 * Find record by id.
-	 * @param int
+	 * @param int $id
 	 * @return void
 	 * @throws Exception
 	 */
@@ -55,7 +57,7 @@ class Resources extends BaseRepository
 
 	/**
 	 * Delete record.
-	 * @param int
+	 * @param int $id
 	 * @return void
 	 */
 	public function delete($id)

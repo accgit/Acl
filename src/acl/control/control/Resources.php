@@ -51,7 +51,7 @@ class Resources extends BaseControl
 	 */
 	protected function createComponentFactory()
 	{
-		$form = $this->factory();
+		$form = $this->createForm();
 		$form->addText('name', 'Název')
 			->setAttribute('placeholder', 'Zadejte název zdroje.')
 			->setAttribute('autocomplete', 'off')
@@ -110,7 +110,7 @@ class Resources extends BaseControl
 	}
 
 	/**
-	 * @param int
+	 * @param int $id
 	 */
 	public function handleEdit($id = 0)
 	{
@@ -143,7 +143,7 @@ class Resources extends BaseControl
 	}
 
 	/**
-	 * @param int
+	 * @param int $id
 	 */
 	public function handleDelete($id = 0)
 	{

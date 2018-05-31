@@ -15,7 +15,9 @@ use Component\Acl;
  */
 class Permissions extends BaseRepository
 {
-	// Exceptions errors.
+	/**
+	 * Exceptions errors.
+	 */
 	const
 
 		RECORD_NOT_FOUND = 1,
@@ -53,7 +55,7 @@ class Permissions extends BaseRepository
 
 	/**
 	 * Find record by id.
-	 * @param int
+	 * @param int $id
 	 * @return void
 	 * @throws Exception
 	 */
@@ -105,7 +107,7 @@ class Permissions extends BaseRepository
 
 	/**
 	 * Delete record.
-	 * @param int
+	 * @param int $id
 	 * @return void
 	 */
 	public function delete($id)

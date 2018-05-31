@@ -15,18 +15,20 @@ use Component\Acl\Repository;
  */
 class Authorizator
 {
-	// Default roles.
+	/**
+	 * Default setting for ACL.
+	 */
 	const
+		// Default roles.
 		ROLE_GUEST  = 'guest',
 		ROLE_MEMBER = 'member',
-		ROLE_ADMIN  = 'admin';
+		ROLE_ADMIN  = 'admin',
 
-	// Option to specify privileges for all actions and signals.
-	const
-		PRIVILEGE_ALL = '*all';
+		// Option to specify privileges for all actions and signals.
+		PRIVILEGE_ALL = '*all',
 
-	// Acl cache.
-	const ACL_CACHE = 'acl.cache';
+		// Acl cache.
+		ACL_CACHE = 'acl.cache';
 
 	/**
 	 * @var Repository\Roles;

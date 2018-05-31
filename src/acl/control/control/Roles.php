@@ -47,8 +47,8 @@ class Roles extends BaseControl
 
 	/**
 	 * Build tree array.
-	 * @param array
-	 * @param int
+	 * @param array $items
+	 * @param int $parent
 	 * @return array
 	 */
 	private function buildTree($items, $parent = 0)
@@ -83,7 +83,7 @@ class Roles extends BaseControl
 	 */
 	protected function createComponentFactory()
 	{
-		$form = $this->factory();
+		$form = $this->createForm();
 		$form->addText('name', 'Název')
 			->setAttribute('placeholder', 'Zadejte název role.')
 			->setAttribute('autocomplete', 'off')
@@ -151,7 +151,7 @@ class Roles extends BaseControl
 	}
 
 	/**
-	 * @param int
+	 * @param int $id
 	 */
 	public function handleEdit($id = 0)
 	{
@@ -187,7 +187,7 @@ class Roles extends BaseControl
 	}
 
 	/**
-	 * @param int
+	 * @param int $id
 	 */
 	public function handleDelete($id = 0)
 	{
