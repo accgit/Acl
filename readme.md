@@ -93,15 +93,13 @@ public function checkRequirements($element)
 
 		// Everything else will check where the user has access.
 		} elseif (!$this->user->isAllowed($this->name, $this->action)) {
-			$this->messageWarning('You do not have permission.');
-			$this->redirect('Homepage:');
+			throw new \Nette\Application\ForbiddenRequestException;
 		}
 
 	// Check what the user can and can not do.
 	} elseif ($element instanceof \ReflectionMethod) {
 		if (!$this->user->isAllowed($this->name, $this->signal[1] ?: $this->action)) {
-			$this->messageWarning('You do not have permission.');
-			$this->redirect('Homepage:');
+			throw new \Nette\Application\ForbiddenRequestException;
 		}
 	}
 }
