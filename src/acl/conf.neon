@@ -2,26 +2,25 @@
 # Acl component.
 services:
 
+	# acl cache
+	acl.cache: {class: Nette\Caching\Cache, autowired: no}
+	acl.cache.setup: {arguments: [@Nette\Caching\IStorage, 'Acl.Cache'], factory: @acl.cache, autowired: no}
+
 	- Component\Acl\Entity\Roles
 	- Component\Acl\Entity\Resources
 	- Component\Acl\Entity\Privileges
 	- Component\Acl\Entity\Permissions
 
-	- Component\Acl\Repository\Roles
-	- Component\Acl\Repository\Resources
-	- Component\Acl\Repository\Privileges
-	- Component\Acl\Repository\Permissions
+	- Component\Acl\Repository\Roles(@acl.cache.setup)
+	- Component\Acl\Repository\Resources(@acl.cache.setup)
+	- Component\Acl\Repository\Privileges(@acl.cache.setup)
+	- Component\Acl\Repository\Permissions(@acl.cache.setup)
 
 	- Component\Acl\Control\Roles
 	- Component\Acl\Control\Resources
 	- Component\Acl\Control\Privileges
 	- Component\Acl\Control\Permissions
 
-	# Cache settings.
-	cache.acl:
-		class: Nette\Caching\Cache
-		arguments: [@Nette\Caching\IStorage, 'Acl.Cache']
-
 	# Registration authorizator.
-	acl: Component\Acl\Authorizator
+	acl: Component\Acl\Authorizator(@acl.cache.setup)
 	app.authorizator: @acl::create

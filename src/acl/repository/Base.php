@@ -21,8 +21,8 @@ abstract class BaseRepository extends Drago\Database\Connection
 	public $cache;
 
 	public function __construct(
-		Dibi\Connection $db,
-		Nette\Caching\Cache $cache)
+		Nette\Caching\Cache $cache,
+		Dibi\Connection $db)
 	{
 		parent::__construct($db);
 		$this->cache = $cache;
