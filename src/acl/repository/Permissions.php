@@ -8,7 +8,7 @@ namespace Component\Acl\Repository;
 
 use Exception;
 use Drago\Database\Iterator;
-use Component\Acl;
+use Component\Acl\Entity;
 
 /**
  * Permissions repository.
@@ -19,52 +19,42 @@ class Permissions extends BaseRepository
 	 * Exceptions errors.
 	 */
 	const
-
 		RECORD_NOT_FOUND = 1,
 		DUPLICATION_RULE = 2;
 
 	/**
-	 * @var string
-	 */
-	private $table = ':prefix:permissions';
-
-	/**
-	 * Returns all records.
 	 * @return array
 	 */
 	public function items()
 	{
 		return $this->db
-			->select('*')
-			->from($this->table);
+			->query('SELECT * FROM :prefix:permissions');
 	}
 
 	/**
-	 * Returns all from joined tables.
 	 * @return array
 	 */
 	public function all()
 	{
 		return $this->db
 			->query('
-				SELECT a.id, a.allowed, r.name AS role, res.name AS resource, p.name AS privilege
-				FROM :prefix:permissions AS a JOIN :prefix:resources AS res using (resourceId)
+				SELECT a.id, a.allowed, r.name AS role, res.name AS resource, p.name AS privilege FROM :prefix:permissions AS a
+				JOIN :prefix:resources AS res using (resourceId)
 				JOIN :prefix:privileges AS p using (privilegeId)
 				JOIN :prefix:roles AS r using (roleId)');
 	}
 
 	/**
-	 * Find record by id.
 	 * @param int $id
-	 * @return void
+	 * @return array
 	 * @throws Exception
 	 */
 	public function find($id)
 	{
-		$row = $this->items()
-			->where('id = ?', $id)
-			->fetch();
-
+		$row = $this->db
+			->fetch('
+				SELECT * FROM :prefix:permissions
+				WHERE id = ?', $id);
 		if (!$row) {
 			throw new Exception('Sorry, but the record was not found.', self::RECORD_NOT_FOUND);
 		}
@@ -72,71 +62,62 @@ class Permissions extends BaseRepository
 	}
 
 	/**
-	 * Group by rules.
 	 * @return array
 	 */
 	public function rules()
 	{
-		return $this->items()
-			->groupBy('allowed, roleId');
+		return $this->db
+			->query('
+				SELECT * FROM :prefix:permissions
+				GROUP BY allowed, roleId');
 	}
 
 	/**
-	 * Group by resources.
 	 * @return array
 	 */
 	public function resources()
 	{
-		return $this->db->query('
-			SELECT a.allowed, r.name AS role, res.name AS resource FROM :prefix:permissions AS a
-			JOIN :prefix:resources AS res using (resourceId) JOIN :prefix:privileges AS p using (privilegeId)
-			JOIN :prefix:roles AS r using (roleId) GROUP BY a.allowed, r.name, res.name');
+		return $this->db
+			->query('
+				SELECT a.allowed, r.name AS role, res.name AS resource FROM :prefix:permissions AS a
+				LEFT JOIN :prefix:resources AS res using (resourceId)
+				LEFT JOIN :prefix:privileges AS p using (privilegeId)
+				LEFT JOIN :prefix:roles AS r using (roleId)
+				GROUP BY a.allowed, r.name, res.name');
 	}
 
 	/**
-	 * Group by privileges.
 	 * @return array
 	 */
 	public function privileges()
 	{
-		return $this->db->query('
-			SELECT a.id, a.allowed, r.name AS role, res.name AS resource, p.name as privilege FROM :prefix:permissions AS a
-			JOIN :prefix:resources AS res using (resourceId) JOIN :prefix:privileges AS p using (privilegeId)
-			JOIN :prefix:roles AS r using (roleId) GROUP BY a.allowed, r.name, res.name, p.name');
+		return $this->db
+			->query('
+				SELECT a.id, a.allowed, r.name AS role, res.name AS resource, p.name as privilege FROM :prefix:permissions AS a
+				LEFT JOIN :prefix:resources AS res using (resourceId)
+				LEFT JOIN :prefix:privileges AS p using (privilegeId)
+				LEFT JOIN :prefix:roles AS r using (roleId)
+				GROUP BY a.allowed, r.name, res.name, p.name');
 	}
 
 	/**
-	 * Delete record.
 	 * @param int $id
-	 * @return void
 	 */
 	public function delete($id)
 	{
-		$row = $this->db->delete($this->table)->where('id = ?', $id)->execute();
-		$this->cache->remove(Acl\Authorizator::ACL_CACHE);
-		return $row;
+		$this->db
+			->query('
+				DELETE FROM :prefix:permissions
+				WHERE id = ?', $id);
+		$this->removeCache();
 	}
 
-	/**
-	 * Save record.
-	 * @param Acl\Entity\Permissions
-	 * @return void
-	 */
-	public function save(Acl\Entity\Permissions $entity)
+	public function save(Entity\Permissions $entity)
 	{
-		if (!$entity->getId()) {
-			$row = $this->db->insert($this->table, Iterator::toArray($entity))->execute();
-			$this->cache->remove(Acl\Authorizator::ACL_CACHE);
-			return $row;
-		} else {
-			$row = $this->db
-				->update($this->table, Iterator::toArray($entity))
-				->where('id = ?', $entity->getId())
-				->execute();
-
-			$this->cache->remove(Acl\Authorizator::ACL_CACHE);
-			return $row;
-		}
+		!$entity->getId() ?
+			$this->db->query('INSERT INTO :prefix:permissions %v', Iterator::toArray($entity)) :
+			$this->db->query('UPDATE :prefix:permissions SET %a',  Iterator::toArray($entity), 'WHERE id = ?', $entity->getId());
+		$this->removeCache();
 	}
 
 }

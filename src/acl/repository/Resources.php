@@ -7,8 +7,8 @@
 namespace Component\Acl\Repository;
 
 use Exception;
-use Drago\Database;
-use Component\Acl;
+use Drago\Database\Iterator;
+use Component\Acl\Entity;
 
 /**
  * Resources repository.
@@ -21,34 +21,28 @@ class Resources extends BaseRepository
 	const RECORD_NOT_FOUND = 1;
 
 	/**
-	 * @var string
-	 */
-	private $table = ':prefix:resources';
-
-	/**
-	 * Returns all records.
 	 * @return array
 	 */
 	public function all()
 	{
 		return $this->db
-			->select('*')
-			->from($this->table)
-			->orderBy('name asc');
+			->query('
+				SELECT * FROM :prefix:resources
+				ORDER BY name asc');
 	}
 
 	/**
-	 * Find record by id.
 	 * @param int $id
-	 * @return void
+	 * @return array
 	 * @throws Exception
 	 */
 	public function find($id)
 	{
-		$row = $this->all()
-			->where('resourceId = ?', $id)
-			->fetch();
-
+		$row = $this->db
+			->fetch('
+				SELECT * FROM :prefix:resources
+				WHERE resourceId = ?', $id, '
+				ORDER BY name asc');
 		if (!$row) {
 			throw new Exception('Sorry, but the record was not found.', self::RECORD_NOT_FOUND);
 		}
@@ -56,37 +50,23 @@ class Resources extends BaseRepository
 	}
 
 	/**
-	 * Delete record.
 	 * @param int $id
-	 * @return void
 	 */
 	public function delete($id)
 	{
-		$row = $this->db->delete($this->table)->where('resourceId = ?', $id)->execute();
-		$this->cache->remove(Acl\Authorizator::ACL_CACHE);
-		return $row;
+		$this->db
+			->query('
+				DELETE FROM :prefix:resources
+				WHERE resourceId = ?', $id);
+		$this->removeCache();
 	}
 
-	/**
-	 * Save record.
-	 * @param Acl\Entity\Resources
-	 * @return void
-	 */
-	public function save(Acl\Entity\Resources $entity)
+	public function save(Entity\Resources $entity)
 	{
-		if (!$entity->getId()) {
-			$row = $this->db->insert($this->table, Database\Iterator::toArray($entity))->execute();
-			$this->cache->remove(Acl\Authorizator::ACL_CACHE);
-			return $row;
-		} else {
-			$row = $this->db
-				->update($this->table, Database\Iterator::toArray($entity))
-				->where('resourceId = ?', $entity->getId())
-				->execute();
-
-			$this->cache->remove(Acl\Authorizator::ACL_CACHE);
-			return $row;
-		}
+		!$entity->getId() ?
+			$this->db->query('INSERT INTO :prefix:resources %v', Iterator::toArray($entity)) :
+			$this->db->query('UPDATE :prefix:resources SET %a',  Iterator::toArray($entity), 'WHERE resourceId = ?', $entity->getId());
+		$this->removeCache();
 	}
 
 }

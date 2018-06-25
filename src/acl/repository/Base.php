@@ -9,6 +9,7 @@ namespace Component\Acl\Repository;
 use Drago;
 use Nette;
 use Dibi;
+use Component;
 
 /**
  * Base for repository.
@@ -24,6 +25,14 @@ abstract class BaseRepository extends Drago\Database\Connection
 	{
 		parent::__construct($db);
 		$this->cache = $cache;
+	}
+
+	/**
+	 * @return void
+	 */
+	public function removeCache()
+	{
+		return $this->cache->remove(Component\Acl\Authorizator::ACL_CACHE);
 	}
 
 }

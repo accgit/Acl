@@ -7,8 +7,10 @@
 namespace Component\Acl\Repository;
 
 use Exception;
-use Drago\Database;
+use Drago\Database\Iterator;
+
 use Component\Acl;
+use Component\Acl\Entity;
 
 /**
  * Roles repository.
@@ -25,37 +27,30 @@ class Roles extends BaseRepository
 		NOT_ALLOWED_DELETE = 4;
 
 	/**
-	 * @var string
-	 */
-	private $table = ':prefix:roles';
-
-	/**
-	 * Returns all records.
 	 * @return array
 	 */
 	public function all()
 	{
 		return $this->db
-			->select('*')
-			->from($this->table);
+			->fetchAll('SELECT * FROM :prefix:roles');
 	}
 
 	/**
-	 * Find records.
 	 * @return array
 	 */
 	public function findRoles()
 	{
-		return $this->all()
-			->where('roleId in (select distinct roleId from :prefix:permissions)');
+		return $this->db
+			->query('
+				SELECT * FROM :prefix:roles
+				WHERE roleId IN (SELECT DISTINCT roleId FROM :prefix:permissions)');
 	}
 
 	/**
-	 * List of roles that are not allowed to be edited or deleted.
 	 * @param array $row
-	 * @return boolean
+	 * @return bool
 	 */
-	private function notAllowed($row)
+	private function isAllowed($row)
 	{
 		if (
 			$row->name === Acl\Authorizator::ROLE_GUEST or
@@ -66,17 +61,16 @@ class Roles extends BaseRepository
 	}
 
 	/**
-	 * Find record by id.
 	 * @param int $id
-	 * @return void
+	 * @return array
 	 * @throws Exception
 	 */
 	public function find($id)
 	{
-		$row = $this->all()
-			->where('roleId = ?', $id)
-			->fetch();
-
+		$row = $this->db
+			->fetch('
+				SELECT * FROM :prefix:roles
+				WHERE roleId = ?', $id);
 		if (!$row) {
 			throw new Exception('Sorry, but the record was not found.', self::RECORD_NOT_FOUND);
 
@@ -85,77 +79,67 @@ class Roles extends BaseRepository
 	}
 
 	/**
-	 * Find role.
 	 * @param int $id
 	 * @return array
 	 * @throws Exception
 	 */
 	public function findRole($id)
 	{
-		$row = $this->find($id);
-		if ($this->notAllowed($row)) {
+		$row = $this->db
+			->fetch('
+				SELECT * FROM :prefix:roles
+				WHERE roleId = ?', $id);
+
+		if ($this->isAllowed($row)) {
 			throw new Exception('The role is not allowed to be edited anyway.', self::NOT_ALLOWED_EDIT);
 		}
 		return $row;
 	}
 
 	/**
-	 * Find record by id.
 	 * @param int $id
-	 * @return void
+	 * @return array
 	 * @throws Exception
 	 */
 	public function findParent($id)
 	{
-		$parent = $this->all()
-			->where('parent = ?', $id)
-			->fetch() ? true : false;
-
-		if ($parent) {
+		$row = $this->db
+			->fetch('
+				SELECT * FROM :prefix:roles
+				WHERE parent = ?', $id) ? true : false;
+		if ($row) {
 			throw new Exception('The record can not be deleted, you must first delete the records that are associated with it.', self::PARENT_ROLE_EXIST);
 		}
-		return $parent;
+		return $row;
 	}
 
 	/**
-	 * Delete record.
 	 * @param int $id
-	 * @return void
 	 * @throws Exception
 	 */
 	public function delete($id)
 	{
-		$row = $this->find($id);
-		if ($this->notAllowed($row)) {
+		$row = $this->db
+			->fetch('
+				SELECT * FROM :prefix:roles
+				WHERE roleId = ?', $id);
+
+		if ($this->isAllowed($row)) {
 			throw new Exception('Sorry, this role is not allowed to be deleted.', self::NOT_ALLOWED_DELETE);
 		}
-		$db  = $this->db->delete($this->table)->where('roleId = ?', $id)->execute();
-		$this->cache->remove(Acl\Authorizator::ACL_CACHE);
-		return $db;
+		$this->db
+			->query('
+				DELETE FROM :prefix:roles
+				WHERE roleId = ?', $id);
+		$this->removeCache();
 	}
 
-	/**
-	 * Save record.
-	 * @param Acl\Entity\Roles
-	 * @return void
-	 * @throws Exception
-	 */
-	public function save(Acl\Entity\Roles $entity)
+	public function save(Entity\Roles $entity)
 	{
-		if (!$entity->getId()) {
-			$db = $this->db->insert($this->table, Database\Iterator::toArray($entity))->execute();
-			$this->cache->remove(Acl\Authorizator::ACL_CACHE);
-			return $db;
-
-		} else {
-			$db = $this->db
-				->update($this->table, Database\Iterator::toArray($entity))
-				->where('roleId = ?', $entity->getId())
-				->execute();
-
-			$this->cache->remove(Acl\Authorizator::ACL_CACHE);
-			return $db;
-		}
+		!$entity->getId() ?
+			$this->db->query('INSERT INTO :prefix:roles %v', Iterator::toArray($entity)) :
+			$this->db->query('UPDATE :prefix:roles SET %a',  Iterator::toArray($entity), 'WHERE roleId = ?', $entity->getId());
+		$this->removeCache();
 	}
 
 }

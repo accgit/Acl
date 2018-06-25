@@ -8,8 +8,8 @@ namespace Component\Acl\Repository;
 
 use Drago;
 use Exception;
-use Drago\Database;
-use Component\Acl;
+use Drago\Database\Iterator;
+use Component\Acl\Entity;
 
 /**
  * Privileges repository.
@@ -22,34 +22,28 @@ class Privileges extends Drago\Database\Connection
 	const RECORD_NOT_FOUND = 1;
 
 	/**
-	 * @var string
-	 */
-	private $table = ':prefix:privileges';
-
-	/**
-	 * Returns all records.
 	 * @return array
 	 */
 	public function all()
 	{
 		return $this->db
-			->select('*')
-			->from($this->table)
-			->orderBy('name asc');
+			->query('
+				SELECT * FROM :prefix:privileges
+				ORDER BY name asc');
 	}
 
 	/**
-	 * Find record by id.
 	 * @param int $id
-	 * @return void
+	 * @return array
 	 * @throws Exception
 	 */
 	public function find($id)
 	{
-		$row = $this->all()
-			->where('privilegeId = ?', $id)
-			->fetch();
-
+		$row = $this->db
+			->fetch('
+				SELECT * FROM :prefix:privileges
+				WHERE privilegeId = ?', $id, '
+				ORDER BY name asc');
 		if (!$row) {
 			throw new Exception('Sorry, but the record was not found.', self::RECORD_NOT_FOUND);
 		}
@@ -57,35 +51,21 @@ class Privileges extends Drago\Database\Connection
 	}
 
 	/**
-	 * Delete record.
 	 * @param int $id
-	 * @return void
 	 */
 	public function delete($id)
 	{
-		return $this->db
-			->delete($this->table)
-			->where('privilegeId = ?', $id)
-			->execute();
+		$this->db
+			->query('
+				DELETE FROM :prefix:privileges
+				WHERE privilegeId = ?', $id);
 	}
 
-	/**
-	 * Save record.
-	 * @param Acl\Entity\Privileges
-	 * @return void
-	 */
-	public function save(Acl\Entity\Privileges $entity)
+	public function save(Entity\Privileges $entity)
 	{
-		if (!$entity->getId()) {
-			return $this->db
-				->insert($this->table, Database\Iterator::toArray($entity))
-				->execute();
-		} else {
-			return $this->db
-				->update($this->table, Database\Iterator::toArray($entity))
-				->where('privilegeId = ?', $entity->getId())
-				->execute();
-		}
+		!$entity->getId() ?
+			$this->db->query('INSERT INTO :prefix:privileges %v', Iterator::toArray($entity)) :
+			$this->db->query('UPDATE :prefix:privileges SET %a',  Iterator::toArray($entity), 'WHERE privilegeId = ?', $entity->getId());
 	}
 
 }
