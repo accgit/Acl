@@ -16,13 +16,7 @@ abstract class BaseControl extends UI\Control
 {
 	use Application\UI\Factory;
 
-	public function __construct()
-	{
-		parent::__construct();
-	}
-
 	/**
-	 * Check is ajax reqest.
 	 * @return bool
 	 */
 	public function isAjax()

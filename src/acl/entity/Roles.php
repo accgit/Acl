@@ -18,7 +18,7 @@ class Roles extends Database\Entity
 	public $name;
 
 	/**
-	 * @var string
+	 * @var int
 	 */
 	public $parent;
 }

@@ -70,7 +70,6 @@ class Permissions extends BaseControl
 	}
 
 	/**
-	 * Factory.
 	 * @return UI\Form
 	 */
 	protected function createComponentFactory()
@@ -125,10 +124,6 @@ class Permissions extends BaseControl
 		return $form;
 	}
 
-	/**
-	 * Factory process.
-	 * @param UI\Form
-	 */
 	public function process(UI\Form $form)
 	{
 		$values = $form->values;
@@ -141,7 +136,6 @@ class Permissions extends BaseControl
 		$this->permissions->save($entity);
 		$message = $values->id ? 'Oprávnění bylo aktualizováno.' : 'Oprávnění bylo vloženo.';
 		$this->flashMessage($message, 'success');
-
 		if ($this->isAjax()) {
 			$form->setValues([], true);
 			$this->redrawControl('items');
@@ -160,7 +154,6 @@ class Permissions extends BaseControl
 			if ($item) {
 				$form = $this['factory'];
 				$form['send']->caption = 'Upravit';
-
 				if ($this->isAjax()) {
 					$this->presenter->payload->toggle = 'permissions';
 					$this->redrawControl('items');
@@ -172,12 +165,10 @@ class Permissions extends BaseControl
 			if ($e->getCode() === 1) {
 				$this->flashMessage('Oprávnění nebylo nalezeno.', 'warning');
 			}
-
 			if ($this->isAjax()) {
 				$this->redrawControl('message');
 			}
 		}
-
 		if (!$this->isAjax()) {
 			$this->redirect('this');
 		}
@@ -192,7 +183,6 @@ class Permissions extends BaseControl
 			if ($this->permissions->find($id)) {
 				$this->permissions->delete($id);
 				$this->flashMessage('Oprávnění bylo odebráno.', 'info');
-
 				if ($this->isAjax()) {
 					$this->redrawControl('items');
 					$this->redrawControl('factory');
@@ -204,12 +194,10 @@ class Permissions extends BaseControl
 			if ($e->getCode() === 1) {
 				$this->flashMessage('Oprávnění nebylo nalezeno.', 'warning');
 			}
-
 			if ($this->isAjax()) {
 				$this->redrawControl('message');
 			}
 		}
-
 		if (!$this->isAjax()) {
 			$this->redirect('this');
 		}

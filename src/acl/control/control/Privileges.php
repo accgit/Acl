@@ -46,7 +46,6 @@ class Privileges extends BaseControl
 	}
 
 	/**
-	 * Factory.
 	 * @return UI\Form
 	 */
 	protected function createComponentFactory()
@@ -70,10 +69,6 @@ class Privileges extends BaseControl
 		return $form;
 	}
 
-	/**
-	 * Factory process.
-	 * @param UI\Form
-	 */
 	public function process(UI\Form $form)
 	{
 		try {
@@ -81,11 +76,9 @@ class Privileges extends BaseControl
 			$entity = $this->entity;
 			$entity->setId($values->privilegeId);
 			$entity->name = $values->name;
-
 			$this->repository->save($entity);
 			$message = $values->privilegeId ? 'Akce byla aktualizována.' : 'Akce byla vložená.';
 			$this->flashMessage($message, 'success');
-
 			if ($this->isAjax()) {
 				$form->setValues([], true);
 				$this->presenter->payload->acl = 'acl';
@@ -98,12 +91,10 @@ class Privileges extends BaseControl
 			if ($e->getCode() === 1062) {
 				$form->addError('Tento akce již exsistuje.');
 			}
-
 			if ($this->isAjax()) {
 				$this->redrawControl('errors');
 			}
 		}
-
 		if (!$this->isAjax()) {
 			$this->redirect('this');
 		}
@@ -119,7 +110,6 @@ class Privileges extends BaseControl
 			if ($item) {
 				$form = $this['factory'];
 				$form['send']->caption = 'Upravit';
-
 				if ($this->isAjax()) {
 					$this->presenter->payload->toggle = 'privileges';
 					$this->redrawControl('items');
@@ -131,12 +121,10 @@ class Privileges extends BaseControl
 			if ($e->getCode() === 1) {
 				$this->flashMessage('Akce nebyla nalezena.', 'warning');
 			}
-
 			if ($this->isAjax()) {
 				$this->redrawControl('message');
 			}
 		}
-
 		if (!$this->isAjax()) {
 			$this->redirect('this');
 		}
@@ -151,7 +139,6 @@ class Privileges extends BaseControl
 			if ($this->repository->find($id)) {
 				$this->repository->delete($id);
 				$this->flashMessage('Akce byla odstraněna.', 'info');
-
 				if ($this->isAjax()) {
 					$this->presenter->payload->acl = 'acl';
 					$this->redrawControl('items');
@@ -166,12 +153,10 @@ class Privileges extends BaseControl
 			} elseif ($e->getCode() === 1451) {
 				$this->flashMessage('Akci nelze odstranit, nejprve odstrante přidělené oprávnění, které se vážou na tuto akci.', 'warning');
 			}
-
 			if ($this->isAjax()) {
 				$this->redrawControl('message');
 			}
 		}
-
 		if (!$this->isAjax()) {
 			$this->redirect('this');
 		}

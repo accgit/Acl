@@ -46,7 +46,6 @@ class Roles extends BaseControl
 	}
 
 	/**
-	 * Build tree array.
 	 * @param array $items
 	 * @param int $parent
 	 * @return array
@@ -65,7 +64,6 @@ class Roles extends BaseControl
 	}
 
 	/**
-	 * Factory items.
 	 * @return array
 	 */
 	private function factoryItems()
@@ -78,7 +76,6 @@ class Roles extends BaseControl
 	}
 
 	/**
-	 * Factory.
 	 * @return UI\Form
 	 */
 	protected function createComponentFactory()
@@ -106,10 +103,6 @@ class Roles extends BaseControl
 		return $form;
 	}
 
-	/**
-	 * Factory process.
-	 * @param UI\Form
-	 */
 	public function process(UI\Form $form)
 	{
 		try {
@@ -118,11 +111,9 @@ class Roles extends BaseControl
 			$entity->setId($values->roleId);
 			$entity->name = $values->name;
 			$entity->parent = $values->parent === null ? 0 : $values->parent;
-
 			$this->repository->save($entity);
 			$message = $values->roleId ? 'Role byla aktualizována.' : 'Role byla vložená.';
 			$this->flashMessage($message, 'success');
-
 			if ($this->isAjax()) {
 				$form->setValues([], true);
 				$this->presenter->payload->acl = 'acl';
@@ -139,12 +130,10 @@ class Roles extends BaseControl
 			} elseif($e->getCode() === 1062) {
 				$form->addError('Tato role již existuje.');
 			}
-
 			if ($this->isAjax()) {
 				$this->redrawControl('errors');
 			}
 		}
-
 		if (!$this->isAjax()) {
 			$this->redirect('this');
 		}
@@ -160,7 +149,6 @@ class Roles extends BaseControl
 			if ($item) {
 				$form = $this['factory'];
 				$form['send']->caption = 'Upravit';
-
 				if ($this->isAjax()) {
 					$this->presenter->payload->toggle = 'roles';
 					$this->redrawControl('items');
@@ -175,12 +163,10 @@ class Roles extends BaseControl
 			} elseif ($e->getCode() === 3) {
 				$this->flashMessage('Roli není povoleno jakkoliv upravovat.', 'warning');
 			}
-
 			if ($this->isAjax()) {
 				$this->redrawControl('message');
 			}
 		}
-
 		if (!$this->isAjax()) {
 			$this->redirect('this');
 		}
@@ -196,7 +182,6 @@ class Roles extends BaseControl
 				if (!$this->repository->findParent($id)) {
 					$this->repository->delete($id);
 					$this->flashMessage('Role byla odstraněna.', 'info');
-
 					if ($this->isAjax()) {
 						$this->presenter->payload->acl = 'acl';
 						$this->redrawControl('items');
@@ -219,12 +204,10 @@ class Roles extends BaseControl
 			} elseif ($e->getCode() === 1451) {
 				$this->flashMessage('Roli nelze odstranit, nejprve odstrante přidělené oprávnění, které se vážou na tuto roli.', 'warning');
 			}
-
 			if ($this->isAjax()) {
 				$this->redrawControl('message');
 			}
 		}
-
 		if (!$this->isAjax()) {
 			$this->redirect('this');
 		}

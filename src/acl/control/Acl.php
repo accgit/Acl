@@ -76,9 +76,6 @@ trait Acl
 		return $this->permissions;
 	}
 
-	/**
-	 * Necessary redraw permissions.
-	 */
 	public function handleAcl()
 	{
 		if ($this->isAjax()) {
