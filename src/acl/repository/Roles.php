@@ -79,7 +79,7 @@ class Roles extends BaseRepository
 	public function findRole($id)
 	{
 		$row = $this->find($id);
-		if ($this->isAllowed($row)) {
+		if ($this->isAllowed($this->find($id))) {
 			throw new Exception('The role is not allowed to be edited anyway.', self::NOT_ALLOWED_EDIT);
 		}
 		return $row;
@@ -108,7 +108,7 @@ class Roles extends BaseRepository
 	 */
 	public function delete($id)
 	{
-		if ($this->findRole($id)) {
+		if ($this->isAllowed($this->find($id))) {
 			throw new Exception('Sorry, this role is not allowed to be deleted.', self::NOT_ALLOWED_DELETE);
 		}
 		$this->db
