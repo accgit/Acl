@@ -79,7 +79,7 @@ class Roles extends BaseRepository
 	public function findRole($id)
 	{
 		$row = $this->find($id);
-		if ($this->isAllowed($this->find($id))) {
+		if ($this->isAllowed($row)) {
 			throw new Exception('The role is not allowed to be edited anyway.', self::NOT_ALLOWED_EDIT);
 		}
 		return $row;
