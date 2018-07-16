@@ -40,7 +40,7 @@ class Privileges extends BaseControl
 	{
 		$template = $this->template;
 		$template->items = $this->repository->all();
-		$template->form = $this['factory'];
+		$template->form  = $this['factory'];
 		$template->setFile(__DIR__ . '/../templates/acl.privileges.latte');
 		$template->render();
 	}
@@ -58,7 +58,7 @@ class Privileges extends BaseControl
 
 		$form->addHidden('privilegeId');
 		$form->addSubmit('send', 'Vložit');
-		$signal = $this->presenter->getSignal();
+		$signal = $this->getSignal();
 		if ($signal) {
 			if (in_array('edit', $signal)) {
 				$item = $this->repository->find($this->getParameter('id'));
@@ -86,7 +86,6 @@ class Privileges extends BaseControl
 				$this->redrawControl('message');
 				$this->redrawControl('factory');
 			}
-
 		} catch (Exception $e) {
 			if ($e->getCode() === 1062) {
 				$form->addError('Tento akce již exsistuje.');
@@ -105,28 +104,14 @@ class Privileges extends BaseControl
 	 */
 	public function handleEdit($id = 0)
 	{
-		try {
-			$item = $this->repository->find($id);
-			if ($item) {
-				$form = $this['factory'];
-				$form['send']->caption = 'Upravit';
-				if ($this->isAjax()) {
-					$this->presenter->payload->toggle = 'privileges';
-					$this->redrawControl('items');
-					$this->redrawControl('factory');
-				}
-			}
-
-		} catch (Exception $e) {
-			if ($e->getCode() === 1) {
-				$this->flashMessage('Akce nebyla nalezena.', 'warning');
-			}
-			if ($this->isAjax()) {
-				$this->redrawControl('message');
-			}
-		}
-		if (!$this->isAjax()) {
-			$this->redirect('this');
+		$item =  $this->repository->find($id);
+		$item ?: $this->error();
+		$form =  $this['factory'];
+		$form['send']->caption = 'Upravit';
+		if ($this->isAjax()) {
+			$this->presenter->payload->toggle = 'privileges';
+			$this->redrawControl('items');
+			$this->redrawControl('factory');
 		}
 	}
 
@@ -135,22 +120,18 @@ class Privileges extends BaseControl
 	 */
 	public function handleDelete($id = 0)
 	{
+		$item =  $this->repository->find($id);
+		$item ?: $this->error();
 		try {
-			if ($this->repository->find($id)) {
-				$this->repository->delete($id);
-				$this->flashMessage('Akce byla odstraněna.', 'info');
-				if ($this->isAjax()) {
-					$this->presenter->payload->acl = 'acl';
-					$this->redrawControl('items');
-					$this->redrawControl('message');
-				}
+			$this->repository->delete($id);
+			$this->flashMessage('Akce byla odstraněna.', 'info');
+			if ($this->isAjax()) {
+				$this->presenter->payload->acl = 'acl';
+				$this->redrawControl('items');
+				$this->redrawControl('message');
 			}
-
 		} catch (Exception $e) {
-			if ($e->getCode() === 1) {
-				$this->flashMessage('Akce nebyla nalezena.', 'warning');
-
-			} elseif ($e->getCode() === 1451) {
+			if ($e->getCode() === 1451) {
 				$this->flashMessage('Akci nelze odstranit, nejprve odstrante přidělené oprávnění, které se vážou na tuto akci.', 'warning');
 			}
 			if ($this->isAjax()) {

@@ -24,4 +24,12 @@ abstract class BaseControl extends UI\Control
 		return $this->presenter->isAjax();
 	}
 
+	/**
+	 * @return array|null
+	 */
+	public function getSignal()
+	{
+		return $this->presenter->getSignal();
+	}
+
 }

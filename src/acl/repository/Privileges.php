@@ -7,7 +7,6 @@
 namespace Component\Acl\Repository;
 
 use Drago;
-use Exception;
 use Drago\Database\Iterator;
 use Component\Acl\Entity;
 
@@ -16,11 +15,6 @@ use Component\Acl\Entity;
  */
 class Privileges extends Drago\Database\Connection
 {
-	/**
-	 * Exceptions errors.
-	 */
-	const RECORD_NOT_FOUND = 1;
-
 	/**
 	 * @return array
 	 */
@@ -35,19 +29,13 @@ class Privileges extends Drago\Database\Connection
 	/**
 	 * @param int $id
 	 * @return array
-	 * @throws Exception
 	 */
 	public function find($id)
 	{
-		$row = $this->db
+		return $this->db
 			->fetch('
 				SELECT * FROM :prefix:privileges
-				WHERE privilegeId = ?', $id, '
-				ORDER BY name asc');
-		if (!$row) {
-			throw new Exception('Sorry, but the record was not found.', self::RECORD_NOT_FOUND);
-		}
-		return $row;
+				WHERE privilegeId = ?', $id);
 	}
 
 	/**
@@ -63,9 +51,9 @@ class Privileges extends Drago\Database\Connection
 
 	public function save(Entity\Privileges $entity)
 	{
-		!$entity->getId() ?
-			$this->db->query('INSERT INTO :prefix:privileges %v', Iterator::toArray($entity)) :
-			$this->db->query('UPDATE :prefix:privileges SET %a',  Iterator::toArray($entity), 'WHERE privilegeId = ?', $entity->getId());
+		$entity->getId()?
+			$this->db->query('UPDATE :prefix:privileges SET  %a', Iterator::toArray($entity), 'WHERE privilegeId = ?', $entity->getId()):
+			$this->db->query('INSERT INTO :prefix:privileges %v', Iterator::toArray($entity));
 	}
 
 }

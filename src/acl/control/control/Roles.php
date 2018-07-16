@@ -40,7 +40,7 @@ class Roles extends BaseControl
 	{
 		$template = $this->template;
 		$template->items = $this->buildTree($this->repository->all());
-		$template->form = $this['factory'];
+		$template->form  = $this['factory'];
 		$template->setFile(__DIR__ . '/../templates/acl.roles.latte');
 		$template->render();
 	}
@@ -91,7 +91,7 @@ class Roles extends BaseControl
 
 		$form->addHidden('roleId');
 		$form->addSubmit('send', 'Vložit');
-		$signal = $this->presenter->getSignal();
+		$signal = $this->getSignal();
 		if ($signal) {
 			if (in_array('edit', $signal)) {
 				$item = $this->repository->find($this->getParameter('id'));
@@ -122,7 +122,6 @@ class Roles extends BaseControl
 				$this->redrawControl('message');
 				$this->redrawControl('factory');
 			}
-
 		} catch (Exception $e) {
 			if ($e->getCode() === 4) {
 				$form->addError('Tato role není povolená.');
@@ -144,23 +143,18 @@ class Roles extends BaseControl
 	 */
 	public function handleEdit($id = 0)
 	{
+		$item =  $this->repository->findRole($id);
+		$item ?: $this->error();
 		try {
-			$item = $this->repository->findRole($id);
-			if ($item) {
-				$form = $this['factory'];
-				$form['send']->caption = 'Upravit';
-				if ($this->isAjax()) {
-					$this->presenter->payload->toggle = 'roles';
-					$this->redrawControl('items');
-					$this->redrawControl('factory');
-				}
+			$form = $this['factory'];
+			$form['send']->caption = 'Upravit';
+			if ($this->isAjax()) {
+				$this->presenter->payload->toggle = 'roles';
+				$this->redrawControl('items');
+				$this->redrawControl('factory');
 			}
-
 		} catch (Exception $e) {
-			if ($e->getCode() === 1) {
-				$this->flashMessage('Role nebyla nalezena.', 'warning');
-
-			} elseif ($e->getCode() === 3) {
+			if ($e->getCode() === 3) {
 				$this->flashMessage('Roli není povoleno jakkoliv upravovat.', 'warning');
 			}
 			if ($this->isAjax()) {
@@ -177,25 +171,21 @@ class Roles extends BaseControl
 	 */
 	public function handleDelete($id = 0)
 	{
+		$item =  $this->repository->find($id);
+		$item ?: $this->error();
 		try {
-			if ($this->repository->find($id)) {
-				if (!$this->repository->findParent($id)) {
-					$this->repository->delete($id);
-					$this->flashMessage('Role byla odstraněna.', 'info');
-					if ($this->isAjax()) {
-						$this->presenter->payload->acl = 'acl';
-						$this->redrawControl('items');
-						$this->redrawControl('factory');
-						$this->redrawControl('message');
-					}
+			if (!$this->repository->findParent($id)) {
+				$this->repository->delete($id);
+				$this->flashMessage('Role byla odstraněna.', 'info');
+				if ($this->isAjax()) {
+					$this->presenter->payload->acl = 'acl';
+					$this->redrawControl('items');
+					$this->redrawControl('factory');
+					$this->redrawControl('message');
 				}
 			}
-
 		} catch (Exception $e) {
-			if ($e->getCode() === 1) {
-				$this->flashMessage('Role nebyla nalezena.', 'warning');
-
-			} elseif ($e->getCode() === 2) {
+			if ($e->getCode() === 2) {
 				$this->flashMessage('Roli nelze odstranit, nejprve odstrante role, které se vážou na tuto roli.', 'warning');
 
 			} elseif ($e->getCode() === 4) {

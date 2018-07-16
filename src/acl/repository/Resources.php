@@ -6,7 +6,6 @@
  */
 namespace Component\Acl\Repository;
 
-use Exception;
 use Drago\Database\Iterator;
 use Component\Acl\Entity;
 
@@ -15,11 +14,6 @@ use Component\Acl\Entity;
  */
 class Resources extends BaseRepository
 {
-	/**
-	 * Exceptions errors.
-	 */
-	const RECORD_NOT_FOUND = 1;
-
 	/**
 	 * @return array
 	 */
@@ -34,19 +28,13 @@ class Resources extends BaseRepository
 	/**
 	 * @param int $id
 	 * @return array
-	 * @throws Exception
 	 */
 	public function find($id)
 	{
-		$row = $this->db
+		return $this->db
 			->fetch('
 				SELECT * FROM :prefix:resources
-				WHERE resourceId = ?', $id, '
-				ORDER BY name asc');
-		if (!$row) {
-			throw new Exception('Sorry, but the record was not found.', self::RECORD_NOT_FOUND);
-		}
-		return $row;
+				WHERE resourceId = ?', $id);
 	}
 
 	/**
@@ -58,15 +46,15 @@ class Resources extends BaseRepository
 			->query('
 				DELETE FROM :prefix:resources
 				WHERE resourceId = ?', $id);
-		$this->removeCache();
+				$this->removeCache();
 	}
 
 	public function save(Entity\Resources $entity)
 	{
-		!$entity->getId() ?
-			$this->db->query('INSERT INTO :prefix:resources %v', Iterator::toArray($entity)) :
-			$this->db->query('UPDATE :prefix:resources SET %a',  Iterator::toArray($entity), 'WHERE resourceId = ?', $entity->getId());
-		$this->removeCache();
+		$entity->getId()?
+			$this->db->query('UPDATE :prefix:resources SET  %a', Iterator::toArray($entity), 'WHERE resourceId = ?', $entity->getId()):
+			$this->db->query('INSERT INTO :prefix:resources %v', Iterator::toArray($entity));
+			$this->removeCache();
 	}
 
 }

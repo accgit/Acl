@@ -6,7 +6,6 @@
  */
 namespace Component\Acl\Control;
 
-use Exception;
 use Nette\Application\UI;
 
 use Component\Acl\Entity;
@@ -63,7 +62,7 @@ class Permissions extends BaseControl
 		$template->roles = $this->roles->findRoles();
 		$template->rules = $this->permissions->rules();
 		$template->privileges = $this->permissions->privileges();
-		$template->resources = $this->permissions->resources();
+		$template->resources  = $this->permissions->resources();
 		$template->form = $this['factory'];
 		$template->setFile(__DIR__ . '/../templates/acl.permissions.latte');
 		$template->render();
@@ -113,7 +112,7 @@ class Permissions extends BaseControl
 
 		$form->addHidden('id');
 		$form->addSubmit('send', 'Vložit');
-		$signal = $this->presenter->getSignal();
+		$signal = $this->getSignal();
 		if ($signal) {
 			if (in_array('edit', $signal)) {
 				$item = $this->permissions->find($this->getParameter('id'));
@@ -149,28 +148,14 @@ class Permissions extends BaseControl
 	 */
 	public function handleEdit($id = 0)
 	{
-		try {
-			$item = $this->permissions->find($id);
-			if ($item) {
-				$form = $this['factory'];
-				$form['send']->caption = 'Upravit';
-				if ($this->isAjax()) {
-					$this->presenter->payload->toggle = 'permissions';
-					$this->redrawControl('items');
-					$this->redrawControl('factory');
-				}
-			}
-
-		} catch (Exception $e) {
-			if ($e->getCode() === 1) {
-				$this->flashMessage('Oprávnění nebylo nalezeno.', 'warning');
-			}
-			if ($this->isAjax()) {
-				$this->redrawControl('message');
-			}
-		}
-		if (!$this->isAjax()) {
-			$this->redirect('this');
+		$item =  $this->permissions->find($id);
+		$item ?: $this->error();
+		$form =  $this['factory'];
+		$form['send']->caption = 'Upravit';
+		if ($this->isAjax()) {
+			$this->presenter->payload->toggle = 'permissions';
+			$this->redrawControl('items');
+			$this->redrawControl('factory');
 		}
 	}
 
@@ -179,27 +164,14 @@ class Permissions extends BaseControl
 	 */
 	public function handleDelete($id = 0)
 	{
-		try {
-			if ($this->permissions->find($id)) {
-				$this->permissions->delete($id);
-				$this->flashMessage('Oprávnění bylo odebráno.', 'info');
-				if ($this->isAjax()) {
-					$this->redrawControl('items');
-					$this->redrawControl('factory');
-					$this->redrawControl('message');
-				}
-			}
-
-		} catch (Exception $e) {
-			if ($e->getCode() === 1) {
-				$this->flashMessage('Oprávnění nebylo nalezeno.', 'warning');
-			}
-			if ($this->isAjax()) {
-				$this->redrawControl('message');
-			}
-		}
-		if (!$this->isAjax()) {
-			$this->redirect('this');
+		$item =  $this->permissions->find($id);
+		$item ?: $this->error();
+		$this->permissions->delete($id);
+		$this->flashMessage('Oprávnění bylo odebráno.', 'info');
+		if ($this->isAjax()) {
+			$this->redrawControl('items');
+			$this->redrawControl('factory');
+			$this->redrawControl('message');
 		}
 	}
 

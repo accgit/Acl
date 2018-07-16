@@ -6,7 +6,6 @@
  */
 namespace Component\Acl\Repository;
 
-use Exception;
 use Drago\Database\Iterator;
 use Component\Acl\Entity;
 
@@ -15,13 +14,6 @@ use Component\Acl\Entity;
  */
 class Permissions extends BaseRepository
 {
-	/**
-	 * Exceptions errors.
-	 */
-	const
-		RECORD_NOT_FOUND = 1,
-		DUPLICATION_RULE = 2;
-
 	/**
 	 * @return array
 	 */
@@ -38,27 +30,27 @@ class Permissions extends BaseRepository
 	{
 		return $this->db
 			->query('
-				SELECT a.id, a.allowed, r.name AS role, res.name AS resource, p.name AS privilege FROM :prefix:permissions AS a
-				JOIN :prefix:resources AS res using (resourceId)
-				JOIN :prefix:privileges AS p using (privilegeId)
-				JOIN :prefix:roles AS r using (roleId)');
+				SELECT a.id, a.allowed,
+				s.name AS resource,
+				p.name AS privilege,
+				r.name AS role
+
+				FROM :prefix:permissions AS a
+				JOIN :prefix:resources   AS s USING (resourceId)
+				JOIN :prefix:privileges  AS p USING (privilegeId)
+				JOIN :prefix:roles       AS r USING (roleId)');
 	}
 
 	/**
 	 * @param int $id
 	 * @return array
-	 * @throws Exception
 	 */
 	public function find($id)
 	{
-		$row = $this->db
+		return $this->db
 			->fetch('
 				SELECT * FROM :prefix:permissions
 				WHERE id = ?', $id);
-		if (!$row) {
-			throw new Exception('Sorry, but the record was not found.', self::RECORD_NOT_FOUND);
-		}
-		return $row;
 	}
 
 	/**
@@ -79,11 +71,15 @@ class Permissions extends BaseRepository
 	{
 		return $this->db
 			->query('
-				SELECT a.allowed, r.name AS role, res.name AS resource FROM :prefix:permissions AS a
-				LEFT JOIN :prefix:resources AS res using (resourceId)
-				LEFT JOIN :prefix:privileges AS p using (privilegeId)
-				LEFT JOIN :prefix:roles AS r using (roleId)
-				GROUP BY a.allowed, r.name, res.name');
+				SELECT a.allowed,
+				s.name AS resource,
+				r.name AS role
+
+				FROM :prefix:permissions     AS a
+				LEFT JOIN :prefix:resources  AS s USING (resourceId)
+				LEFT JOIN :prefix:privileges AS p USING (privilegeId)
+				LEFT JOIN :prefix:roles      AS r USING (roleId)
+				GROUP BY a.allowed, r.name, s.name');
 	}
 
 	/**
@@ -93,11 +89,16 @@ class Permissions extends BaseRepository
 	{
 		return $this->db
 			->query('
-				SELECT a.id, a.allowed, r.name AS role, res.name AS resource, p.name as privilege FROM :prefix:permissions AS a
-				LEFT JOIN :prefix:resources AS res using (resourceId)
-				LEFT JOIN :prefix:privileges AS p using (privilegeId)
-				LEFT JOIN :prefix:roles AS r using (roleId)
-				GROUP BY a.allowed, r.name, res.name, p.name');
+				SELECT a.id, a.allowed,
+				s.name AS resource,
+				p.name AS privilege,
+				r.name AS role
+
+				FROM :prefix:permissions     AS a
+				LEFT JOIN :prefix:resources  AS s USING (resourceId)
+				LEFT JOIN :prefix:privileges AS p USING (privilegeId)
+				LEFT JOIN :prefix:roles      AS r USING (roleId)
+				GROUP BY a.allowed, r.name, s.name, p.name');
 	}
 
 	/**
@@ -109,15 +110,15 @@ class Permissions extends BaseRepository
 			->query('
 				DELETE FROM :prefix:permissions
 				WHERE id = ?', $id);
-		$this->removeCache();
+				$this->removeCache();
 	}
 
 	public function save(Entity\Permissions $entity)
 	{
-		!$entity->getId() ?
-			$this->db->query('INSERT INTO :prefix:permissions %v', Iterator::toArray($entity)) :
-			$this->db->query('UPDATE :prefix:permissions SET %a',  Iterator::toArray($entity), 'WHERE id = ?', $entity->getId());
-		$this->removeCache();
+		$entity->getId()?
+			$this->db->query('UPDATE :prefix:permissions SET  %a', Iterator::toArray($entity), 'WHERE id = ?', $entity->getId()):
+			$this->db->query('INSERT INTO :prefix:permissions %v', Iterator::toArray($entity));
+			$this->removeCache();
 	}
 
 }
