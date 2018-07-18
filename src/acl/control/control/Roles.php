@@ -6,6 +6,7 @@
  */
 namespace Component\Acl\Control;
 
+use Drago;
 use Exception;
 use Nette\Application\UI;
 
@@ -15,8 +16,10 @@ use Component\Acl\Repository;
 /**
  * Roles control.
  */
-class Roles extends BaseControl
+class Roles extends Drago\Application\UI\Control
 {
+	use Drago\Application\UI\Factory;
+
 	/**
 	 * @var Entity\Roles
 	 */

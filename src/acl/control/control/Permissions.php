@@ -6,6 +6,7 @@
  */
 namespace Component\Acl\Control;
 
+use Drago;
 use Nette\Application\UI;
 
 use Component\Acl\Entity;
@@ -14,8 +15,10 @@ use Component\Acl\Repository;
 /**
  * Permissions control.
  */
-class Permissions extends BaseControl
+class Permissions extends Drago\Application\UI\Control
 {
+	use Drago\Application\UI\Factory;
+
 	/**
 	 * @var Entity\Permissions
 	 */
