@@ -94,9 +94,6 @@ class Privileges extends BaseControl
 				$this->redrawControl('errors');
 			}
 		}
-		if (!$this->isAjax()) {
-			$this->redirect('this');
-		}
 	}
 
 	/**
@@ -137,9 +134,6 @@ class Privileges extends BaseControl
 			if ($this->isAjax()) {
 				$this->redrawControl('message');
 			}
-		}
-		if (!$this->isAjax()) {
-			$this->redirect('this');
 		}
 	}
 
