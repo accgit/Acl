@@ -126,10 +126,7 @@ class Roles extends Drago\Application\UI\Control
 				$this->redrawControl('factory');
 			}
 		} catch (Exception $e) {
-			if ($e->getCode() === 4) {
-				$form->addError('Tato role není povolená.');
-
-			} elseif($e->getCode() === 1062) {
+			if ($e->getCode() === 1062) {
 				$form->addError('Tato role již existuje.');
 			}
 			if ($this->isAjax()) {
@@ -143,15 +140,18 @@ class Roles extends Drago\Application\UI\Control
 	 */
 	public function handleEdit($id = 0)
 	{
-		$item =  $this->repository->findRole($id);
+		$item =  $this->repository->find($id);
 		$item ?: $this->error();
 		try {
-			$form = $this['factory'];
-			$form['send']->caption = 'Upravit';
-			if ($this->isAjax()) {
-				$this->presenter->payload->toggle = 'roles';
-				$this->redrawControl('items');
-				$this->redrawControl('factory');
+			$allowed = $this->repository->isAllowed($item);
+			if ($allowed) {
+				$form = $this['factory'];
+				$form['send']->caption = 'Upravit';
+				if ($this->isAjax()) {
+					$this->presenter->payload->toggle = 'roles';
+					$this->redrawControl('items');
+					$this->redrawControl('factory');
+				}
 			}
 		} catch (Exception $e) {
 			if ($e->getCode() === 3) {
@@ -171,21 +171,24 @@ class Roles extends Drago\Application\UI\Control
 		$item =  $this->repository->find($id);
 		$item ?: $this->error();
 		try {
-			if (!$this->repository->findParent($id)) {
-				$this->repository->delete($id);
-				$this->flashMessage('Role byla odstraněna.', 'info');
-				if ($this->isAjax()) {
-					$this->presenter->payload->acl = 'acl';
-					$this->redrawControl('items');
-					$this->redrawControl('factory');
-					$this->redrawControl('message');
+			$allowed = $this->repository->isAllowed($item);
+			if ($allowed) {
+				if (!$this->repository->findParent($id)) {
+					$this->repository->delete($id);
+					$this->flashMessage('Role byla odstraněna.', 'info');
+					if ($this->isAjax()) {
+						$this->presenter->payload->acl = 'acl';
+						$this->redrawControl('items');
+						$this->redrawControl('factory');
+						$this->redrawControl('message');
+					}
 				}
 			}
 		} catch (Exception $e) {
 			if ($e->getCode() === 2) {
 				$this->flashMessage('Roli nelze odstranit, nejprve odstrante role, které se vážou na tuto roli.', 'warning');
 
-			} elseif ($e->getCode() === 4) {
+			} elseif ($e->getCode() === 3) {
 				$this->flashMessage('Roli nelze odstranit.', 'warning');
 
 			} elseif ($e->getCode() === 1451) {

@@ -21,9 +21,8 @@ class Roles extends BaseRepository
 	 * Exceptions errors.
 	 */
 	const
-		PARENT_ROLE_EXIST  = 2,
-		NOT_ALLOWED_EDIT   = 3,
-		NOT_ALLOWED_DELETE = 4;
+		PARENT_EXIST = 2,
+		NOT_ALLOWED  = 3;
 
 	/**
 	 * @return array
@@ -48,15 +47,14 @@ class Roles extends BaseRepository
 	/**
 	 * @param array $row
 	 * @return bool
+	 * @throws Exception
 	 */
-	private function isAllowed($row)
+	public function isAllowed($row)
 	{
-		if (
-			$row->name === Acl\Authorizator::ROLE_GUEST  or
-			$row->name === Acl\Authorizator::ROLE_MEMBER or
-			$row->name === Acl\Authorizator::ROLE_ADMIN) {
-			return true;
+		if ($row->name === Acl\Authorizator::ROLE_GUEST or $row->name === Acl\Authorizator::ROLE_MEMBER or $row->name === Acl\Authorizator::ROLE_ADMIN) {
+			throw new Exception('The role is not allowed to be edited or deleted.', self::NOT_ALLOWED);
 		}
+		return true;
 	}
 
 	/**
@@ -73,21 +71,7 @@ class Roles extends BaseRepository
 
 	/**
 	 * @param int $id
-	 * @return array
-	 * @throws Exception
-	 */
-	public function findRole($id)
-	{
-		$row = $this->find($id);
-		if ($this->isAllowed($row)) {
-			throw new Exception('The role is not allowed to be edited anyway.', self::NOT_ALLOWED_EDIT);
-		}
-		return $row;
-	}
-
-	/**
-	 * @param int $id
-	 * @return array
+	 * @return bool
 	 * @throws Exception
 	 */
 	public function findParent($id)
@@ -97,20 +81,16 @@ class Roles extends BaseRepository
 				SELECT * FROM :prefix:roles
 				WHERE parent = ?', $id) ? true : false;
 		if ($row) {
-			throw new Exception('The record can not be deleted, you must first delete the records that are associated with it.', self::PARENT_ROLE_EXIST);
+			throw new Exception('The record can not be deleted, you must first delete the records that are associated with it.', self::PARENT_EXIST);
 		}
 		return $row;
 	}
 
 	/**
 	 * @param int $id
-	 * @throws Exception
 	 */
 	public function delete($id)
 	{
-		if ($this->isAllowed($this->find($id))) {
-			throw new Exception('Sorry, this role is not allowed to be deleted.', self::NOT_ALLOWED_DELETE);
-		}
 		$this->db
 			->query('
 				DELETE FROM :prefix:roles
