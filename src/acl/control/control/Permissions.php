@@ -141,7 +141,6 @@ class Permissions extends Drago\Application\UI\Control
 		if ($this->isAjax()) {
 			$form->setValues([], true);
 			$this->redrawControl('items');
-			$this->redrawControl('message');
 			$this->redrawControl('factory');
 		}
 	}
@@ -170,11 +169,10 @@ class Permissions extends Drago\Application\UI\Control
 		$item =  $this->permissions->find($id);
 		$item ?: $this->error();
 		$this->permissions->delete($id);
-		$this->flashMessage('Oprávnění bylo odebráno.', 'info');
+		$this->flashMessage('Oprávnění bylo odebráno.');
 		if ($this->isAjax()) {
 			$this->redrawControl('items');
 			$this->redrawControl('factory');
-			$this->redrawControl('message');
 		}
 	}
 

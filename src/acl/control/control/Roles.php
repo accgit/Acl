@@ -119,10 +119,8 @@ class Roles extends Drago\Application\UI\Control
 			$this->flashMessage($message, 'success');
 			if ($this->isAjax()) {
 				$form->setValues([], true);
-				$this->presenter->payload->acl = 'acl';
 				$this['factory']['parent']->setItems($this->factoryItems());
 				$this->redrawControl('items');
-				$this->redrawControl('message');
 				$this->redrawControl('factory');
 			}
 		} catch (Exception $e) {
@@ -157,9 +155,6 @@ class Roles extends Drago\Application\UI\Control
 			if ($e->getCode() === 3) {
 				$this->flashMessage('Roli není povoleno jakkoliv upravovat.', 'warning');
 			}
-			if ($this->isAjax()) {
-				$this->redrawControl('message');
-			}
 		}
 	}
 
@@ -175,12 +170,10 @@ class Roles extends Drago\Application\UI\Control
 			if ($allowed) {
 				if (!$this->repository->findParent($id)) {
 					$this->repository->delete($id);
-					$this->flashMessage('Role byla odstraněna.', 'info');
+					$this->flashMessage('Role byla odstraněna.');
 					if ($this->isAjax()) {
-						$this->presenter->payload->acl = 'acl';
 						$this->redrawControl('items');
 						$this->redrawControl('factory');
-						$this->redrawControl('message');
 					}
 				}
 			}
@@ -193,9 +186,6 @@ class Roles extends Drago\Application\UI\Control
 
 			} elseif ($e->getCode() === 1451) {
 				$this->flashMessage('Roli nelze odstranit, nejprve odstrante přidělené oprávnění, které se vážou na tuto roli.', 'warning');
-			}
-			if ($this->isAjax()) {
-				$this->redrawControl('message');
 			}
 		}
 	}

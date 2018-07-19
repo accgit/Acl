@@ -2,13 +2,6 @@
 {* roles latte *}
 <div class="wrapper">
 
-	{* flash message *}
-	{snippet message}
-	<div class="wrapper">
-		<p n:foreach="$flashes as $flash" class="message {$flash->type}">{$flash->message}</p>
-	</div>
-	{/snippet}
-
 	{* title *}
 	<p class="heading">
 		<a href="#" id="form-1" class="toggle">Role</a>

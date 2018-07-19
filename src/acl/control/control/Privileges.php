@@ -84,9 +84,7 @@ class Privileges extends Drago\Application\UI\Control
 			$this->flashMessage($message, 'success');
 			if ($this->isAjax()) {
 				$form->setValues([], true);
-				$this->presenter->payload->acl = 'acl';
 				$this->redrawControl('items');
-				$this->redrawControl('message');
 				$this->redrawControl('factory');
 			}
 		} catch (Exception $e) {
@@ -124,18 +122,13 @@ class Privileges extends Drago\Application\UI\Control
 		$item ?: $this->error();
 		try {
 			$this->repository->delete($id);
-			$this->flashMessage('Akce byla odstraněna.', 'info');
+			$this->flashMessage('Akce byla odstraněna.');
 			if ($this->isAjax()) {
-				$this->presenter->payload->acl = 'acl';
 				$this->redrawControl('items');
-				$this->redrawControl('message');
 			}
 		} catch (Exception $e) {
 			if ($e->getCode() === 1451) {
 				$this->flashMessage('Akci nelze odstranit, nejprve odstrante přidělené oprávnění, které se vážou na tuto akci.', 'warning');
-			}
-			if ($this->isAjax()) {
-				$this->redrawControl('message');
 			}
 		}
 	}

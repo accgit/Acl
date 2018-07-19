@@ -1,5 +1,5 @@
 
-# Acl component.
+# acl component
 services:
 
 	- Component\Acl\Entity\Roles
@@ -17,10 +17,10 @@ services:
 	- Component\Acl\Control\Privileges
 	- Component\Acl\Control\Permissions
 
-	# Cache settings.
+	# cache settings
 	cache.acl: Nette\Caching\Cache
 	cache.acl.app: {class: Nette\Caching\Cache, arguments: [@Nette\Caching\IStorage, 'Acl.Cache'], autowired: no}
 
-	# Registration authorizator.
+	# registration authorizator
 	acl: Component\Acl\Authorizator(@cache.acl.app)
 	app.authorizator: @acl::create

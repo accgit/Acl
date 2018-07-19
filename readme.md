@@ -41,6 +41,26 @@ use Component\Acl;
 {/snippet}
 ```
 
+## Add snippet for flash messages
+
+```phtml
+{snippet message}
+	<p n:foreach="$flashes as $flash" class="message {$flash->type}">{$flash->message}</p>
+{/snippet}
+```
+
+## Add ajax redraw in presenter
+
+```php
+public function render()
+{
+	if ($this->isAjax()) {
+		$this->redrawControl('message');
+		$this->redrawControl('acl');
+	}
+}
+```
+
 ## We create a query for assigning roles to users
 
 ```php

@@ -2,13 +2,6 @@
 {* roles privileges *}
 <div class="wrapper">
 
-	{* flash message *}
-	{snippet message}
-	<div class="wrapper">
-		<p n:foreach="$flashes as $flash" class="message {$flash->type}">{$flash->message}</p>
-	</div>
-	{/snippet}
-
 	{* title *}
 	<p class="heading">
 		<a href="#" id="form-2" class="toggle">Akce a signály</a>
@@ -43,8 +36,6 @@
 			</li>
 		</ul>
 	</div>
-	{else}
-		<p class="na">n/a</p>
 	{/if}
 	{/snippet}
 </div>

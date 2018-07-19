@@ -84,9 +84,7 @@ class Resources extends Drago\Application\UI\Control
 			$this->flashMessage($message, 'success');
 			if ($this->isAjax()) {
 				$form->setValues([], true);
-				$this->presenter->payload->acl = 'acl';
 				$this->redrawControl('items');
-				$this->redrawControl('message');
 				$this->redrawControl('factory');
 			}
 		} catch (Exception $e) {
@@ -124,18 +122,13 @@ class Resources extends Drago\Application\UI\Control
 		$item ?: $this->error();
 		try {
 			$this->repository->delete($id);
-			$this->flashMessage('Zdroj byl odstraněn.', 'info');
+			$this->flashMessage('Zdroj byl odstraněn.');
 			if ($this->isAjax()) {
-				$this->presenter->payload->acl = 'acl';
 				$this->redrawControl('items');
-				$this->redrawControl('message');
 			}
 		} catch (Exception $e) {
 			if ($e->getCode() === 1451) {
 				$this->flashMessage('Zdroj nelze odstranit, nejprve odstrante přidělené oprávnění, které se vážou na tento zdroj.', 'warning');
-			}
-			if ($this->isAjax()) {
-				$this->redrawControl('message');
 			}
 		}
 	}

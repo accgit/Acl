@@ -76,11 +76,4 @@ trait Acl
 		return $this->permissions;
 	}
 
-	public function handleAcl()
-	{
-		if ($this->isAjax()) {
-			$this->redrawControl('acl');
-		}
-	}
-
 }

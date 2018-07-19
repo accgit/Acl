@@ -48,11 +48,7 @@
 					case 'roles':       $('.toggle-1').toggle(); break;
 					case 'privileges':  $('.toggle-2').toggle(); break;
 					case 'resources':   $('.toggle-3').toggle(); break;
-					case 'permissions': $('.toggle-4').toggle(); break;
-						default:
-							if (payload.acl === 'acl') {
-								json.data();
-							}
+					case 'permissions': $('.toggle-4').toggle();
 				}
 			}
 		});
@@ -62,13 +58,6 @@
 				$(selector + '.tree li').each(function() {
 					$(this).toggleClass('active');
 					$(this).children('ul').toggle();
-				});
-			}
-		};
-		var json = {
-			data: function () {
-				return $.nette.ajax({
-					url: {link acl!}
 				});
 			}
 		};
