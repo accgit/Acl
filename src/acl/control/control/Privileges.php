@@ -42,6 +42,7 @@ class Privileges extends Base
 		$template->items = $this->repository->all();
 		$template->form  = $this['factory'];
 		$template->setFile(__DIR__ . '/../templates/acl.privileges.latte');
+		$template->setTranslator($this->translator());
 		$template->render();
 	}
 
@@ -51,13 +52,14 @@ class Privileges extends Base
 	protected function createComponentFactory()
 	{
 		$form = $this->createForm();
-		$form->addText('name', 'Název')
-			->setAttribute('placeholder', 'Zadejte název akce.')
+		$form->setTranslator($this->translator());
+		$form->addText('name', 'form.name')
+			->setAttribute('placeholder', 'form.name.placeholder')
 			->setAttribute('autocomplete', 'off')
-			->setRequired('Prosím, vyplňte povinnu položku.');
+			->setRequired('form.required');
 
 		$form->addHidden('privilegeId');
-		$form->addSubmit('send', 'Vložit');
+		$form->addSubmit('send', 'form.send');
 		$signal = $this->getSignal();
 		if ($signal) {
 			if (in_array('edit', $signal)) {
@@ -77,7 +79,7 @@ class Privileges extends Base
 			$entity->setId($values->privilegeId);
 			$entity->name = $values->name;
 			$this->repository->save($entity);
-			$message = $values->privilegeId ? 'Akce byla aktualizována.' : 'Akce byla vložená.';
+			$message = $values->privilegeId ? $this->translate('message.update.privilege') : $this->translate('message.insert.privilege');
 			$this->flashMessage($message, 'success');
 			if ($this->isAjax()) {
 				$form->setValues([], true);
@@ -86,7 +88,7 @@ class Privileges extends Base
 			}
 		} catch (Exception $e) {
 			if ($e->getCode() === 1062) {
-				$form->addError('Tento akce již exsistuje.');
+				$form->addError('form.error.privilege');
 			}
 			if ($this->isAjax()) {
 				$this->redrawControl('errors');
@@ -102,7 +104,7 @@ class Privileges extends Base
 		$item =  $this->repository->find($id);
 		$item ?: $this->error();
 		$form =  $this['factory'];
-		$form['send']->caption = 'Upravit';
+		$form['send']->caption = 'form.send.update';
 		if ($this->isAjax()) {
 			$this->presenter->payload->toggle = 'privileges';
 			$this->redrawControl('items');
@@ -119,13 +121,13 @@ class Privileges extends Base
 		$item ?: $this->error();
 		try {
 			$this->repository->delete($id);
-			$this->flashMessage('Akce byla odstraněna.');
+			$this->flashMessage($this->translate('message.delete.privilege'));
 			if ($this->isAjax()) {
 				$this->redrawControl('items');
 			}
 		} catch (Exception $e) {
 			if ($e->getCode() === 1451) {
-				$this->flashMessage('Akci nelze odstranit, nejprve odstrante přidělené oprávnění, které se vážou na tuto akci.', 'warning');
+				$this->flashMessage($this->translate('message.do.not.removed'), 'warning');
 			}
 		}
 	}
