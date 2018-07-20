@@ -42,6 +42,7 @@ class Roles extends Base
 		$template->items = $this->buildTree($this->repository->all());
 		$template->form  = $this['factory'];
 		$template->setFile(__DIR__ . '/../templates/acl.roles.latte');
+		$template->setTranslator($this->translator());
 		$template->render();
 	}
 
@@ -81,16 +82,17 @@ class Roles extends Base
 	protected function createComponentFactory()
 	{
 		$form = $this->createForm();
-		$form->addText('name', 'Název')
-			->setAttribute('placeholder', 'Zadejte název role.')
+		$form->setTranslator($this->translator());
+		$form->addText('name', 'form.name.role')
+			->setAttribute('placeholder', 'form.name.role')
 			->setAttribute('autocomplete', 'off')
-			->setRequired('Prosím, vyplňte povinnu položku.');
+			->setRequired('form.required');
 
-		$form->addSelect('parent', 'Rodič', $this->factoryItems())
-			->setPrompt('Zvolte rodiče');
+		$form->addSelect('parent', 'form.role', $this->factoryItems())
+			->setPrompt('form.select.role');
 
 		$form->addHidden('roleId');
-		$form->addSubmit('send', 'Vložit');
+		$form->addSubmit('send', 'form.send');
 		$signal = $this->getSignal();
 		if ($signal) {
 			if (in_array('edit', $signal)) {
@@ -112,7 +114,7 @@ class Roles extends Base
 			$entity->name = $values->name;
 			$entity->parent = $values->parent === null ? 0 : $values->parent;
 			$this->repository->save($entity);
-			$message = $values->roleId ? 'Role byla aktualizována.' : 'Role byla vložená.';
+			$message = $values->roleId ? $this->translate('message.update.role') : $this->translate('message.insert.role');
 			$this->flashMessage($message, 'success');
 			if ($this->isAjax()) {
 				$form->setValues([], true);
@@ -122,7 +124,7 @@ class Roles extends Base
 			}
 		} catch (Exception $e) {
 			if ($e->getCode() === 1062) {
-				$form->addError('Tato role již existuje.');
+				$form->addError('form.error.role');
 			}
 			if ($this->isAjax()) {
 				$this->redrawControl('errors');
@@ -150,7 +152,7 @@ class Roles extends Base
 			}
 		} catch (Exception $e) {
 			if ($e->getCode() === 3) {
-				$this->flashMessage('Roli není povoleno jakkoliv upravovat.', 'warning');
+				$this->flashMessage($this->translate('message.not.allowed.role'), 'warning');
 			}
 		}
 	}
@@ -167,7 +169,7 @@ class Roles extends Base
 			if ($allowed) {
 				if (!$this->repository->findParent($id)) {
 					$this->repository->delete($id);
-					$this->flashMessage('Role byla odstraněna.');
+					$this->flashMessage($this->translate('message.delete.role'));
 					if ($this->isAjax()) {
 						$this->redrawControl('items');
 						$this->redrawControl('factory');
@@ -176,13 +178,13 @@ class Roles extends Base
 			}
 		} catch (Exception $e) {
 			if ($e->getCode() === 2) {
-				$this->flashMessage('Roli nelze odstranit, nejprve odstrante role, které se vážou na tuto roli.', 'warning');
+				$this->flashMessage($this->translate('message.remove.role.3'), 'warning');
 
 			} elseif ($e->getCode() === 3) {
-				$this->flashMessage('Roli nelze odstranit.', 'warning');
+				$this->flashMessage($this->translate('message.remove.role.2'), 'warning');
 
 			} elseif ($e->getCode() === 1451) {
-				$this->flashMessage('Roli nelze odstranit, nejprve odstrante přidělené oprávnění, které se vážou na tuto roli.', 'warning');
+				$this->flashMessage($this->translate('message.remove.role'), 'warning');
 			}
 		}
 	}
