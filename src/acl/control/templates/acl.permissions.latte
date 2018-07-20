@@ -4,7 +4,7 @@
 
 	{* title *}
 	<p class="heading">
-		<a href="#" id="form-4" class="toggle">Oprávnění</a>
+		<a href="#" id="form-4" class="toggle">{_'acl.authorization'}</a>
 		<a href="#" id="permissions" class="all">
 			<i class="fa fa-folder-open-o" aria-hidden="true"></i>
 		</a>
@@ -39,7 +39,7 @@
 				{foreach $rules as $rule}
 					<ul n:if="$rule->roleId == $role->roleId">
 						<li>
-							<a>{if $rule->allowed == 'yes'}Povoleno{else}Zakázano{/if}</a>
+							<a>{if $rule->allowed == 'yes'}{_'acl.allowed.yes'}{else}{_'acl.allowed.no'}{/if}</a>
 							{foreach $resources as $resource}
 							<ul n:if="$role->name == $resource->role and $rule->allowed == $resource->allowed">
 

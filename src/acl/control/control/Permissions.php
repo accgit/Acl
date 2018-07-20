@@ -65,6 +65,7 @@ class Permissions extends Base
 		$template->resources  = $this->permissions->resources();
 		$template->form = $this['factory'];
 		$template->setFile(__DIR__ . '/../templates/acl.permissions.latte');
+		$template->setTranslator($this->translator());
 		$template->render();
 	}
 
@@ -74,44 +75,45 @@ class Permissions extends Base
 	protected function createComponentFactory()
 	{
 		$form  = $this->createForm();
+		$form->setTranslator($this->translator());
 		$roles = [];
 		foreach ($this->roles->all() as $role) {
 			$roles[$role->roleId] = $role->name;
 		}
 
-		$form->addSelect('roleId', 'Role', $roles)
-			->setPrompt('Zvolte roli')
-			->setRequired('Prosím, vyplňte povinnu položku.');
+		$form->addSelect('roleId', 'form.role', $roles)
+			->setPrompt('form.select.role')
+			->setRequired('form.required');
 
 		$resources = [];
 		foreach ($this->resources->all() as $resource) {
 			$resources[$resource->resourceId] = $resource->name;
 		}
 
-		$form->addSelect('resourceId', 'Zdroj', $resources)
-			->setPrompt('Zvolte zdroj')
-			->setRequired('Prosím, vyplňte povinnu položku.');
+		$form->addSelect('resourceId', 'form.resource', $resources)
+			->setPrompt('form.select.resource')
+			->setRequired('form.required');
 
 		$privileges = [];
 		foreach ($this->privileges->all() as $privilege) {
 			$privileges[$privilege->privilegeId] = $privilege->name;
 		}
 
-		$form->addSelect('privilegeId', 'Akce', $privileges)
-			->setPrompt('Zvolte akci')
-			->setRequired('Prosím, vyplňte povinnu položku.');
+		$form->addSelect('privilegeId', 'form.privilege', $privileges)
+			->setPrompt('form.select.privilege')
+			->setRequired('form.required');
 
 		$allowed = [
-			'yes' => 'Povolit',
-			'no'  => 'Zakázat'
+			'yes' => 'form.allowed.yes',
+			'no'  => 'form.allowed.no'
 		];
 
-		$form->addSelect('allowed', 'Přístup:', $allowed)
-			->setPrompt('Zvolte přístup')
-			->setRequired('Prosím, vyplňte povinnu položku.');
+		$form->addSelect('allowed', 'form.allowed', $allowed)
+			->setPrompt('form.select.allowed')
+			->setRequired('form.required');
 
 		$form->addHidden('id');
-		$form->addSubmit('send', 'Vložit');
+		$form->addSubmit('send', 'form.send');
 		$signal = $this->getSignal();
 		if ($signal) {
 			if (in_array('edit', $signal)) {
@@ -133,7 +135,7 @@ class Permissions extends Base
 		$entity->privilegeId = $values->privilegeId;
 		$entity->allowed = $values->allowed;
 		$this->permissions->save($entity);
-		$message = $values->id ? 'Oprávnění bylo aktualizováno.' : 'Oprávnění bylo vloženo.';
+		$message = $values->id ? $this->translate('message.role.update') : $this->translate('message.role.insert');
 		$this->flashMessage($message, 'success');
 		if ($this->isAjax()) {
 			$form->setValues([], true);
@@ -150,7 +152,7 @@ class Permissions extends Base
 		$item =  $this->permissions->find($id);
 		$item ?: $this->error();
 		$form =  $this['factory'];
-		$form['send']->caption = 'Upravit';
+		$form['send']->caption = 'form.send.update';
 		if ($this->isAjax()) {
 			$this->presenter->payload->toggle = 'permissions';
 			$this->redrawControl('items');
@@ -166,7 +168,7 @@ class Permissions extends Base
 		$item =  $this->permissions->find($id);
 		$item ?: $this->error();
 		$this->permissions->delete($id);
-		$this->flashMessage('Oprávnění bylo odebráno.');
+		$this->flashMessage($this->translate('message.role.delete'));
 		if ($this->isAjax()) {
 			$this->redrawControl('items');
 			$this->redrawControl('factory');

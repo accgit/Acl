@@ -23,4 +23,13 @@ abstract class Base extends Drago\Application\UI\Control
 		return new Drago\Localization\Translator($path);
 	}
 
+	/**
+	 * @param string $message
+	 * @return string
+	 */
+	public function translate($message)
+	{
+		return $this->translator()->translate($message);
+	}
+
 }
