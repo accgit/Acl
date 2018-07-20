@@ -16,7 +16,8 @@
 		"nette/caching": "^2.5",
 		"nette/di": "^2.4",
 		"latte/latte": "^2.4.0",
-		"drago-ex/database": "^1.0"
+		"drago-ex/database": "^1.0",
+		"drago-ex/translator": "^1.0"
 	},
 	"autoload": {
 		"classmap": ["src/"]

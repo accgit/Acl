@@ -6,20 +6,17 @@
  */
 namespace Component\Acl\Control;
 
-use Drago;
-use Exception;
-use Nette\Application\UI;
-
 use Component\Acl\Entity;
 use Component\Acl\Repository;
+
+use Exception;
+use Nette\Application\UI;
 
 /**
  * Resources control.
  */
-class Resources extends Drago\Application\UI\Control
+class Resources extends Base
 {
-	use Drago\Application\UI\Factory;
-
 	/**
 	 * @var Entity\Resources
 	 */
