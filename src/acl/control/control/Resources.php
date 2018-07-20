@@ -42,6 +42,7 @@ class Resources extends Base
 		$template->items = $this->repository->all();
 		$template->form  = $this['factory'];
 		$template->setFile(__DIR__ . '/../templates/acl.resources.latte');
+		$template->setTranslator($this->translator());
 		$template->render();
 	}
 
@@ -51,13 +52,14 @@ class Resources extends Base
 	protected function createComponentFactory()
 	{
 		$form = $this->createForm();
-		$form->addText('name', 'Název')
-			->setAttribute('placeholder', 'Zadejte název zdroje.')
+		$form->setTranslator($this->translator());
+		$form->addText('name', 'form.name.resource')
+			->setAttribute('placeholder', 'form.name.resource')
 			->setAttribute('autocomplete', 'off')
-			->setRequired('Prosím, vyplňte povinnu položku.');
+			->setRequired('form.required');
 
 		$form->addHidden('resourceId');
-		$form->addSubmit('send', 'Vložit');
+		$form->addSubmit('send', 'form.send');
 		$signal = $this->getSignal();
 		if ($signal) {
 			if (in_array('edit', $signal)) {
@@ -77,7 +79,7 @@ class Resources extends Base
 			$entity->setId($values->resourceId);
 			$entity->name = $values->name;
 			$this->repository->save($entity);
-			$message = $values->resourceId ? 'Zdroj byl aktualizován.' : 'Zdroj byl vložen.';
+			$message = $values->resourceId ? $this->translate('message.update.resource') : $this->translate('message.insert.resource');
 			$this->flashMessage($message, 'success');
 			if ($this->isAjax()) {
 				$form->setValues([], true);
@@ -86,7 +88,7 @@ class Resources extends Base
 			}
 		} catch (Exception $e) {
 			if ($e->getCode() === 1062) {
-				$form->addError('Tento zdroj již exsistuje.');
+				$form->addError('form.error.resource');
 			}
 			if ($this->isAjax()) {
 				$this->redrawControl('errors');
@@ -102,7 +104,7 @@ class Resources extends Base
 		$item =  $this->repository->find($id);
 		$item ?: $this->error();
 		$form =  $this['factory'];
-		$form['send']->caption = 'Upravit';
+		$form['send']->caption = 'form.send.update';
 		if ($this->isAjax()) {
 			$this->presenter->payload->toggle = 'resources';
 			$this->redrawControl('items');
@@ -119,13 +121,13 @@ class Resources extends Base
 		$item ?: $this->error();
 		try {
 			$this->repository->delete($id);
-			$this->flashMessage('Zdroj byl odstraněn.');
+			$this->flashMessage($this->translate('message.delete.resource'));
 			if ($this->isAjax()) {
 				$this->redrawControl('items');
 			}
 		} catch (Exception $e) {
 			if ($e->getCode() === 1451) {
-				$this->flashMessage('Zdroj nelze odstranit, nejprve odstrante přidělené oprávnění, které se vážou na tento zdroj.', 'warning');
+				$this->flashMessage($this->translate('message.remove.resource'), 'warning');
 			}
 		}
 	}

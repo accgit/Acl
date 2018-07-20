@@ -54,7 +54,7 @@ class Privileges extends Base
 		$form = $this->createForm();
 		$form->setTranslator($this->translator());
 		$form->addText('name', 'form.name')
-			->setAttribute('placeholder', 'form.name.placeholder')
+			->setAttribute('placeholder', 'form.name')
 			->setAttribute('autocomplete', 'off')
 			->setRequired('form.required');
 
@@ -127,7 +127,7 @@ class Privileges extends Base
 			}
 		} catch (Exception $e) {
 			if ($e->getCode() === 1451) {
-				$this->flashMessage($this->translate('message.do.not.removed'), 'warning');
+				$this->flashMessage($this->translate('message.remove.privilege'), 'warning');
 			}
 		}
 	}
