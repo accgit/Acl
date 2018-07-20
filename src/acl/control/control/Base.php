@@ -19,7 +19,7 @@ abstract class Base extends Drago\Application\UI\Control
 	 */
 	public function translator()
 	{
-		$path = __DIR__ . '/../translation/cs.ini';
+		$path = __DIR__ . '/../locale/cs.ini';
 		return new Drago\Localization\Translator($path);
 	}
 
