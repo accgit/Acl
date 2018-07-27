@@ -11,9 +11,8 @@ CREATE TABLE `privileges` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 -- ---- insert data in privileges table:
-INSERT INTO `privileges` (`privilegeId`, `name`) VALUES
-(NULL, '*all'),
-(NULL, 'default');
+INSERT INTO `privileges` (`privilegeId`, `name`)
+VALUES (NULL, '*all'), (NULL, 'default');
 
 -- ---- create resources table:
 CREATE TABLE `resources` (
@@ -24,10 +23,8 @@ CREATE TABLE `resources` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 -- ---- insert data in resources table:
-INSERT INTO `resources` (`resourceId`, `name`) VALUES
-(NULL, 'Web:Web'),
-(NULL, 'Web:Login'),
-(NULL, 'Admin:Admin');
+INSERT INTO `resources` (`resourceId`, `name`)
+VALUES (NULL, 'Web:Web'), (NULL, 'Web:Login'), (NULL, 'Admin:Admin');
 
 -- ---- create roles table:
 CREATE TABLE `roles` (
@@ -39,10 +36,8 @@ CREATE TABLE `roles` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 -- ---- insert data in roles table:
-INSERT INTO `roles` (`roleId`, `name`, `parent`) VALUES
-(NULL, 'guest',	 0),
-(NULL, 'member', 1),
-(NULL, 'admin',  2);
+INSERT INTO `roles` (`roleId`, `name`, `parent`)
+VALUES (NULL, 'guest',	 0), (NULL, 'member', 1), (NULL, 'admin',  2);
 
 -- ---- create permissions table:
 CREATE TABLE `permissions` (
@@ -61,9 +56,8 @@ CREATE TABLE `permissions` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 -- ---- insert data in permissions table:
-INSERT INTO `permissions` (`id`, `roleId`, `resourceId`, `privilegeId`, `allowed`) VALUES
-(NULL, 1, 1, 1, 'yes'),
-(NULL, 1, 2, 1, 'yes');
+INSERT INTO `permissions` (`id`, `roleId`, `resourceId`, `privilegeId`, `allowed`)
+VALUES (NULL, 1, 1, 1, 'yes'), (NULL, 1, 2, 1, 'yes');
 
 -- ---- create users table:
 CREATE TABLE `users` (
@@ -75,8 +69,8 @@ CREATE TABLE `users` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 -- ---- insert data in users table:
-INSERT INTO `users` (`userId`, `realname`, `email`, `password`) VALUES
-(NULL, 'Root', 'root@root.local', '$2y$10$N8V61Vhx8P4qAFcFE/ZSjuAmFtxHt28FZMShsb4ADYTHZTFdlM/Oi');
+INSERT INTO `users` (`userId`, `realname`, `email`, `password`)
+VALUES (NULL, 'Root', 'root@root.local', '$2y$10$N8V61Vhx8P4qAFcFE/ZSjuAmFtxHt28FZMShsb4ADYTHZTFdlM/Oi');
 
 -- ---- create acl table:
 CREATE TABLE `acl` (
@@ -91,5 +85,5 @@ CREATE TABLE `acl` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 -- ---- insert data in acl table:
-INSERT INTO `acl` (`id`, `roleId`, `userId`) VALUES
-(1, 3, 1);
+INSERT INTO `acl` (`id`, `roleId`, `userId`)
+VALUES (1, 3, 1);
