@@ -20,7 +20,7 @@ use the db.sql file.
 
 ## Extension registration
 
-```yaml
+```
 extensions:
 
 	# simple management of users' permissions
