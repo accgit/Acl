@@ -69,7 +69,7 @@ public function render()
 ```php
 /**
  * Returned record by id.
- * @param int userId
+ * @param int $userId
  * @return array
  */
 public function findRoles($userId)
