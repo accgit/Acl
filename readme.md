@@ -18,10 +18,13 @@ composer require accgit/acl
 
 use the db.sql file.
 
-## Register a configuration file
+## Extension registration
 
-```php
-$configurator->addConfig(__DIR__ . '/../vendor/accgit/acl/src/acl/conf.neon');
+```yaml
+extensions:
+
+	# simple management of users' permissions
+	acl: Component\Acl\Extension
 ```
 
 ## Add a trait to the Presenter
