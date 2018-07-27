@@ -75,7 +75,7 @@ public function render()
 public function findRoles($userId)
 {
 	return $this->db
-		->query('SELECT r.name AS role FROM acl AS a JOIN roles AS r USING (roleId) WHERE a.userId = ?', $userId);
+		->fetch('SELECT r.name AS role FROM acl AS a JOIN roles AS r USING (roleId) WHERE a.userId = ?', $userId);
 }
 ```
 
