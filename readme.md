@@ -52,7 +52,7 @@ use Component\Acl;
 {/snippet}
 ```
 
-## Add ajax redraw in presenter
+## Add ajax redraw to presenter
 
 ```php
 public function render()
