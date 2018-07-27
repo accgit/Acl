@@ -18,10 +18,13 @@ composer require accgit/acl
 
 use the db.sql file.
 
-## Register a configuration file
+## Extension registration
 
-```php
-$configurator->addConfig(__DIR__ . '/../vendor/accgit/acl/src/acl/conf.neon');
+```
+extensions:
+
+	# simple management of users' permissions
+	acl: Component\Acl\Extension
 ```
 
 ## Add a trait to the Presenter
@@ -49,7 +52,7 @@ use Component\Acl;
 {/snippet}
 ```
 
-## Add ajax redraw in presenter
+## Add ajax redraw to presenter
 
 ```php
 public function render()
@@ -66,13 +69,15 @@ public function render()
 ```php
 /**
  * Returned record by id.
- * @param int userId
+ * @param int $userId
  * @return array
  */
 public function findRoles($userId)
 {
 	return $this->db
-		->query('SELECT r.name AS role FROM acl AS a JOIN roles AS r USING (roleId) WHERE a.userId = ?', $userId);
+		->fetch('
+			SELECT r.name AS role FROM acl AS a JOIN roles AS r USING (roleId) 
+			WHERE a.userId = ?', $userId);
 }
 ```
 

@@ -51,10 +51,10 @@ class Resources extends BaseRepository
 
 	public function save(Entity\Resources $entity)
 	{
-		$entity->getId()?
-			$this->db->query('UPDATE :prefix:resources SET  %a', Iterator::toArray($entity), 'WHERE resourceId = ?', $entity->getId()):
-			$this->db->query('INSERT INTO :prefix:resources %v', Iterator::toArray($entity));
-			$this->removeCache();
+		$entity->getId() ?
+		$this->db->query('UPDATE :prefix:resources SET  %a', Iterator::toArray($entity), 'WHERE resourceId = ?', $entity->getId()) :
+		$this->db->query('INSERT INTO :prefix:resources %v', Iterator::toArray($entity));
+		$this->removeCache();
 	}
 
 }

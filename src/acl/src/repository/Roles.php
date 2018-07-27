@@ -100,10 +100,10 @@ class Roles extends BaseRepository
 
 	public function save(Entity\Roles $entity)
 	{
-		$entity->getId()?
-			$this->db->query('UPDATE :prefix:roles SET  %a', Iterator::toArray($entity), 'WHERE roleId = ?', $entity->getId()):
-			$this->db->query('INSERT INTO :prefix:roles %v', Iterator::toArray($entity));
-			$this->removeCache();
+		$entity->getId() ?
+		$this->db->query('UPDATE :prefix:roles SET  %a', Iterator::toArray($entity), 'WHERE roleId = ?', $entity->getId()) :
+		$this->db->query('INSERT INTO :prefix:roles %v', Iterator::toArray($entity));
+		$this->removeCache();
 	}
 
 }

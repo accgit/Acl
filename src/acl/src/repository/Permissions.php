@@ -115,10 +115,10 @@ class Permissions extends BaseRepository
 
 	public function save(Entity\Permissions $entity)
 	{
-		$entity->getId()?
-			$this->db->query('UPDATE :prefix:permissions SET  %a', Iterator::toArray($entity), 'WHERE id = ?', $entity->getId()):
-			$this->db->query('INSERT INTO :prefix:permissions %v', Iterator::toArray($entity));
-			$this->removeCache();
+		$entity->getId() ?
+		$this->db->query('UPDATE :prefix:permissions SET  %a', Iterator::toArray($entity), 'WHERE id = ?', $entity->getId()) :
+		$this->db->query('INSERT INTO :prefix:permissions %v', Iterator::toArray($entity));
+		$this->removeCache();
 	}
 
 }

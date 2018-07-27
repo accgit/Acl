@@ -51,9 +51,9 @@ class Privileges extends Drago\Database\Connection
 
 	public function save(Entity\Privileges $entity)
 	{
-		$entity->getId()?
-			$this->db->query('UPDATE :prefix:privileges SET  %a', Iterator::toArray($entity), 'WHERE privilegeId = ?', $entity->getId()):
-			$this->db->query('INSERT INTO :prefix:privileges %v', Iterator::toArray($entity));
+		$entity->getId() ?
+		$this->db->query('UPDATE :prefix:privileges SET  %a', Iterator::toArray($entity), 'WHERE privilegeId = ?', $entity->getId()) :
+		$this->db->query('INSERT INTO :prefix:privileges %v', Iterator::toArray($entity));
 	}
 
 }
