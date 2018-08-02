@@ -114,8 +114,8 @@ class Roles extends Base
 			$entity->name = $values->name;
 			$entity->parent = $values->parent === null ? 0 : $values->parent;
 			$this->repository->save($entity);
-			$message = $values->roleId ? $this->translate('message.update.role') : $this->translate('message.insert.role');
-			$this->flashMessage($message, 'success');
+			$values->roleId ? $this->flashMessage($this->translate('message.update.role')) :
+			$this->flashMessage($this->translate('message.insert.role'), 'success');
 			if ($this->isAjax()) {
 				$form->setValues([], true);
 				$this['factory']['parent']->setItems($this->factoryItems());

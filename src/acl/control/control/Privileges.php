@@ -79,8 +79,8 @@ class Privileges extends Base
 			$entity->setId($values->privilegeId);
 			$entity->name = $values->name;
 			$this->repository->save($entity);
-			$message = $values->privilegeId ? $this->translate('message.update.privilege') : $this->translate('message.insert.privilege');
-			$this->flashMessage($message, 'success');
+			$values->privilegeId ? $this->flashMessage($this->translate('message.update.privilege')) :
+			$this->flashMessage($this->translate('message.insert.privilege'), 'success');
 			if ($this->isAjax()) {
 				$form->setValues([], true);
 				$this->redrawControl('items');

@@ -135,8 +135,11 @@ class Permissions extends Base
 		$entity->privilegeId = $values->privilegeId;
 		$entity->allowed = $values->allowed;
 		$this->permissions->save($entity);
-		$message = $values->id ? $this->translate('message.update.permissions') : $this->translate('message.insert.permissions');
-		$this->flashMessage($message, 'success');
+
+		$values->id ?
+		$this->flashMessage($this->translate('message.update.permissions')) :
+		$this->flashMessage($this->translate('message.insert.permissions'), 'success');
+
 		if ($this->isAjax()) {
 			$form->setValues([], true);
 			$this->redrawControl('items');

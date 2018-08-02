@@ -79,8 +79,8 @@ class Resources extends Base
 			$entity->setId($values->resourceId);
 			$entity->name = $values->name;
 			$this->repository->save($entity);
-			$message = $values->resourceId ? $this->translate('message.update.resource') : $this->translate('message.insert.resource');
-			$this->flashMessage($message, 'success');
+			$values->resourceId ? $this->flashMessage($this->translate('message.update.resource')) :
+			$this->flashMessage($this->translate('message.insert.resource'), 'success');
 			if ($this->isAjax()) {
 				$form->setValues([], true);
 				$this->redrawControl('items');
