@@ -68,7 +68,6 @@ public function render()
 
 ```php
 /**
- * Returned record by id.
  * @param int $userId
  * @return array
  */
@@ -84,8 +83,7 @@ public function findRoles($userId)
 ## We will add individual roles to users
 
 ```php
-$roles = $this->repository->findRoles($row->userId);
-foreach ($roles as $role) {
+foreach ($this->findRoles($row->userId) as $role) {
 	$userRoles[] = $role['role'];
 }
 return new Security\Identity($row->userId, $userRoles, $row->toArray());
