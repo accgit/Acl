@@ -6,13 +6,14 @@
  */
 namespace Component\Acl\Repository;
 
+use Drago;
 use Drago\Database\Iterator;
 use Component\Acl\Entity;
 
 /**
  * Resources repository.
  */
-class Resources extends BaseRepository
+class Resources extends Drago\Database\Connection
 {
 	/**
 	 * @return array
@@ -46,7 +47,6 @@ class Resources extends BaseRepository
 			->query('
 				DELETE FROM :prefix:resources
 				WHERE resourceId = ?', $id);
-				$this->removeCache();
 	}
 
 	public function save(Entity\Resources $entity)
@@ -54,7 +54,6 @@ class Resources extends BaseRepository
 		$entity->getId() ?
 		$this->db->query('UPDATE :prefix:resources SET  %a', Iterator::toArray($entity), 'WHERE resourceId = ?', $entity->getId()) :
 		$this->db->query('INSERT INTO :prefix:resources %v', Iterator::toArray($entity));
-		$this->removeCache();
 	}
 
 }
