@@ -82,7 +82,7 @@ class Permissions extends Base
 		}
 
 		$form->addSelect('roleId', 'form.role', $roles)
-			->setPrompt('form.select.role')
+			->setPrompt('form.select.role.permissions')
 			->setRequired('form.required');
 
 		$resources = [];
