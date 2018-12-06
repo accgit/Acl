@@ -6,6 +6,7 @@
  */
 namespace Component\Acl\Repository;
 
+use Drago;
 use Exception;
 use Drago\Database\Iterator;
 
@@ -15,7 +16,7 @@ use Component\Acl\Entity;
 /**
  * Roles repository.
  */
-class Roles extends BaseRepository
+class Roles extends Drago\Database\Connection
 {
 	/**
 	 * Exceptions errors.
@@ -95,7 +96,6 @@ class Roles extends BaseRepository
 			->query('
 				DELETE FROM :prefix:roles
 				WHERE roleId = ?', $id);
-				$this->removeCache();
 	}
 
 	public function save(Entity\Roles $entity)
@@ -103,7 +103,6 @@ class Roles extends BaseRepository
 		$entity->getId() ?
 		$this->db->query('UPDATE :prefix:roles SET  %a', Iterator::toArray($entity), 'WHERE roleId = ?', $entity->getId()) :
 		$this->db->query('INSERT INTO :prefix:roles %v', Iterator::toArray($entity));
-		$this->removeCache();
 	}
 
 }

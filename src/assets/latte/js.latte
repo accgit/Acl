@@ -20,7 +20,7 @@
 				});
 				$('.all').off('click').on('click', function() {
 				    	var treeId = $(this).attr('id');
-					switch(treeId) {
+					switch (treeId) {
 						case 'roles': tree.click('#roles-1'); break;
 						case 'permissions': tree.click('#permissions-1');
 					}
@@ -44,7 +44,7 @@
 				});
 			},
 			success: function(payload) {
-				switch(payload.toggle) {
+				switch (payload.toggle) {
 					case 'roles':       $('.toggle-1').toggle(); break;
 					case 'privileges':  $('.toggle-2').toggle(); break;
 					case 'resources':   $('.toggle-3').toggle(); break;

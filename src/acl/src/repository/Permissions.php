@@ -6,14 +6,39 @@
  */
 namespace Component\Acl\Repository;
 
+use Dibi;
+use Nette;
+use Drago;
 use Drago\Database\Iterator;
 use Component\Acl\Entity;
+use Component\Acl\Authorizator;
 
 /**
  * Permissions repository.
  */
-class Permissions extends BaseRepository
+class Permissions extends Drago\Database\Connection
 {
+    	/**
+	 * @var Nette\Caching\Cache
+	 */
+	public $cache;
+
+	public function __construct(
+		Nette\Caching\Cache $cache,
+		Dibi\Connection $db)
+	{
+		parent::__construct($db);
+		$this->cache = $cache;
+	}
+
+	/**
+	 * @return void
+	 */
+	private function removeCache()
+	{
+		return $this->cache->remove(Authorizator::ACL_CACHE);
+	}
+
 	/**
 	 * @return array
 	 */

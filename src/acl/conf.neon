@@ -10,7 +10,7 @@ services:
 	- Component\Acl\Repository\Roles
 	- Component\Acl\Repository\Resources
 	- Component\Acl\Repository\Privileges
-	- Component\Acl\Repository\Permissions
+	- Component\Acl\Repository\Permissions(@cache.acl.app)
 
 	- Component\Acl\Control\Roles
 	- Component\Acl\Control\Resources
