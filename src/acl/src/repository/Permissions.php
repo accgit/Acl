@@ -6,6 +6,7 @@
  */
 namespace Component\Acl\Repository;
 
+use Dibi;
 use Nette;
 use Drago;
 use Drago\Database\Iterator;
