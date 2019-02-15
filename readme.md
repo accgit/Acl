@@ -84,7 +84,7 @@ public function findRoles($userId)
 
 ```php
 foreach ($this->findRoles($row->userId) as $role) {
-	$userRoles[] = $role['role'];
+	$userRoles[] = $role->role;
 }
 return new Security\Identity($row->userId, $userRoles, $row->toArray());
 ```
