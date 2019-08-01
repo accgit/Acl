@@ -31,7 +31,6 @@ class Privileges extends Base
 		Entity\Privileges $entity,
 		Repository\Privileges $repository)
 	{
-		parent::__construct();
 		$this->entity = $entity;
 		$this->repository = $repository;
 	}
