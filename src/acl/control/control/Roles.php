@@ -31,7 +31,6 @@ class Roles extends Base
 		Entity\Roles $entity,
 		Repository\Roles $repository)
 	{
-		parent::__construct();
 		$this->entity = $entity;
 		$this->repository = $repository;
 	}
