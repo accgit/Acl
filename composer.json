@@ -10,14 +10,14 @@
 		}
 	],
 	"require": {
-		"php": ">=5.6",
-		"nette/security": "^2.4",
-		"nette/application": "^2.4",
-		"nette/caching": "^2.5",
-		"nette/di": "^2.4",
-		"latte/latte": "^2.4.0",
-		"drago-ex/database": "^1.0",
-		"drago-ex/translator": "^1.0"
+		"php": ">=7.1",
+		"nette/security": "^3.0",
+		"nette/application": "^3.0",
+		"nette/caching": "^3.0",
+		"nette/di": "^3.0",
+		"latte/latte": "^2.5",
+		"drago-ex/database": "^2.0",
+		"drago-ex/translator": "^2.0"
 	},
 	"autoload": {
 		"classmap": ["src/"]
