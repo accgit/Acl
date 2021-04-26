@@ -14,8 +14,7 @@ class Extension extends Nette\DI\CompilerExtension
 {
 	public function loadConfiguration()
 	{
-		$builder = $this->getContainerBuilder();
-		$this->compiler->loadDefinitions($builder, $this->loadFromFile(__DIR__ . '/conf.neon')['services']);
+		$config = $this->loadFromFile(__DIR__ . '/conf.neon');
+		$this->compiler->loadDefinitionsFromConfig($config['services']);
 	}
-
 }

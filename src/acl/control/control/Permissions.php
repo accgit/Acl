@@ -48,7 +48,6 @@ class Permissions extends Base
 		Repository\Privileges $privileges,
 		Repository\Permissions $permissions)
 	{
-		parent::__construct();
 		$this->entity = $entity;
 		$this->roles  = $roles;
 		$this->resources = $resources;

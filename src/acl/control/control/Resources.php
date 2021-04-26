@@ -31,7 +31,6 @@ class Resources extends Base
 		Entity\Resources $entity,
 		Repository\Resources $repository)
 	{
-		parent::__construct();
 		$this->entity = $entity;
 		$this->repository = $repository;
 	}
